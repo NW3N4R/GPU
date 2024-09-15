@@ -1,0 +1,91 @@
+﻿.form-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px; /* Space between form items */
+}
+
+.form-group {
+    flex: 1 1 calc(50% - 15px); /* Two columns layout with space between */
+    margin-bottom: 15px; /* Space below each item */
+}
+
+    .form-group label,
+    .form-group input,
+    .form-group span {
+        width: 100%; /* Full-width for labels, inputs, and validation messages */
+    }
+
+    .form-group:last-child {
+        flex: 1 1 100%; /* Full-width for submit button */
+        margin-bottom: 0; /* Remove bottom margin for submit button */
+    }
+/* Basic reset */
+body {
+    margin: 0;
+    padding: 0;
+}
+.pivot-container {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.pivot-nav {
+    display: flex;
+    background-color: #f1f1f1;
+    border-bottom: 1px solid #ddd;
+}
+
+.pivot-tab {
+    padding: 10px 20px;
+    text-decoration: none;
+    color: #333;
+    display: block;
+    cursor: pointer;
+    background-color: #ddd;
+    border: 1px solid #ccc;
+    border-bottom: none;
+}
+
+    .pivot-tab:hover {
+        background-color: #bbb;
+    }
+
+    .pivot-tab.disabled {
+        opacity: 0.5;
+        pointer-events: none;
+    }
+.pivot-content {
+    display: none;
+    padding: 20px;
+    border: 1px solid #ddd;
+}
+
+    .pivot-content.active {
+        display: block;
+    }
+
+.pivot-nav {
+    display: flex;
+    background-color: #f1f1f1;
+    border-bottom: 1px solid #ddd;
+}
+
+.pivot-tab {
+    padding: 10px 20px;
+    text-decoration: none;
+    color: #333;
+    display: block;
+    cursor: pointer;
+    background-color: #ddd;
+    border: 1px solid #ccc;
+    border-bottom: none;
+}
+
+    .pivot-tab:hover {
+        background-color: #bbb;
+    }
+
+    .pivot-tab.disabled {
+        opacity: 0.5;
+        pointer-events: none;
+    }

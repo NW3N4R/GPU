@@ -1,0 +1,22 @@
+﻿@model GPU.Models.StudentContactInfo
+
+<form asp-action="Create" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+    <div class="form-container">
+        <!-- Your form fields here -->
+        <div class="form-group">
+            <label asp-for="StudentPhone" class="control-label">Phone</label>
+            <input asp-for="StudentPhone" class="form-control" />
+            <span asp-validation-for="StudentPhone" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="StudentEmail" class="control-label">Email</label>
+            <input asp-for="StudentEmail" class="form-control" />
+            <span asp-validation-for="StudentEmail" class="text-danger"></span>
+        </div>
+        <!-- Add more fields as needed -->
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</form>

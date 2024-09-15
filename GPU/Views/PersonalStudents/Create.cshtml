@@ -1,0 +1,133 @@
+﻿@model GPU.Models.PersonalStudent
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h4>تۆمارکردن</h4>
+
+<hr />
+
+
+<div class="pivot-container">
+    <!-- Navigation Tabs -->
+    <nav class="pivot-nav">
+        <a href="#tab1" class="pivot-tab active" id="pivot-tab1">زانیاری کەسی</a>
+        <a href="#tab2" class="pivot-tab disabled" id="pivot-tab2">زنیاری پەیوەندیکردن</a>
+        <a href="#tab3" class="pivot-tab disabled" id="pivot-tab3">زنیاری دایباب</a>
+        <a href="#tab4" class="pivot-tab disabled" id="pivot-tab4">زنیاری پۆلی ١٢</a>
+        <a href="#tab5" class="pivot-tab disabled" id="pivot-tab5">زنیاری جۆری وەرگرتن</a>
+    </nav>
+
+    <!-- Pivot Content -->
+    <div id="tab1" class="pivot-content">
+        <form asp-action="Create" id="infoForm">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+            <div class="form-container">
+
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label">Name</label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Age" class="control-label">Age</label>
+                    <input asp-for="Age" class="form-control" />
+                    <span asp-validation-for="Age" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Sex" class="control-label">Sex</label>
+                    <select asp-for="Sex" class="form-control">
+                        <option value="Male">نێر</option>
+                        <option value="Female">مێ</option>
+                        <option value="Other">ئەوانی تر</option>
+                    </select>
+                    <span asp-validation-for="Sex" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="MartialStatus" class="control-label">Martial Status</label>
+                    <select asp-for="MartialStatus" class="form-control">
+                        <option value="سەڵت">سەڵت</option>
+                        <option value="خێزاندار">خێزاندار</option>
+                        <option value="جیابووە">جیابووە</option>
+                    </select>
+                    <span asp-validation-for="MartialStatus" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="BloodGroup" class="control-label">Blood Group</label>
+                    <select asp-for="BloodGroup" class="form-control">
+                        <option value="A+">A+</option>
+                        <option value="A-">A-</option>
+                        <option value="B+">B+</option>
+                        <option value="B-">B-</option>
+                        <option value="AB+">AB+</option>
+                        <option value="AB-">AB-</option>
+                        <option value="O+">O+</option>
+                        <option value="O-">O-</option>
+                    </select>
+                    <span asp-validation-for="BloodGroup" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Religion" class="control-label">Religion</label>
+                    <input asp-for="Religion" class="form-control" />
+                    <span asp-validation-for="Religion" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="IdentityNo" class="control-label">Identity No</label>
+                    <input asp-for="IdentityNo" class="form-control" />
+                    <span asp-validation-for="IdentityNo" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Nationality" class="control-label">Nationality</label>
+                    <input asp-for="Nationality" class="form-control" />
+                    <span asp-validation-for="Nationality" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="RationingFormNo" class="control-label">Rationing Form No</label>
+                    <input asp-for="RationingFormNo" class="form-control" />
+                    <span asp-validation-for="RationingFormNo" class="text-danger"></span>
+                </div>
+
+              
+
+            </div>
+        </form>
+    </div>
+
+    <div id="tab2" class="pivot-content">
+        <div id="studentContactInfoContainer"></div>
+    </div>
+    <div id="tab3" class="pivot-content">
+        <h1>Content for Tab 3</h1>
+        <p>This is some content for the third tab.</p>
+    </div>
+    <div id="tab4" class="pivot-content">
+        <h1>Content for Tab 4</h1>
+        <p>This is some content for the fourth tab.</p>
+    </div>
+    <div id="tab5" class="pivot-content">
+        <h1>Content for Tab 5</h1>
+        <p>This is some content for the fifth tab.</p>
+    </div>
+</div>
+
+<button id="nextTabButton" class="btn btn-primary">دواتر</button>
+    
+    <script src="./js/StudentInsertJS.js"></script>
+
+@*
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+ *@
