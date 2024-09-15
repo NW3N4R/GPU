@@ -1,5 +1,6 @@
 ﻿document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('infoForm');
+    const studentContactInfoForm = document.getElementById('studentContactInfoForm');
     const tabs = Array.from(document.querySelectorAll('.pivot-tab'));
     const contents = Array.from(document.querySelectorAll('.pivot-content'));
     let currentIndex = tabs.findIndex(tab => tab.classList.contains('active'));
@@ -37,7 +38,24 @@
         }
     }
 
-    form.addEventListener('input', checkFormValidity);
+    function checkStudentContactInfoFormValidity() {
+        const inputs = studentContactInfoForm.querySelectorAll('input, select');
+        const allFilled = Array.from(inputs).every(input => input.value.trim() !== '');
+
+        const tab3 = document.getElementById('pivot-tab3');
+        if (allFilled) {
+            tab3.classList.remove('disabled');
+        } else {
+            tab3.classList.add('disabled');
+        }
+    }
+
+    form.addEventListener('input', function () {
+        checkFormValidity();
+        checkStudentContactInfoFormValidity();
+    });
+
+    studentContactInfoForm.addEventListener('input', checkStudentContactInfoFormValidity);
 
     // Initialize the default active tab
     if (currentIndex === -1) {

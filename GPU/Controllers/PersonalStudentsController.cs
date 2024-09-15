@@ -47,7 +47,12 @@ namespace GPU.Controllers
         // GET: PersonalStudents/Create
         public IActionResult Create()
         {
-            return View();
+            var personalStudent = new PersonalStudent();
+            var studentContactInfo = new StudentContactInfo();
+
+            var viewModel = (PersonalStudent: personalStudent, StudentContactInfo: studentContactInfo);
+
+            return View(viewModel);
         }
 
         // POST: PersonalStudents/Create
@@ -55,29 +60,20 @@ namespace GPU.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Age,Sex,MartialStatus,BloodGroup,Religion,IdentityNo,Nationality,RationingFormNo")] PersonalStudent personalStudent)
+        public async Task<IActionResult> Create([Bind(Prefix = "PersonalStudent")] PersonalStudent personalStudent, [Bind(Prefix = "StudentContactInfo")] StudentContactInfo studentContactInfo)
         {
             if (ModelState.IsValid)
             {
-                var student = new PersonalStudent
-                {
-                    Id = personalStudent.Id,
-                    Name = personalStudent.Name,
-                    Age = personalStudent.Age,
-                    Sex = personalStudent.Sex,
-                    MartialStatus = personalStudent.MartialStatus,
-                    BloodGroup = personalStudent.BloodGroup,
-                    Religion = personalStudent.Religion,
-                    IdentityNo = personalStudent.IdentityNo,
-                    Nationality = personalStudent.Nationality,
-                    RationingFormNo = personalStudent.RationingFormNo
-                };
-                await Helper_PersonalStudent.Create(student);
-           
+                _context.Add(personalStudent);
+                _context.Add(studentContactInfo);
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(personalStudent);
+
+            var viewModel = (PersonalStudent: personalStudent, StudentContactInfo: studentContactInfo);
+            return View(viewModel);
         }
+
 
         // GET: PersonalStudents/Edit/5
         public async Task<IActionResult> Edit(int? id)

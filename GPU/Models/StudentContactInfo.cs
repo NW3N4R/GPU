@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace GPU.Models
 {
@@ -6,7 +7,7 @@ namespace GPU.Models
     {
         public int Id { get; set; }
 
-        [DisplayName("ناو")]
+        [Display(Name= "ناو")]
         public string StudentPhone { get; set; }
 
         [DisplayName("ئیمەیڵ")]
