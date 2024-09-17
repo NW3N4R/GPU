@@ -1,32 +1,36 @@
 ﻿.form-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 15px; /* Space between form items */
+    gap: 15px; 
 }
 
 .form-group {
-    flex: 1 1 calc(50% - 15px); /* Two columns layout with space between */
-    margin-bottom: 15px; /* Space below each item */
+    width:100%;
+    flex: 1 1 calc(50% - 15px); 
+    margin-bottom: 15px; 
 }
 
-    .form-group label,
+ /*   .form-group label,
     .form-group input,
     .form-group span {
-        width: 100%; /* Full-width for labels, inputs, and validation messages */
+        width: 100%;
     }
 
     .form-group:last-child {
-        flex: 1 1 100%; /* Full-width for submit button */
-        margin-bottom: 0; /* Remove bottom margin for submit button */
-    }
-/* Basic reset */
+        flex: 1 1 100%; 
+        margin-bottom: 0; 
+    }*/
+
 body {
     margin: 0;
-    padding: 0;
+    padding: 0px;
+    font-family: 'Droid Arabic Kufi';
 }
+
 .pivot-container {
     width: 100%;
     margin: 0 auto;
+    min-height: 500px;
 }
 
 .pivot-nav {
@@ -54,10 +58,12 @@ body {
         opacity: 0.5;
         pointer-events: none;
     }
+
 .pivot-content {
     display: none;
+    min-width: 800px;
     padding: 20px;
-    border: 1px solid #ddd;
+    min-height: 500px;
 }
 
     .pivot-content.active {
@@ -89,3 +95,85 @@ body {
         opacity: 0.5;
         pointer-events: none;
     }
+
+
+.Title {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.SubActions {
+    text-decoration: none;
+    color: black;
+}
+
+.btn {
+    position: absolute;
+    left: 50%;
+    background-color: transparent;
+    color: black;
+    border: none;
+    margin-top:1%;
+}
+
+.saveenabled {
+    background-color: dodgerblue;
+    color: white;
+}
+.printEnabled {
+    background-color: darkgrey;
+    color: white;
+}
+
+    
+.pbttn {
+    padding-inline: 20px;
+    padding-block: 3px;
+    border: none;
+    border-radius: 5px;
+}
+
+.footer {
+    text-align: center;
+}
+
+.Header {
+    font-weight: 100;
+    text-align: center;
+}
+
+.DgColumn {
+    text-align: center;
+}
+
+.FormsActionbttn {
+    margin-top: 1%;
+}
+
+.ColumnForm {
+    flex-wrap:wrap;
+    display: flex;
+    width: 100%;
+    gap: 15px;
+}
+#InvoiceDiv {
+    display: grid; /* Use grid layout for the container */
+    grid-template-columns: repeat(3, 1fr); /* Create three equal columns */
+    gap: 15px; /* Space between columns */
+    width: 100%; /* Ensure the container takes the full width of its parent */
+}
+
+    #InvoiceDiv .form-group {
+        margin: 0; /* Remove margin to avoid extra spacing issues */
+    }
+.FormCol {
+    flex: 1 1 calc(50% - 15px); 
+
+}
+.drop{
+    height:60px;
+}
+.fwidthElement {
+    width: 100%;
+    box-sizing: border-box; /* Includes padding and border in the element's total width */
+}

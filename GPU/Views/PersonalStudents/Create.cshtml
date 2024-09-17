@@ -1,4 +1,4 @@
-﻿@model (GPU.Models.PersonalStudent PersonalStudent, GPU.Models.StudentContactInfo StudentContactInfo)
+﻿@model (GPU.Models.PersonalStudent PersonalStudent, GPU.Models.StudentContactInfo StudentContactInfo,GPU.Models.StudentParentInfo StudentParentInfo,GPU.Models.Student12Grade Student12Grade,GPU.Models.StudentDepartmentInfo StudentDepartmentInfo,InvoiceInfo InvoiceInfo)
 
 
 @{
@@ -6,62 +6,68 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h4>تۆمارکردن</h4>
 
-<hr />
 
 
 <div class="pivot-container">
-    <!-- Navigation Tabs -->
     <nav class="pivot-nav">
         <a href="#tab1" class="pivot-tab active" id="pivot-tab1">زانیاری کەسی</a>
         <a href="#tab2" class="pivot-tab disabled" id="pivot-tab2">زانیاری پەیوەندیکردن</a>
-        <a href="#tab3" class="pivot-tab disabled" id="pivot-tab3">زانیاری دایباب</a>
+        <a href="#tab3" class="pivot-tab disabled" id="pivot-tab3">زانیاری بەخێوکەر</a>
         <a href="#tab4" class="pivot-tab disabled" id="pivot-tab4">زانیاری پۆلی ١٢</a>
         <a href="#tab5" class="pivot-tab disabled" id="pivot-tab5">زانیاری جۆری وەرگرتن</a>
     </nav>
+    <form method="post" asp-action="Create" id="infoForm">
+        <div id="tab1" class="pivot-content active">
+            <h6>زانیاری کەسی</h6>
 
-    <!-- Pivot Content -->
-    <div id="tab1" class="pivot-content">
-        <form asp-action="Create" id="infoForm">
-            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
             <div class="form-container">
-
                 <div class="form-group">
                     <label asp-for="PersonalStudent.Name" class="control-label"></label>
-                    <input asp-for="PersonalStudent.Name" class="form-control" />
+                    <input asp-for="PersonalStudent.Name" name="PersonalStudent.Name" class="form-control" required />
                     <span asp-validation-for="PersonalStudent.Name" class="text-danger"></span>
                 </div>
 
                 <div class="form-group">
                     <label asp-for="PersonalStudent.Age" class="control-label"></label>
-                    <input asp-for="PersonalStudent.Age" class="form-control" />
+                    <select asp-for="PersonalStudent.Age" name="PersonalStudent.Age" class="form-control YearSelect" required>
+                        @for (int year = 1980; year <= DateTime.Now.Year - 16; year++)
+                        {
+                            <option value="@year" class="YearOptions">@year</option>
+                        }
+                    </select>
                     <span asp-validation-for="PersonalStudent.Age" class="text-danger"></span>
                 </div>
 
-                <div class="form-group">
-                    <label asp-for="PersonalStudent.Sex" class="control-label"></label>
-                    <select asp-for="PersonalStudent.Sex" class="form-control">
-                        <option value="Male">نێر</option>
-                        <option value="Female">مێ</option>
-                        <option value="Other">ئەوانی تر</option>
-                    </select>
-                    <span asp-validation-for="PersonalStudent.Sex" class="text-danger"></span>
-                </div>
 
-                <div class="form-group">
-                    <label asp-for="PersonalStudent.MartialStatus" class="control-label"></label>
-                    <select asp-for="PersonalStudent.MartialStatus" class="form-control">
-                        <option value="سەڵت">سەڵت</option>
-                        <option value="خێزاندار">خێزاندار</option>
-                        <option value="جیابووە">جیابووە</option>
-                    </select>
-                    <span asp-validation-for="PersonalStudent.MartialStatus" class="text-danger"></span>
+                <div class="form-group ColumnForm">
+                    <div class="FormCol" style="margin-left:5px;">
+
+                        <label asp-for="PersonalStudent.Sex" class="control-label"></label>
+                        <select asp-for="PersonalStudent.Sex" name="PersonalStudent.Sex" class="form-control">
+                            <option value="نێر">نێر</option>
+                            <option value="مێ">مێ</option>
+                        </select>
+                        <span asp-validation-for="PersonalStudent.Sex" class="text-danger"></span>
+
+                    </div>
+                    <div class="FormCol" style="margin-right:5px;">
+
+                        <label asp-for="PersonalStudent.MartialStatus" class="control-label"></label>
+                        <select asp-for="PersonalStudent.MartialStatus" name="PersonalStudent.MartialStatus" class="form-control">
+                            <option value="سەڵت">سەڵت</option>
+                            <option value="خێزاندار">خێزاندار</option>
+                            <option value="جیابووە">جیابووە</option>
+                        </select>
+                        <span asp-validation-for="PersonalStudent.MartialStatus" class="text-danger"></span>
+
+                    </div>
                 </div>
 
                 <div class="form-group">
                     <label asp-for="PersonalStudent.BloodGroup" class="control-label"></label>
-                    <select asp-for="PersonalStudent.BloodGroup" class="form-control">
+                    <select asp-for="PersonalStudent.BloodGroup" name="PersonalStudent.BloodGroup" class="form-control">
+                        <option value="-">دیاری نەکراو</option>
                         <option value="A+">A+</option>
                         <option value="A-">A-</option>
                         <option value="B+">B+</option>
@@ -74,121 +80,300 @@
                     <span asp-validation-for="PersonalStudent.BloodGroup" class="text-danger"></span>
                 </div>
 
-                <div class="form-group">
-                    <label asp-for="PersonalStudent.Religion" class="control-label"></label>
-                    <input asp-for="PersonalStudent.Religion" class="form-control" />
-                    <span asp-validation-for="PersonalStudent.Religion" class="text-danger"></span>
-                </div>
 
                 <div class="form-group">
+                    <label asp-for="PersonalStudent.Religion" class="control-label"></label>
+                    <select asp-for="PersonalStudent.Religion" id="skip" name="PersonalStudent.Religion" class="form-control">
+
+                        <option value="-">دیاری نەکراو</option>
+                        <option value="ئیسلام">ئیسلام</option>
+                        <option value="مەسیحی">مەسیحی</option>
+                        <option value="جوو">جوو</option>
+                        <option value="زەردەشتی">زەردەشتی</option>
+                        <option value="زەردەشتی">یارسانی</option>
+
+                    </select>
+
+                    <span asp-validation-for="PersonalStudent.Religion" class="text-danger"></span>
+                </div>
+                <div class="form-group">
                     <label asp-for="PersonalStudent.IdentityNo" class="control-label"></label>
-                    <input asp-for="PersonalStudent.IdentityNo" class="form-control" />
+                    <input asp-for="PersonalStudent.IdentityNo" name="PersonalStudent.IdentityNo" class="form-control" required />
                     <span asp-validation-for="PersonalStudent.IdentityNo" class="text-danger"></span>
                 </div>
 
-                <div class="form-group">
-                    <label asp-for="PersonalStudent.Nationality" class="control-label"></label>
-                    <input asp-for="PersonalStudent.Nationality" class="form-control" />
-                    <span asp-validation-for="PersonalStudent.Nationality" class="text-danger"></span>
-                </div>
+                <div class="form-group ColumnForm">
 
-                <div class="form-group">
-                    <label asp-for="PersonalStudent.RationingFormNo" class="control-label"></label>
-                    <input asp-for="PersonalStudent.RationingFormNo" class="form-control" />
-                    <span asp-validation-for="PersonalStudent.RationingFormNo" class="text-danger"></span>
+                    <div class="form-group">
+                        <label asp-for="PersonalStudent.Nationality" class="control-label"></label>
+                        <select asp-for="PersonalStudent.Nationality" name="PersonalStudent.Nationality" class="form-control">
+                            <option value="-">دیاری نەکراو</option>
+                            <option value="کورد">کورد</option>
+                            <option value="عەرەب">عەرەب</option>
+                            <option value="تورکمان">تورکمان</option>
+                        </select>
+                        <span asp-validation-for="PersonalStudent.Nationality" class="text-danger"></span>
+                    </div>
+                    <div class="FormCol">
+                        <label asp-for="PersonalStudent.RationingFormNo" class="control-label"></label>
+                        <input asp-for="PersonalStudent.RationingFormNo" id="skip" name="PersonalStudent.RationingFormNo" class="form-control" />
+                        <span asp-validation-for="PersonalStudent.RationingFormNo" class="text-danger"></span>
+                    </div>
                 </div>
-
-              
 
             </div>
-        </form>
-    </div>
-    <div id="tab2" class="pivot-content">
-        <form asp-action="Create" method="post" id="studentContactInfoForm">
-            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        </div>
+        <div id="tab2" class="pivot-content">
+            <h6>زانیاری پەیوەندیکردن</h6>
+
             <div class="form-container">
 
                 <div class="form-group">
-                    <label asp-for="StudentContactInfo.StudentPhone" class="control-label"></label>
-                    <input asp-for="StudentContactInfo.StudentPhone" class="form-control" />
-                    <span asp-validation-for="StudentContactInfo.StudentPhone" class="text-danger"></span>
+                    <label asp-for="StudentContactInfo.Phone" class="control-label"></label>
+                    <input asp-for="StudentContactInfo.Phone" name="StudentContactInfo.Phone" class="form-control" />
+                    <span asp-validation-for="StudentContactInfo.Phone" class="text-danger"></span>
                 </div>
 
                 <div class="form-group">
                     <label asp-for="StudentContactInfo.StudentEmail" class="control-label"></label>
-                    <input asp-for="StudentContactInfo.StudentEmail" class="form-control" />
+                    <input asp-for="StudentContactInfo.StudentEmail" id="skip" name="StudentContactInfo.StudentEmail" class="form-control" />
                     <span asp-validation-for="StudentContactInfo.StudentEmail" class="text-danger"></span>
                 </div>
 
-         
+
                 <div class="form-group">
                     <label asp-for="StudentContactInfo.Province" class="control-label"></label>
-                    <select asp-for="StudentContactInfo.Province" class="form-control">
-                        <option value="Baghdad">بەغداد</option>
-                        <option value="Erbil">هەولێر</option>
-                        <option value="Sulaymaniyah">سلێمانی</option>
-                        <option value="Duhok">دهۆک</option>
-                        <option value="Kirkuk">که‌رکوک</option>
-                        <option value="Basra">بەسڕە</option>
-                        <option value="Najaf">نەجەف</option>
-                        <option value="Karbala">کەربەلاء</option>
-                        <option value="Mosul">مووسڵ</option>
-                        <option value="Anbar">انبار</option>
-                        <option value="Diyala">دیالە</option>
-                        <option value="Maysan">مەیسەن</option>
-                        <option value="Wasit">واسط</option>
-                        <option value="Babil">بابڵ</option>
-                        <option value="Muthanna">مووسەننا</option>
-                        <option value="Dhi Qar">ذی قەر</option>
-                        <option value="Qadisiyyah">القادسیە</option>
-                        <option value="Salahaddin">سەلاحەدین</option>
-                        <option value="Nineveh">نێنەوا</option>
-                
+                    <select asp-for="StudentContactInfo.Province" name="StudentContactInfo.Province" class="form-control">
+                        <option value="گەرمیان">گەرمیان</option>
+                        <option value="سلێمانی">سلێمانی</option>
+                        <option value="هەولێر">هەولێر</option>
+                        <option value="کەرکووک">کەرکووک</option>
+                        <option value="دیالە">دیالە</option>
                     </select>
                     <span asp-validation-for="StudentContactInfo.Province" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="StudentContactInfo.City" class="control-label"></label>
-                    <input asp-for="StudentContactInfo.City" class="form-control" />
+                    <input asp-for="StudentContactInfo.City" id="skip" name="StudentContactInfo.City" class="form-control" />
                     <span asp-validation-for="StudentContactInfo.City" class="text-danger"></span>
                 </div>
 
                 <div class="form-group">
                     <label asp-for="StudentContactInfo.District" class="control-label"></label>
-                    <input asp-for="StudentContactInfo.District" class="form-control" />
+                    <input asp-for="StudentContactInfo.District" id="skip" name="StudentContactInfo.District" class="form-control" />
                     <span asp-validation-for="StudentContactInfo.District" class="text-danger"></span>
                 </div>
 
                 <div class="form-group">
                     <label asp-for="StudentContactInfo.Village" class="control-label"></label>
-                    <input asp-for="StudentContactInfo.Village" class="form-control" />
+                    <input asp-for="StudentContactInfo.Village" id="skip" name="StudentContactInfo.Village" class="form-control" />
                     <span asp-validation-for="StudentContactInfo.Village" class="text-danger"></span>
                 </div>
+
+
             </div>
-        </form>
-    </div>
-    <div id="tab3" class="pivot-content">
-        <h1>Content for Tab 3</h1>
-        <p>This is some content for the third tab.</p>
-    </div>
-    <div id="tab4" class="pivot-content">
-        <h1>Content for Tab 4</h1>
-        <p>This is some content for the fourth tab.</p>
-    </div>
-    <div id="tab5" class="pivot-content">
-        <h1>Content for Tab 5</h1>
-        <p>This is some content for the fifth tab.</p>
-    </div>
+        </div>
+        <div id="tab3" class="pivot-content">
+            <h6>زانیاری بەخێوکەر</h6>
+            <div class="form-container">
+
+                <div class="form-group">
+                    <label asp-for="StudentParentInfo.Name" class="control-label"></label>
+                    <input asp-for="StudentParentInfo.Name" name="StudentParentInfo.Name" class="form-control" />
+                    <span asp-validation-for="StudentParentInfo.Name" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="StudentParentInfo.Profession" class="control-label"></label>
+                    <input asp-for="StudentParentInfo.Profession" name="StudentParentInfo.Profession" class="form-control" />
+                    <span asp-validation-for="StudentParentInfo.Profession" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="StudentParentInfo.Phone" class="control-label"></label>
+                    <input asp-for="StudentParentInfo.Phone" name="StudentParentInfo.Phone" class="form-control" />
+                    <span asp-validation-for="StudentParentInfo.Phone" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="StudentParentInfo.Email" class="control-label"></label>
+                    <input asp-for="StudentParentInfo.Email" id="skip" name="StudentParentInfo.Email" class="form-control" />
+                    <span asp-validation-for="StudentParentInfo.Email" class="text-danger"></span>
+                </div>
+
+            </div>
+        </div>
+        <div id="tab4" class="pivot-content">
+            <h6>زانیاری پۆلی ١٢</h6>
+            <div class="form-container">
+                <div class="form-group">
+                    <label asp-for="Student12Grade.ExamNo" class="control-label"></label>
+                    <input asp-for="Student12Grade.ExamNo" name="Student12Grade.ExamNo" class="form-control" />
+                    <span asp-validation-for="Student12Grade.ExamNo" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Student12Grade.SchoolName" class="control-label"></label>
+                    <input asp-for="Student12Grade.SchoolName" name="Student12Grade.SchoolName" class="form-control" />
+                    <span asp-validation-for="Student12Grade.SchoolName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Student12Grade.EducationAdministrator" class="control-label"></label>
+                    <select asp-for="Student12Grade.EducationAdministrator" name="Student12Grade.EducationAdministrator" class="form-control">
+                        <option value="گەرمیان">گەرمیان</option>
+                        <option value="سلێمانی">سلێمانی</option>
+                        <option value="هەولێر">هەولێر</option>
+                        <option value="کەرکووک">کەرکووک</option>
+                        <option value="دیالە">دیالە</option>
+                        <option value="دیالە">سەڵاحەدین</option>
+
+                    </select>
+                    <span asp-validation-for="Student12Grade.EducationAdministrator" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Student12Grade.EducationType" class="control-label"></label>
+                    <select asp-for="Student12Grade.EducationType" name="Student12Grade.EducationType" class="form-control">
+                        <option value="زانستی">زانستی</option>
+                        <option value="وێژەیی">وێژەیی</option>
+                        <option value="پیشەیی">پیشەیی</option>
+
+                    </select>
+                    <span asp-validation-for="Student12Grade.EducationType" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Student12Grade.Graduation" class="control-label"></label>
+                    <select asp-for="Student12Grade.Graduation" name="Student12Grade.Graduation" class="form-control YearSelect" required>
+                        @for (int year = 1990; year <= DateTime.Now.Year; year++)
+                        {
+                            int yr = year + 1;
+                            <option value="@year" class="YearOptions">@year - @yr </option>
+                        }
+                    </select>
+                    <span asp-validation-for="Student12Grade.Graduation" class="text-danger"></span>
+                </div>
+
+
+                <div class="form-group">
+                    <label asp-for="Student12Grade.TotalMark" class="control-label"></label>
+                    <input asp-for="Student12Grade.TotalMark" name="Student12Grade.TotalMark" class="form-control" />
+                    <span asp-validation-for="Student12Grade.TotalMark" class="text-danger"></span>
+                </div>
+
+            </div>
+        </div>
+        <div id="tab5" class="pivot-content">
+            <h6>زانیاری جۆری وەرگرتن</h6>
+            <div class="form-container">
+
+                <div class="form-group">
+                    <label asp-for="StudentDepartmentInfo.Department" class="control-label"></label>
+                    <select asp-for="StudentDepartmentInfo.Department" name="StudentDepartmentInfo.Department" class="form-control">
+                        <option value="پەرستاری">پەرستاری</option>
+                        <option value="تەکنیکی ڤێتەرنەری">تەکنیکی ڤێتەرنەری</option>
+                        <option value="تەکنەلۆجیای زانیاری">تەکنەلۆجیای زانیاری</option>
+                        <option value="ڕوو پێوی">ڕوو پێوی</option>
+                        <option value="کارگێری کا">کارگێری کار</option>
+                        <option value="پرۆژە کشتوکاڵیەکان">پرۆژە کشتوکاڵیەکان</option>
+
+                    </select>
+                    <span asp-validation-for="StudentDepartmentInfo.Department" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="StudentDepartmentInfo.AcceptanceType" class="control-label"></label>
+                    <select asp-for="StudentDepartmentInfo.AcceptanceType" name="StudentDepartmentInfo.AcceptanceType" class="form-control" id="AcceptanceTypeSelect">
+                        <option value="زانکۆلاین">زانکۆلاین</option>
+                        <option value="پاراڵیل">پاراڵیل</option>
+                        <option value="ئێواران">ئێواران</option>
+
+                    </select>
+                    <span asp-validation-for="StudentDepartmentInfo.AcceptanceType" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="StudentDepartmentInfo.UniversityCommandNo" class="control-label"></label>
+                    <input asp-for="StudentDepartmentInfo.UniversityCommandNo" name="StudentDepartmentInfo.UniversityCommandNo" class="form-control" />
+                    <span asp-validation-for="StudentDepartmentInfo.UniversityCommandNo" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="StudentDepartmentInfo.AdministratorCommandNo" class="control-label"></label>
+                    <input asp-for="StudentDepartmentInfo.AdministratorCommandNo" name="StudentDepartmentInfo.AdministratorCommandNo" class="form-control" />
+                    <span asp-validation-for="StudentDepartmentInfo.AdministratorCommandNo" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="StudentDepartmentInfo.Seq" class="control-label"></label>
+                    <input asp-for="StudentDepartmentInfo.Seq" name="StudentDepartmentInfo.Seq" class="form-control" />
+                    <span asp-validation-for="StudentDepartmentInfo.Seq" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="StudentDepartmentInfo.Stage" class="control-label"></label>
+                    <select asp-for="StudentDepartmentInfo.Stage" name="StudentDepartmentInfo.Stage" class="form-control YearSelect" required>
+                        <option value="1" class="YearOptions">1</option>
+                        <option value="2" class="YearOptions">2</option>
+                    </select>
+                    <span asp-validation-for="StudentDepartmentInfo.Stage" class="text-danger"></span>
+                </div>
+
+
+                <div class="FormCol">
+                    <label asp-for="StudentDepartmentInfo.startinYear" class="control-label"></label>
+                    <select asp-for="StudentDepartmentInfo.startinYear" name="StudentDepartmentInfo.startinYear" class="form-control " required>
+                        @for (int year = 1990; year <= DateTime.Now.Year; year++)
+                        {
+                            int yr = year + 1;
+                            <option value="@year" class="YearOptions">@year - @yr </option>
+                        }
+                    </select>
+                    <span asp-validation-for="StudentDepartmentInfo.startinYear" class="text-danger"></span>
+                </div>
+                <div class="FormCol">
+                    <label asp-for="StudentDepartmentInfo.Graduate" class="control-label"></label>
+                    <select asp-for="StudentDepartmentInfo.Graduate" name="StudentDepartmentInfo.Graduate" class="form-control " required>
+                        <option value="0" class="YearOptions">بەردەوامە</option>
+                        @for (int year = 1991; year <= DateTime.Now.Year; year++)
+                        {
+                            int yr = year + 1;
+                            <option value="@year" class="YearOptions">@year - @yr </option>
+                        }
+                    </select>
+                    <span asp-validation-for="StudentDepartmentInfo.Graduate" class="text-danger"></span>
+                </div>
+
+                <div class="form-group ColumnForm" id="InvoiceDiv">
+                    <div class="form-group">
+                        <label asp-for="InvoiceInfo.InvoiceId" class="control-label"></label>
+                        <input asp-for="InvoiceInfo.InvoiceId" name="InvoiceInfo.InvoiceId" class="form-control" />
+                        <span asp-validation-for="InvoiceInfo.InvoiceId" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="InvoiceInfo.InvoiceDate" class="control-label"></label>
+                        <input asp-for="InvoiceInfo.InvoiceDate" name="InvoiceInfo.InvoiceDate" class="form-control" />
+                        <span asp-validation-for="InvoiceInfo.InvoiceDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="InvoiceInfo.Amount" class="control-label"></label>
+                        <input asp-for="InvoiceInfo.Amount" name="InvoiceInfo.Amount" class="form-control" />
+                        <span asp-validation-for="InvoiceInfo.Amount" class="text-danger"></span>
+                    </div>
+                </div>
+             
+
+            </div>
+            <div class="FormsActionbttn">
+                <button type="submit" id="SaveStudentBttn" class="SaveStudentBttn bttnDisabled  pbttn" disabled>تۆمار کردن</button>
+                <button id="PrintStudentBttn" class="PrintBttn bttnDisabled  pbttn" disabled>پرنت کردن</button>
+            </div>
+        </div>
+    </form>
+
+    <button id="nextTabButton" class="btn btn-primary">دواتر</button>
 </div>
 
-<button id="nextTabButton" class="btn btn-primary">دواتر</button>
-    
-    <script src="./js/StudentInsertJS.js"></script>
-
-@*
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-}
- *@
+<script src="./js/StudentInsertJS.js"></script>

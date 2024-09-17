@@ -8,11 +8,10 @@ namespace GPU.Models
         [DisplayName("ئاید")]
         public int Id { get; set; }
 
-        [DisplayName("ناو")]
+        [DisplayName("ناوی خوێندکار")]
         public  string Name { get; set; }
 
-        [Range(16, 60, ErrorMessage = "تەمەن پێویستە لە نێوان ١٦ بۆ ٦٠ ساڵ بێت")]
-        [DisplayName("تەمەن")]
+        [DisplayName("ساڵی لەدایک بوون")]
         public  int Age { get; set; }
 
         [DisplayName("ڕەگەز")]
@@ -25,7 +24,7 @@ namespace GPU.Models
         [DisplayName("جۆری خوێن")]
         public  string BloodGroup { get; set; }
 
-        [DisplayName("ئاین")]
+        [DisplayName("داوا کراو نیە")]
         public  string Religion { get; set; }
 
         [DisplayName("ژ. پێناسی کەسی")]

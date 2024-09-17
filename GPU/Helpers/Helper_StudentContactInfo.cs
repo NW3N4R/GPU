@@ -20,7 +20,7 @@ namespace GPU.Helpers
                         var contact = new StudentContactInfo
                         {
                             Id = rd.GetInt32(0),
-                            StudentPhone = rd.GetString(1),
+                            Phone = rd.GetString(1),
                             StudentEmail = rd.GetString(2),
                             Province = rd.GetString(3),
                             City = rd.GetString(4),

@@ -30,12 +30,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=PersonalStudents}/{action=Index}/{id?}");
 await DbConnectionHelper.OpenConnection();
 
-//await Helper_PersonalStudent.GetStudents();
-//await Helper_Student12Grade.GetGrades();
-//await Helper_StudentContactInfo.GetContacts();
-//await Helper_StudentParentInfo.GetParent();
-//await Helper_StudentDepartmentInfo.GetDepartments();
 app.Run();

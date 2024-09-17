@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using GPU.Data;
 using GPU.Models;
 using GPU.Helpers;
+using System.Diagnostics;
+using System.Collections.ObjectModel;
 
 namespace GPU.Controllers
 {
@@ -20,13 +22,12 @@ namespace GPU.Controllers
             _context = context;
         }
 
-        // GET: PersonalStudents
+        private ObservableCollection<StudentTableModel> _students = new ObservableCollection<StudentTableModel>();
         public async Task<IActionResult> Index()
         {
-            return View(await Helper_PersonalStudent.GetStudents());
+            return View(await Helper_StudentTable.GetStudent());
         }
 
-        // GET: PersonalStudents/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -44,35 +45,56 @@ namespace GPU.Controllers
             return View(personalStudent);
         }
 
-        // GET: PersonalStudents/Create
         public IActionResult Create()
         {
             var personalStudent = new PersonalStudent();
             var studentContactInfo = new StudentContactInfo();
+            var studentParentInfo = new StudentParentInfo();
+            var student12Grade = new Student12Grade();
+            var studentDepartmentInfo = new StudentDepartmentInfo();
+            var invoice = new InvoiceInfo();
 
-            var viewModel = (PersonalStudent: personalStudent, StudentContactInfo: studentContactInfo);
+            var viewModel = (PersonalStudent: personalStudent, StudentContactInfo: studentContactInfo,
+                             StudentParentInfo: studentParentInfo, Student12Grade: student12Grade,
+                             StudentDepartmentInfo: studentDepartmentInfo,InvoiceInfo:invoice);
 
             return View(viewModel);
         }
 
-        // POST: PersonalStudents/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind(Prefix = "PersonalStudent")] PersonalStudent personalStudent, [Bind(Prefix = "StudentContactInfo")] StudentContactInfo studentContactInfo)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(personalStudent);
-                _context.Add(studentContactInfo);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
+        public async Task<IActionResult> Create(
+            [Bind(Prefix = "PersonalStudent")] PersonalStudent personalStudent,
+            [Bind(Prefix = "StudentContactInfo")] StudentContactInfo studentContactInfo,
+            [Bind(Prefix = "StudentParentInfo")] StudentParentInfo studentParentInfo,
+            [Bind(Prefix = "Student12Grade")] Student12Grade student12Grade,
+            [Bind(Prefix = "StudentDepartmentInfo")] StudentDepartmentInfo studentDepartmentInfo,
+            [Bind(Prefix = "InvoiceInfo")] InvoiceInfo invoice
 
-            var viewModel = (PersonalStudent: personalStudent, StudentContactInfo: studentContactInfo);
-            return View(viewModel);
+            )
+        {
+            _context.Add(personalStudent);
+
+            //if (ModelState.IsValid)
+            //{
+            //    _context.Add(studentContactInfo);
+            //    _context.Add(studentParentInfo);
+            //    _context.Add(student12Grade);
+            //    _context.Add(studentDepartmentInfo);
+            //    await _context.SaveChangesAsync();
+            //    return RedirectToAction("Success");
+            //}
+
+            await Helper_PersonalStudent.Create(personalStudent, studentContactInfo, studentParentInfo, student12Grade, studentDepartmentInfo,invoice);
+
+
+            return View((personalStudent, studentContactInfo, studentParentInfo, student12Grade, studentDepartmentInfo,invoice));
         }
+
+
+
+
+
 
 
         // GET: PersonalStudents/Edit/5

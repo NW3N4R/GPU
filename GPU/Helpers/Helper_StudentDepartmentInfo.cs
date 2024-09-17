@@ -26,6 +26,8 @@ namespace GPU.Helpers
                             AdministratorCommandNo = rd.GetString(3),
                             Seq = rd.GetInt32(4),
                             SID = rd.GetInt32(5),
+                            Department = rd.GetString(6),
+                            startinYear = rd.GetString(7)
 
                         };
                         _departmen.Add(model);

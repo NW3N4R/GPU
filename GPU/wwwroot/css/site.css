@@ -24,3 +24,37 @@ body {
     direction: rtl;
     font-family: 'Droid Arabic Kufi';
 }
+
+body, html {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 8vh; 
+    border:none;
+}
+
+navCenter {
+    display: flex;
+    justify-content: center;
+}
+.NavTitle {
+    width: 50%;
+}
+.NavLogo {
+    margin-right:5%;
+    height: auto;
+    width: 3%;
+}
+.NavCenter {
+    margin-right: -8%;
+}
+
+.finner {
+margin-top:1%;
+}
