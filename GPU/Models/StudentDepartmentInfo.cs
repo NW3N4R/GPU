@@ -32,6 +32,8 @@ namespace GPU.Models
         [DisplayName("قۆناغ")]
         public int Stage { get; set; }
 
+        [DisplayName("خوێندکاری بەشە ناوخۆییە؟")]
+        public string ResidenceType { get; set; }
         public int SID { get; set; }
     }
 }

@@ -22,7 +22,7 @@ namespace GPU.Models
         public string Graduation { get; set; }
 
         [DisplayName("کۆنمرە")]
-        public int TotalMark { get; set; }
+        public string TotalMark { get; set; }
         public int SID { get; set; }
     }
 }

@@ -1,0 +1,65 @@
+﻿body {
+}
+header {
+    background-color: #008374;
+    color:white;
+}
+nav {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    width: 100%; 
+}
+
+
+.nav-nav {
+    list-style: none; /* Remove default list dots */
+    padding-left: 0; /* Remove default padding */
+}
+
+.nav-li {
+    display: inline-block; /* Align items horizontally */
+}
+
+.nav-link {
+    color: white !important; /* Make text color white */
+    text-decoration: none; /* Remove underline from links */
+    padding: 10px 15px; /* Optional: Add padding for better spacing */
+}
+
+.nav-link:hover {
+    color: #f0f0f0; /* Optional: Change color on hover for better UX */
+}
+
+
+
+
+.NavCenter {
+    padding-top:10px;
+    text-align: center; 
+}
+.NavLogo {
+    width: 10%;
+}
+
+.NavRight {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    box-sizing: border-box;
+}
+
+.NavLeft {
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    box-sizing: border-box;
+}
+
+.NavLeft a{
+    color:white;
+    text-decoration:none;
+}
+.BottomSpan{
+    font-size:13px;
+    margin-top:-2vh;
+}

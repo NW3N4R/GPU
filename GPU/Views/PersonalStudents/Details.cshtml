@@ -1,73 +1,105 @@
-﻿@model GPU.Models.PersonalStudent
+﻿@model (GPU.Models.PersonalStudent PersonalStudent, GPU.Models.StudentContactInfo StudentContactInfo,GPU.Models.StudentParentInfo StudentParentInfo,GPU.Models.Student12Grade Student12Grade,GPU.Models.StudentDepartmentInfo StudentDepartmentInfo,InvoiceInfo InvoiceInfo,StudentSupport studentSupport)
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "پرۆفایلی خوێندکار";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
 
-<div>
-    <h4>PersonalStudent</h4>
-    <hr />
-    <dl class="row">
+<div class="ParentAll">
+@*     <div class="item">
+        <div class="PropInfo">
+            <h5>
+                @Html.DisplayNameFor(model => model.PersonalStudent.Name)
+
+            </h5>
+            <h4>
+                @Html.DisplayFor(model => model.PersonalStudent.Name)
+            </h4>
+          
+            
+        </div>
+        <div class="PropInfo">
+            <h4>
+                @Html.DisplayFor(model => model.PersonalStudent.Age)
+            </h4>
+            <h5>
+                @Html.DisplayNameFor(model => model.PersonalStudent.Age)
+
+            </h5>
+         
+        </div>
+    </div> *@
+@*     <div class="item">Item 2</div>
+    <div class="item">Item 3</div>
+    <div class="item">Item 4</div>
+    <div class="item">Item 5</div>
+    <div class="item">Item 6</div>
+    <div class="item">Item 7</div>
+    <div class="item">Item 8</div> *@
+</div>
+
+
+
+@* <h4>پرۆفایلی خوێندکار</h4> *@
+@*
+ <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(model => model.PersonalStudent.Name)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
+            @Html.DisplayFor(model => model.PersonalStudent.Name)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Age)
+            @Html.DisplayNameFor(model => model.PersonalStudent.Age)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Age)
+            @Html.DisplayFor(model => model.PersonalStudent.Age)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Sex)
+            @Html.DisplayNameFor(model => model.PersonalStudent.Sex)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Sex)
+            @Html.DisplayFor(model => model.PersonalStudent.Sex)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MartialStatus)
+            @Html.DisplayNameFor(model => model.PersonalStudent.MartialStatus)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MartialStatus)
+            @Html.DisplayFor(model => model.PersonalStudent.MartialStatus)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.BloodGroup)
+            @Html.DisplayNameFor(model => model.PersonalStudent.BloodGroup)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.BloodGroup)
+            @Html.DisplayFor(model => model.PersonalStudent.BloodGroup)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Religion)
+            @Html.DisplayNameFor(model => model.PersonalStudent.Religion)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Religion)
+            @Html.DisplayFor(model => model.PersonalStudent.Religion)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdentityNo)
+            @Html.DisplayNameFor(model => model.PersonalStudent.IdentityNo)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdentityNo)
+            @Html.DisplayFor(model => model.PersonalStudent.IdentityNo)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Nationality)
+            @Html.DisplayNameFor(model => model.PersonalStudent.Nationality)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Nationality)
+            @Html.DisplayFor(model => model.PersonalStudent.Nationality)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.RationingFormNo)
+            @Html.DisplayNameFor(model => model.PersonalStudent.RationingFormNo)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.RationingFormNo)
+            @Html.DisplayFor(model => model.PersonalStudent.RationingFormNo)
         </dd>
     </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+</div>  *@
+@* <div>
+    @* <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Index">گەڕانەوە</a> *@

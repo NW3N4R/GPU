@@ -16,33 +16,61 @@ namespace GPU.Controllers
     public class PersonalStudentsController : Controller
     {
         private readonly GPUContext _context;
+        StudentTableModel stu;
 
         public PersonalStudentsController(GPUContext context)
         {
             _context = context;
         }
-
-        private ObservableCollection<StudentTableModel> _students = new ObservableCollection<StudentTableModel>();
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string txt = "MyCode")
         {
-            return View(await Helper_StudentTable.GetStudent());
+            //await Helper_StudentTable.GetStudent("getstudents");
+
+            //if (txt != "MyCode")
+            //{
+            //    if (Helper_StudentTable._stu.Where(x => x.Name.Contains(txt)) as StudentTableModel != null)
+            //    {
+            //        stu = (StudentTableModel)Helper_StudentTable._stu.Where(x => x.id != -1);
+            //    }
+            //}
+            //else
+            //{
+            //    stu = Helper_StudentTable._stu.Where(x => x.id != -1) as StudentTableModel;
+            //}
+
+            return View(await Helper_StudentTable.GetStudent("getstudents"));
         }
+
 
         public async Task<IActionResult> Details(int? id)
         {
+
+            await Helper_PersonalStudent.GetStudents();
             if (id == null)
             {
                 return NotFound();
             }
 
-            var personalStudent = await _context.PersonalStudent
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var personalStudent = Helper_PersonalStudent._Student.FirstOrDefault(x => x.Id == id) as PersonalStudent;
+            var studentContactInfo = Helper_StudentContactInfo._Contacts.Where(x => x.SID == id) as StudentContactInfo;
+            var studentParentInfo = Helper_StudentParentInfo._Parent.Where(x => x.SID == id) as StudentParentInfo;
+            var student12Grade = Helper_Student12Grade._Grade.Where(x => x.SID == id) as Student12Grade;
+            var studentDepartmentInfo = Helper_StudentDepartmentInfo._departmen.Where(x => x.SID == id) as StudentDepartmentInfo;
+            var support = Helper_Invoice._Invoices.Where(x => x.SID == id) as StudentSupport;
+            var invoice = Helper_StudentSupport._Supports.Where(x => x.sid == id) as InvoiceInfo;
+
+            var viewModel = (PersonalStudent: personalStudent, StudentContactInfo: studentContactInfo,
+                             StudentParentInfo: studentParentInfo, Student12Grade: student12Grade,
+                             StudentDepartmentInfo: studentDepartmentInfo, InvoiceInfo: invoice,
+                             StudentSupport: support);
+
+
             if (personalStudent == null)
             {
-                return NotFound();
+                return NotFound("404");
             }
 
-            return View(personalStudent);
+            return View(viewModel);
         }
 
         public IActionResult Create()
@@ -53,10 +81,12 @@ namespace GPU.Controllers
             var student12Grade = new Student12Grade();
             var studentDepartmentInfo = new StudentDepartmentInfo();
             var invoice = new InvoiceInfo();
+            var studentSupport = new StudentSupport();
 
             var viewModel = (PersonalStudent: personalStudent, StudentContactInfo: studentContactInfo,
                              StudentParentInfo: studentParentInfo, Student12Grade: student12Grade,
-                             StudentDepartmentInfo: studentDepartmentInfo,InvoiceInfo:invoice);
+                             StudentDepartmentInfo: studentDepartmentInfo, InvoiceInfo: invoice,
+                             StudentSupport: studentSupport);
 
             return View(viewModel);
         }
@@ -69,26 +99,17 @@ namespace GPU.Controllers
             [Bind(Prefix = "StudentParentInfo")] StudentParentInfo studentParentInfo,
             [Bind(Prefix = "Student12Grade")] Student12Grade student12Grade,
             [Bind(Prefix = "StudentDepartmentInfo")] StudentDepartmentInfo studentDepartmentInfo,
-            [Bind(Prefix = "InvoiceInfo")] InvoiceInfo invoice
-
-            )
+            [Bind(Prefix = "InvoiceInfo")] InvoiceInfo invoice,
+            [Bind(Prefix = "studentSupport")] StudentSupport studentSupport)
         {
             _context.Add(personalStudent);
 
-            //if (ModelState.IsValid)
-            //{
-            //    _context.Add(studentContactInfo);
-            //    _context.Add(studentParentInfo);
-            //    _context.Add(student12Grade);
-            //    _context.Add(studentDepartmentInfo);
-            //    await _context.SaveChangesAsync();
-            //    return RedirectToAction("Success");
-            //}
-
-            await Helper_PersonalStudent.Create(personalStudent, studentContactInfo, studentParentInfo, student12Grade, studentDepartmentInfo,invoice);
 
 
-            return View((personalStudent, studentContactInfo, studentParentInfo, student12Grade, studentDepartmentInfo,invoice));
+            await Helper_PersonalStudent.Create(personalStudent, studentContactInfo, studentParentInfo, student12Grade, studentDepartmentInfo, invoice, studentSupport);
+
+
+            return View((personalStudent, studentContactInfo, studentParentInfo, student12Grade, studentDepartmentInfo, invoice, studentSupport));
         }
 
 
@@ -113,9 +134,7 @@ namespace GPU.Controllers
             return View(personalStudent);
         }
 
-        // POST: PersonalStudents/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Age,Sex,MartialStatus,BloodGroup,Religion,IdentityNo,Nationality,RationingFormNo")] PersonalStudent personalStudent)

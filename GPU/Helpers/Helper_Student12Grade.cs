@@ -25,7 +25,7 @@ namespace GPU.Helpers
                             EducationAdministrator = rd.GetString(3),
                             EducationType = rd.GetString(4),
                             Graduation = rd.GetString(5),
-                            TotalMark = rd.GetInt32(6),
+                            TotalMark = rd.GetString(6),
                             SID = rd.GetInt32(7),
                         };
                         _Grade.Add(grade);

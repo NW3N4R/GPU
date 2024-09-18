@@ -5,6 +5,7 @@
     const divTab3 = document.getElementById('tab3');
     const divTab4 = document.getElementById('tab4');
     const divTab5 = document.getElementById('tab5');
+    const divTab6 = document.getElementById('tab6');
     const Savebttn = document.getElementById('SaveStudentBttn');
     const printbttn = document.getElementById('PrintStudentBttn');
 
@@ -40,17 +41,19 @@
             .every(input => input.value.trim() !== '');
     }
 
+
     function handleTabValidity() {
         const isTab1Valid = checkDivValidity(divTab1); // Check entire form for tab1
         const isTab2Valid = checkDivValidity(divTab2);
         const isTab3Valid = checkDivValidity(divTab3);
         const isTab4Valid = checkDivValidity(divTab4);
-        const isTab5Valid = checkDivValidity(divTab5);
+        const isTab6Valid = checkDivValidity(divTab6);
 
         const tab2 = document.getElementById('pivot-tab2');
         const tab3 = document.getElementById('pivot-tab3');
         const tab4 = document.getElementById('pivot-tab4');
         const tab5 = document.getElementById('pivot-tab5');
+        const tab6 = document.getElementById('pivot-tab6');
 
         if (isTab1Valid) {
             tab2.classList.remove('disabled');
@@ -59,6 +62,7 @@
             tab3.classList.add('disabled');
             tab4.classList.add('disabled');
             tab5.classList.add('disabled');
+            tab6.classList.add('disabled');
             return;
         }
 
@@ -68,6 +72,7 @@
             tab3.classList.add('disabled');
             tab4.classList.add('disabled');
             tab5.classList.add('disabled');
+            tab6.classList.add('disabled');
             return;
         }
 
@@ -76,16 +81,18 @@
         } else {
             tab4.classList.add('disabled');
             tab5.classList.add('disabled');
+            tab6.classList.add('disabled');
             return;
         }
 
         if (isTab4Valid) {
             tab5.classList.remove('disabled');
+            tab6.classList.remove('disabled');
         } else {
-            tab5.classList.add('disabled');
+            tab6.classList.add('disabled');
         }
 
-        if (isTab5Valid) {
+        if (isTab6Valid) {
             Savebttn.classList.add('saveenabled');
             printbttn.classList.add('printEnabled');
             printbttn.disabled = false;
@@ -124,23 +131,64 @@
     });
 });
 
+function acceptance() {
 
+    const selectElement = document.getElementById('AcceptanceTypeSelect');
+    // Add an event listener for the 'change' event
+    selectElement.addEventListener('change', function () {
+        var txt = document.getElementById('txtinvoiceid');
+
+
+        txt.value = '-';
+        checkDivValidity(divTab6);
+
+        alert("Selected value: " + selectElement.value);
+        handleTabValidity();
+    });
+}
 
 
 
 $(document).ready(function () {
+
     $('#AcceptanceTypeSelect').on('change', function () {
+
+        var txt = document.getElementById('txtinvoiceid');
+        const a = document.getElementById('ARequired');
+        const b = document.getElementById('BRequired');
+        const Savebttn = document.getElementById('SaveStudentBttn');
+        const printbttn = document.getElementById('PrintStudentBttn');
+
+
         var selectedValue = $(this).val();
         if (selectedValue === 'زانکۆلاین') {
             $('#InvoiceDiv').hide();
+            txt.value = '-';
+            if (a.value !== '' && b.value !== '') {
+                Savebttn.classList.add('saveenabled');
+                printbttn.classList.add('printEnabled');
+                printbttn.disabled = false;
+                Savebttn.disabled = false;
+            }
+            else {
+                Savebttn.classList.remove('saveenabled');
+                printbttn.classList.remove('printEnabled');
+                Savebttn.disabled = true;
+                printbttn.disabled = true;
+            }
+
+            //alert("Selected value: " + selectedValue);
+
         } else {
             $('#InvoiceDiv').show();
         }
+
     });
 
     // Initially check the selected value on page load
     if ($('#AcceptanceTypeSelect').val() === 'زانکۆلاین') {
         $('#InvoiceDiv').hide();
     }
-});
 
+
+});

@@ -1,0 +1,38 @@
+﻿body {
+}
+.ParentAll {
+    min-width: 200vh;
+    min-height: 75vh;
+    margin-top: 1%;
+    background-color: #B4DBD6;
+    border-radius: 10px;
+    max-width: 200vh;
+    max-height: 75vh;
+    padding: 10px;
+    padding-inline: 30px;
+    display: grid;
+ /*   grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 1fr);*/
+    gap: 10px;
+}
+.PropInfo{
+    display:flex;
+    flex-direction:row; 
+    gap:10px;
+}
+.ParentAll h4 {
+    color: black;
+    margin-bottom:10%;
+    font-weight:100;
+}
+.item {
+  
+    padding: 10px;
+    display: flex;
+    flex-direction:column;
+    gap: -50px;
+    text-align:center;
+}
+.PropRowTow{
+    margin-top:-7%;
+}

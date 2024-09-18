@@ -1,53 +1,31 @@
-﻿.form-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px; 
-}
-
-.form-group {
-    width:100%;
-    flex: 1 1 calc(50% - 15px); 
-    margin-bottom: 15px; 
-}
-
- /*   .form-group label,
-    .form-group input,
-    .form-group span {
-        width: 100%;
-    }
-
-    .form-group:last-child {
-        flex: 1 1 100%; 
-        margin-bottom: 0; 
-    }*/
-
-body {
-    margin: 0;
-    padding: 0px;
-    font-family: 'Droid Arabic Kufi';
-}
-
+﻿
 .pivot-container {
     width: 100%;
     margin: 0 auto;
-    min-height: 500px;
+    width:140vh;
+    margin-block:10px;
+    max-height:80vh;
 }
 
 .pivot-nav {
     display: flex;
-    background-color: #f1f1f1;
-    border-bottom: 1px solid #ddd;
+    background-color: #E9E9E9;
+    border-bottom: none;
+    border-radius:10px;
+    
+    padding-block:5px;
 }
 
 .pivot-tab {
-    padding: 10px 20px;
+    margin-inline:30px;
+    padding:5px;
     text-decoration: none;
-    color: #333;
+    color: #008374;
     display: block;
     cursor: pointer;
-    background-color: #ddd;
-    border: 1px solid #ccc;
-    border-bottom: none;
+    background-color: transparent;
+    border: none;
+    border-radius:10px;
 }
 
     .pivot-tab:hover {
@@ -59,43 +37,64 @@ body {
         pointer-events: none;
     }
 
+
+
+    .pivot-tab:hover {
+        background-color: #bbb;
+    }
+
+    .pivot-tab.disabled {
+        opacity: 0.5;
+        pointer-events: none;
+    }
 .pivot-content {
     display: none;
-    min-width: 800px;
-    padding: 20px;
-    min-height: 500px;
+    min-width: 80vh;
+    padding-inline: 20px;
+    padding-bottom: 20px;
+    padding-top: 10px;
+    margin-top: 10px;
+    background-color: #B4DBD6;
+    border-radius: 10px;
+    min-height: 65vh;
 }
 
     .pivot-content.active {
         display: block;
     }
 
-.pivot-nav {
+
+.form-container {
     display: flex;
-    background-color: #f1f1f1;
-    border-bottom: 1px solid #ddd;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+.form-control {
+    border: solid rgba(0, 131, 116, 0.5) 2px;
+    padding: 4px;
+    border-radius: 5px;
+    font-family:'Droid Arabic Kufi';
+    font-size:16px;
 }
 
-.pivot-tab {
-    padding: 10px 20px;
-    text-decoration: none;
-    color: #333;
-    display: block;
-    cursor: pointer;
-    background-color: #ddd;
-    border: 1px solid #ccc;
-    border-bottom: none;
+
+
+.formcol {
+    display: flex;
+    flex: 1 1 calc(50% - 15px);
+    gap: 15px;
+    min-width: 30vh;
 }
-
-    .pivot-tab:hover {
-        background-color: #bbb;
-    }
-
-    .pivot-tab.disabled {
-        opacity: 0.5;
-        pointer-events: none;
-    }
-
+.control-label {
+    font-size: 14px;
+}
+.form-group {
+    width: 100%;
+    flex: 1 1 calc(50% - 15px);
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0px;
+}
 
 .Title {
     margin-top: 10px;
@@ -113,8 +112,10 @@ body {
     background-color: transparent;
     color: black;
     border: none;
-    margin-top:1%;
+    margin-top: 1%;
 }
+
+  
 
 .saveenabled {
     background-color: dodgerblue;
@@ -128,14 +129,11 @@ body {
     
 .pbttn {
     padding-inline: 20px;
-    padding-block: 3px;
     border: none;
     border-radius: 5px;
+    font-family:'Droid Arabic Kufi'
 }
 
-.footer {
-    text-align: center;
-}
 
 .Header {
     font-weight: 100;
@@ -148,6 +146,8 @@ body {
 
 .FormsActionbttn {
     margin-top: 1%;
+
+
 }
 
 .ColumnForm {
@@ -155,25 +155,52 @@ body {
     display: flex;
     width: 100%;
     gap: 15px;
+
+
 }
 #InvoiceDiv {
-    display: grid; /* Use grid layout for the container */
-    grid-template-columns: repeat(3, 1fr); /* Create three equal columns */
-    gap: 15px; /* Space between columns */
-    width: 100%; /* Ensure the container takes the full width of its parent */
+    display: grid; 
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 15px;  
+    width: 100%;  
 }
 
     #InvoiceDiv .form-group {
-        margin: 0; /* Remove margin to avoid extra spacing issues */
+        margin: 0;
     }
-.FormCol {
+/*.FormCol {
     flex: 1 1 calc(50% - 15px); 
-
-}
+}*/
 .drop{
     height:60px;
 }
 .fwidthElement {
     width: 100%;
-    box-sizing: border-box; /* Includes padding and border in the element's total width */
+    box-sizing: border-box; 
 }
+.icon {
+    font-family: 'Segoe MDL2 Assets';
+    font-size: 24px;
+    transition: 0.2s;
+}
+.icon:hover{
+    transition:0.1s;
+    font-size:26px;
+    color:#008374;
+}
+
+
+
+
+/* Custom button */
+.custom-file-upload {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: transparent;
+    cursor: pointer;
+    border-radius: 5px;
+    border:solid dodgerblue 1px;
+    width:20%;
+    vertical-align:baseline;
+}
+

@@ -18,18 +18,24 @@ html {
   position: relative;
   min-height: 100%;
 }
-
+@font-face {
+    font-family: 'Droid Arabic Kufi';
+    src: url('../fonts/DroidKufi-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
 body {
     margin-bottom: 60px;
     direction: rtl;
-    font-family: 'Droid Arabic Kufi';
+    font-family: 'Droid Arabic Kufi', sans-serif;
+    font-weight: normal;
+    font-style: normal;
 }
 
 body, html {
     height: 100%;
     margin: 0;
-    display: flex;
-    flex-direction: column;
+    overflow:hidden;
 }
 footer {
     position: absolute;
@@ -39,22 +45,20 @@ footer {
     border:none;
 }
 
-navCenter {
-    display: flex;
-    justify-content: center;
-}
-.NavTitle {
-    width: 50%;
-}
-.NavLogo {
-    margin-right:5%;
-    height: auto;
-    width: 3%;
-}
-.NavCenter {
-    margin-right: -8%;
-}
-
 .finner {
 margin-top:1%;
 }
+.footer {
+    text-align: center;
+}
+
+
+.container {
+    max-width: 180vh; /* Max width (though typically max-width is set in pixels or percentage) */
+    margin: 0 auto; /* Center the container itself horizontally */
+    display: flex; /* Use Flexbox */
+    align-items: center; /* Center children vertically */
+    justify-content: center; /* Center children horizontally */
+    width: 100%;
+}
+

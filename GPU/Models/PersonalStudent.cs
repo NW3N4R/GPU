@@ -24,7 +24,7 @@ namespace GPU.Models
         [DisplayName("جۆری خوێن")]
         public  string BloodGroup { get; set; }
 
-        [DisplayName("داوا کراو نیە")]
+        [DisplayName("ئاین")]
         public  string Religion { get; set; }
 
         [DisplayName("ژ. پێناسی کەسی")]

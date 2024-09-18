@@ -18,6 +18,11 @@ namespace GPU.Models
         [DisplayName("ئیمەیڵ")]
         public string Email { get; set; }
 
+        [DisplayName("ژمارەی کارتی زانیاری")]
+        public string CardInfoNo { get; set; }
+
+        [DisplayName("شوێنی دەرچوونی کارتی زانیاری")]
+        public string CardInfoIssuePlace { get; set; }
         public int SID { get; set; }
     }
 }

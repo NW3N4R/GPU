@@ -24,6 +24,11 @@ namespace GPU.Models
         [DisplayName("ساڵی دەستپێك")]
         public string StartingYear { get; set; }
 
+        public bool isFirst { get; set; }
+
+
+        public bool isLast { get; set; }
+
 
     }
 }

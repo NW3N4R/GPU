@@ -39,14 +39,15 @@ namespace GPU.Helpers
         }
 
         public static async Task Create(PersonalStudent student, StudentContactInfo contact,
-                                        StudentParentInfo parent, Student12Grade school, StudentDepartmentInfo department,InvoiceInfo Invoice )
+                                        StudentParentInfo parent, Student12Grade school,
+                                        StudentDepartmentInfo department,InvoiceInfo Invoice,
+                                        StudentSupport support)
         {
             using (SqlCommand cmd = new SqlCommand("", DbConnectionHelper.con))
             {
                 if (department.Graduate == "0")
                 {
                     cmd.CommandText = "InsertStudent";
-
                 }
                 else
                 {
@@ -86,6 +87,9 @@ namespace GPU.Helpers
                 cmd.Parameters.AddWithValue("@Seq", department.Seq);
                 cmd.Parameters.AddWithValue("@StartingYear", department.startinYear);
                 cmd.Parameters.AddWithValue("@stage", department.Stage);
+                cmd.Parameters.AddWithValue("@CardInfoNo", parent.CardInfoNo);
+                cmd.Parameters.AddWithValue("@CardInfoIssuePlace", parent.CardInfoIssuePlace);
+                cmd.Parameters.AddWithValue("@ResidenceType", department.ResidenceType);
 
                 if(!department.AcceptanceType.Contains("زانکۆلاین"))
                 {
@@ -93,7 +97,13 @@ namespace GPU.Helpers
                     cmd.Parameters.AddWithValue("@invoiceDate", Invoice.InvoiceDate);
                     cmd.Parameters.AddWithValue("@Amount", Invoice.Amount);
                 }
-
+                if(support.office != "" || !string.IsNullOrEmpty(support.office) || !string.IsNullOrWhiteSpace(support.office))
+                {
+                    cmd.Parameters.AddWithValue("@office", support.office);
+                    cmd.Parameters.AddWithValue("@writtenNo", support.WrittenNo);
+                    cmd.Parameters.AddWithValue("@writtenDate", support.WrittenDate);
+                    cmd.Parameters.AddWithValue("@SupAmount", support.Amount);
+                }
                 // Execute the command
                 await cmd.ExecuteNonQueryAsync();
             }

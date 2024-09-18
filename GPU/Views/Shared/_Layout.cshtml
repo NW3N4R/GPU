@@ -3,46 +3,57 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - GPU</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/StudentInsertStyle.css" asp-append-version="true" />
+    <title>@ViewData["Title"]</title>
+    @* <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" /> *@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/DetailsCss.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/NavCss.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/StudentInsertStyle.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/StudentTableStyle.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/GPU/styles.css" asp-append-version="true" />
+    <link rel="icon" type="image/x-icon" href="~/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="~/logo.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="~/logo.png">
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <div class="NavTitle">
-                    <a class="navbar-brand" asp-area="" asp-controller="PersonalStudents" asp-action="Index">
-                        <img src="~/logo.png" class="NavLogo" />
-                        پەیمانگای تەکنیکی کەلار
-                    </a>
-                </div>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between NavCenter">
-                    <ul class="navbar-nav flex-grow-1">
+        <nav >
+            <div class="NavRight">
+                <ul class="nav-nav flex-grow-1">
 
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="PersonalStudents" asp-action="Index">خوێندکاران</a>
-                        </li>
+                    <li class="nav-li">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="PersonalStudents" asp-action="Index">خوێندکاران</a>
+                    </li>
+                    <li class="nav-li">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Archive" asp-action="Index">ئەرشیف</a>
+                    </li>
+                    <li class="nav-li">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="PersonalStudents" asp-action="Create">تۆمارکردن</a>
+                    </li>
+                </ul>
 
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="PersonalStudents" asp-action="Create">تۆمارکردن</a>
-                        </li>
-                    </ul>
-                </div>
+            </div>
+            <div class="NavCenter">
+                <a class="ActionSide" asp-area="" asp-controller="PersonalStudents" asp-action="Index">
+                    <img src="~/logo.png" class="NavLogo" />
+                </a>
+            </div>
+            <div class="NavLeft">
+                <a class="ActionSide" asp-area="" asp-controller="PersonalStudents" asp-action="Index">
+                    <div class="NavTxt">
+                        <p>پەیمانگای تەکنیکی کەلار</p>
+                        <p class="BottomSpan">هۆبـەی تـۆمـارگـا</p>
+                    </div>
+                </a>
+
             </div>
         </nav>
     </header>
     <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
     </div>
 
     <footer class="border-top footer text-muted">
@@ -56,6 +67,27 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/StudentInsertJS.js" asp-append-version="true"></script>
+    <script src="~/js/HomeJS.js asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+
+
+@*   <div class="NavTitle">
+
+     <div class="">
+            <div class="NavTitle">
+            <a class="navbar-brand" asp-area="" asp-controller="PersonalStudents" asp-action="Index">
+            <img src="~/logo.png" class="NavLogo" />
+            پەیمانگای تەکنیکی کەلار
+            </a>
+            </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between NavCenter">
+
+            </div>
+            </div> *@
+
