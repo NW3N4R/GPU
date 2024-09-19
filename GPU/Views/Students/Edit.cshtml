@@ -1,10 +1,12 @@
 ﻿@model (GPU.Models.PersonalStudent PersonalStudent, GPU.Models.StudentContactInfo StudentContactInfo,GPU.Models.StudentParentInfo StudentParentInfo,GPU.Models.Student12Grade Student12Grade,GPU.Models.StudentDepartmentInfo StudentDepartmentInfo,InvoiceInfo InvoiceInfo,StudentSupport studentSupport)
 @{
-    ViewData["Title"] = "تۆمارکردن";
+    ViewData["Title"] = "نوێ کردنەوەی خوێندکار";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="content">
+
     <div class="pivot-container">
+
         <nav class="pivot-nav">
             <a href="#tab1" class="pivot-tab active" id="pivot-tab1">زانیاری کەسی</a>
             <a href="#tab2" class="pivot-tab active" id="pivot-tab2">زانیاری پەیوەندیکردن</a>
@@ -15,8 +17,13 @@
         </nav>
 
         <form method="post" asp-action="Create" id="infoForm">
+
             <div id="tab1" class="pivot-content">
-                <h3>زانیاری کەسی</h3>
+                <div class="TitleHeader">
+                    <h3>زانیاری کەسی</h3>
+                    <h3 class="ActionTitle">نوێ کردنەوە</h3>
+                </div>
+
                 <div class="form-container">
                     <div class="form-group">
                         <label asp-for="PersonalStudent.Name" class="control-label"></label>
@@ -119,8 +126,10 @@
                 </div>
             </div>
             <div id="tab2" class="pivot-content">
-                <h3>زانیاری پەیوەندیکردن</h3>
-
+                <div class="TitleHeader">
+                    <h3>زانیاری پەیوەندیکردن</h3>
+                    <h3 class="ActionTitle">نوێ کردنەوە</h3>
+                </div>
                 <div class="form-container">
 
                     <div class="form-group">
@@ -169,7 +178,10 @@
                 </div>
             </div>
             <div id="tab3" class="pivot-content">
-                <h3>زانیاری بەخێوکەر</h3>
+                <div class="TitleHeader">
+                    <h3>زانیاری بەخێوکەر</h3>
+                    <h3 class="ActionTitle">نوێ کردنەوە</h3>
+                </div>
                 <div class="form-container">
 
                     <div class="form-group">
@@ -213,7 +225,10 @@
                 </div>
             </div>
             <div id="tab4" class="pivot-content">
-                <h3>زانیاری پۆلی ١٢</h3>
+                <div class="TitleHeader">
+                    <h3>زانیاری پۆلی ١٢</h3>
+                    <h3 class="ActionTitle">نوێ کردنەوە</h3>
+                </div>
                 <div class="form-container">
                     <div class="form-group">
                         <label asp-for="Student12Grade.ExamNo" class="control-label"></label>
@@ -276,7 +291,10 @@
                 </div>
             </div>
             <div id="tab5" class="pivot-content">
-                <h3>گەرەنتیدەر</h3>
+                <div class="TitleHeader">
+                    <h3>گەرەنتیدەر</h3>
+                    <h3 class="ActionTitle">نوێ کردنەوە</h3>
+                </div>
                 <div class="form-container">
                     <div class="form-group">
                         <label asp-for="studentSupport.office" class="control-label"></label>
@@ -285,7 +303,7 @@
                     </div>
                     <div class="form-group">
                         <label asp-for="studentSupport.WrittenNo" class="control-label"></label>
-                        <input asp-for="studentSupport.WrittenNo"  name="studentSupport.WrittenNo" class="form-control" />
+                        <input asp-for="studentSupport.WrittenNo" name="studentSupport.WrittenNo" class="form-control" />
                         <span asp-validation-for="studentSupport.WrittenNo" class="text-danger"></span>
                     </div>
                     <div class="form-group">
@@ -305,7 +323,10 @@
                 </div>
             </div>
             <div id="tab6" class="pivot-content">
-                <h3>زانیاری جۆری وەرگرتن</h3>
+                <div class="TitleHeader">
+                    <h3>زانیاری جۆری وەرگرتن</h3>
+                    <h3 class="ActionTitle">نوێ کردنەوە</h3>
+                </div>
                 <div class="form-container">
 
                     <div class="form-group">
@@ -424,21 +445,14 @@
                             dateInput.value = today;
                         });
 
-
-
-
-
                     </script>
-
-
 
                 </div>
                 <div class="FormsActionbttn">
-                    <button type="submit" id="SaveStudentBttn" class="SaveStudentBttn bttnDisabled  pbttn" disabled>تۆمار کردن</button>
+                    <button type="submit" id="SaveStudentBttn" class="SaveStudentBttn bttnDisabled  pbttn" disabled>نوێ کردنەوە</button>
                     <button id="PrintStudentBttn" class="PrintBttn bttnDisabled  pbttn" disabled>پرنت کردن</button>
                 </div>
             </div>
-
 
         </form>
         <button id="nextTabButton" class="btn btn-primary">

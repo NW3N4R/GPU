@@ -7,22 +7,22 @@ namespace GPU.Models
 
         public int id { get; set; }
         [DisplayName("ناو")]
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         [DisplayName("بەش")]
-        public string department { get; set; }
+        public string? department { get; set; }
 
         [DisplayName("جۆری خوێندن")]
-        public string Acceptance { get; set; }
+        public string? Acceptance { get; set; }
 
         [DisplayName("قۆناغ")]
         public int Stage { get; set; }
         
         [DisplayName("ساڵی دەرچوون")]
-        public string Graduate { get; set; }
+        public string? Graduate { get; set; }
 
         [DisplayName("ساڵی دەستپێك")]
-        public string StartingYear { get; set; }
+        public string? StartingYear { get; set; }
 
         public bool isFirst { get; set; }
 

@@ -92,7 +92,7 @@ namespace GPU.Helpers
                 cmd.Parameters.AddWithValue("@CardInfoIssuePlace", parent.CardInfoIssuePlace);
                 cmd.Parameters.AddWithValue("@ResidenceType", department.ResidenceType);
 
-                if(!department.AcceptanceType.Contains("زانکۆلاین"))
+                if(!string.IsNullOrEmpty(department.AcceptanceType) && !department.AcceptanceType.Contains("زانکۆلاین"))
                 {
                     cmd.Parameters.AddWithValue("@invoiceId", Invoice.InvoiceId);
                     cmd.Parameters.AddWithValue("@invoiceDate", Invoice.InvoiceDate);

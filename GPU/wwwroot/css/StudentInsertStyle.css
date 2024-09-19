@@ -63,11 +63,18 @@
         display: block;
     }
 
+.TitleHeader {
+    min-width: 80vh;
+}
 
+.ActionTitle {
+    text-align: center;
+}
 .form-container {
     display: flex;
     flex-wrap: wrap;
     gap: 15px;
+    margin-top:5%;
 }
 .form-control {
     border: solid rgba(0, 131, 116, 0.5) 2px;
@@ -203,4 +210,3 @@
     width:20%;
     vertical-align:baseline;
 }
-

@@ -17,29 +17,29 @@
 </head>
 <body>
     <header>
-        <nav >
+        <nav>
             <div class="NavRight">
                 <ul class="nav-nav flex-grow-1">
 
                     <li class="nav-li">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="PersonalStudents" asp-action="Index">خوێندکاران</a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Students" asp-action="Index">خوێندکاران</a>
                     </li>
                     <li class="nav-li">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Archive" asp-action="Index">ئەرشیف</a>
                     </li>
                     <li class="nav-li">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="PersonalStudents" asp-action="Create">تۆمارکردن</a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Students" asp-action="Create">تۆمارکردن</a>
                     </li>
                 </ul>
 
             </div>
             <div class="NavCenter">
-                <a class="ActionSide" asp-area="" asp-controller="PersonalStudents" asp-action="Index">
+                <a class="ActionSide" asp-area="" asp-controller="Students" asp-action="Index">
                     <img src="~/logo.png" class="NavLogo" />
                 </a>
             </div>
             <div class="NavLeft">
-                <a class="ActionSide" asp-area="" asp-controller="PersonalStudents" asp-action="Index">
+                <a class="ActionSide" asp-area="" asp-controller="Students" asp-action="Index">
                     <div class="NavTxt">
                         <p>پەیمانگای تەکنیکی کەلار</p>
                         <p class="BottomSpan">هۆبـەی تـۆمـارگـا</p>
@@ -51,9 +51,9 @@
     </header>
     <div class="container">
 
-            <main role="main" class="pb-3">
-                @RenderBody()
-            </main>
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
     </div>
 
     <footer class="border-top footer text-muted">
@@ -63,11 +63,11 @@
         </div>
 
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js" asp-append-version="true"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="~/js/StudentInsertJS.js" asp-append-version="true"></script>
-    <script src="~/js/HomeJS.js asp-append-version="true"></script>
+    @* <script src="~/js/StudentInsertJS.js" asp-append-version="true"> </script> *@
+    <script src="~/js/HomeJS.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

@@ -9,31 +9,31 @@ namespace GPU.Models
 
         [DisplayName("بەشی وەرگیراو")]
 
-        public string Department { get; set; }
+        public string? Department { get; set; }
 
         [DisplayName("جۆری وەرگرتن")]
-        public string AcceptanceType { get; set; }
+        public string? AcceptanceType { get; set; }
 
         [DisplayName("ژ. فەرمانی زانکۆیی")]
-        public string UniversityCommandNo { get; set; }
+        public string? UniversityCommandNo { get; set; }
         
         [DisplayName("ژ.فەرمانی کارگێڕی")]
-        public string AdministratorCommandNo { get; set; }
+        public string? AdministratorCommandNo { get; set; }
 
         [DisplayName("زنجیرە")]
         public int Seq { get; set; }
 
         [DisplayName("ساڵی تەواوکردن")]
-        public string Graduate { get; set; }
+        public string? Graduate { get; set; }
         
         [DisplayName("ساڵی دەستپێک")]
-        public string startinYear { get; set; }
+        public string? startinYear { get; set; }
 
         [DisplayName("قۆناغ")]
         public int Stage { get; set; }
 
         [DisplayName("خوێندکاری بەشە ناوخۆییە؟")]
-        public string ResidenceType { get; set; }
+        public string?   ResidenceType { get; set; }
         public int SID { get; set; }
     }
 }

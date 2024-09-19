@@ -17,25 +17,27 @@ namespace GPU.Controllers
         [HttpPost]
         public IActionResult Search([Bind(Prefix = "table")] StudentTableModel model)
         {
+            int z = 0, y = 0;
+
             if (!string.IsNullOrEmpty(model.Name) && model.department != "0" && model.StartingYear != "0")
             {
                 // search by all
-                students = Helper_StudentTable._stu.Where(x => x.Name.Contains(model.Name) && x.department == model.department && x.StartingYear == model.StartingYear);
+                students = Helper_StudentTable._stu.Where(x => !string.IsNullOrEmpty(x.Name) ? x.Name.Contains(model.Name) : z == y && x.department == model.department && x.StartingYear == model.StartingYear);
             }
             else if (!string.IsNullOrEmpty(model.Name) && model.department != "0" && model.StartingYear == "0")
             {
                 //search by name and dep
-                students = Helper_StudentTable._stu.Where(x => x.Name.Contains(model.Name) && x.department == model.department);
+                students = Helper_StudentTable._stu.Where(x => !string.IsNullOrEmpty(x.Name) ? x.Name.Contains(model.Name) : z == y && x.department == model.department);
             }
             else if (!string.IsNullOrEmpty(model.Name) && model.department == "0" && model.StartingYear != "0")
             {
                 //search by name and starting year
-                students = Helper_StudentTable._stu.Where(x => x.Name.Contains(model.Name) && x.StartingYear == model.StartingYear);
+                students = Helper_StudentTable._stu.Where(x => !string.IsNullOrEmpty(x.Name) ? x.Name.Contains(model.Name) : z == y && x.StartingYear == model.StartingYear);
             }
             else if (!string.IsNullOrEmpty(model.Name) && model.department == "0" && model.StartingYear == "0")
             {
                 // search by name
-                students = Helper_StudentTable._stu.Where(x => x.Name.Contains(model.Name));
+                students = Helper_StudentTable._stu.Where(x => !string.IsNullOrEmpty(x.Name) ? x.Name.Contains(model.Name) : z == y);
             }
             else if (string.IsNullOrEmpty(model.Name) && model.department != "0" && model.StartingYear != "0")
             {
@@ -82,18 +84,16 @@ namespace GPU.Controllers
             var invoice = Helper_Invoice._Invoices.FirstOrDefault(x => x.SID == id) as InvoiceInfo;
             var support = Helper_StudentSupport._Supports.FirstOrDefault(x => x.sid == id) as StudentSupport;
 
-            var viewModel = (PersonalStudent: personalStudent, StudentContactInfo: studentContactInfo,
-                             StudentParentInfo: studentParentInfo, Student12Grade: student12Grade,
-                             StudentDepartmentInfo: studentDepartmentInfo, InvoiceInfo: invoice,
-                             StudentSupport: support);
-
 
             if (personalStudent == null)
             {
-                return NotFound("404");
+                return View("~/Views/Students/NotFound.cshtml");
             }
 
-            return View(viewModel);
+            return View((PersonalStudent: personalStudent, StudentContactInfo: studentContactInfo,
+                             StudentParentInfo: studentParentInfo, Student12Grade: student12Grade,
+                             StudentDepartmentInfo: studentDepartmentInfo, InvoiceInfo: invoice,
+                             StudentSupport: support));
         }
     }
 }

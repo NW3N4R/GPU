@@ -8,7 +8,6 @@ namespace GPU.Helpers
     public class Helper_StudentTable
     {
         public static ObservableCollection<StudentTableModel> _stu = new ObservableCollection<StudentTableModel>();
-        public static ObservableCollection<SearchModel>_search = new ObservableCollection<SearchModel>();
 
         public static async Task<ObservableCollection<StudentTableModel>> GetStudent(string cmdtxt)
         {
