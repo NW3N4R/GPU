@@ -111,4 +111,17 @@ tbody td {
 .SearchCM{
 min-width:30vh;
 }
-   
+.SearchBttn{
+    background-color:transparent;
+    border:none;
+    color:#008374;
+    font-family:'Droid Arabic Kufi';
+
+}
+
+.button-container {
+    display: flex;
+    margin-top:1.5%;
+    justify-content: center; 
+    align-items: center;
+}

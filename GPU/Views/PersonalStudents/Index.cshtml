@@ -1,4 +1,4 @@
-﻿@model IEnumerable<GPU.Models.StudentTableModel>
+﻿@model (IEnumerable<GPU.Models.StudentTableModel> student,GPU.Models.StudentTableModel table)
 
 @{
     ViewData["Title"] = "لیستی خوێندکاران";
@@ -6,79 +6,61 @@
 }
 
 <h4 class="Title">لیستی خوێندکاران</h4>
-<div class="SearchBar">
-
-    <div class="SearchChild SearchBox">
-        <label for="StudentName" class="inLabel">ناوی خوێندکار</label>
-        <input placeholder="ناوی خوێندکار" oninput="TxtChanged(this.value)" class="SearchTXT" name="StudentName" />
-
-        <script>
-            function TxtChanged(value) {
-                // Use fetch to call the MVC action
-                fetch('/PersonalStudents/Search', {
-                    method: 'POST', // or 'GET' based on your action
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '@Html.AntiForgeryToken()' // Use this if CSRF protection is enabled
-                    },
-                    body: JSON.stringify({ txt: value }) // Sending the input value as data
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        // Handle the response (optional)
-                        console.log(data);
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                    });
-            }
-        </script>
+<form method="post" asp-controller="PersonalStudents" asp-action="Search">
+    <div class="SearchBar">
+        <div class="SearchChild SearchBox">
+            <label asp-for="table.Name"  class="control-label"></label>
+            <input asp-for="table.Name" name="table.Name" placeholder="ناوی خوێندکار" oninput="TxtChanged(this.value)" class="SearchTXT" />
+        </div>
+        <div class="SearchChild SearchBox">
+            <label for="StudentName" class="inLabel">گەڕان لە نێو بەشەکان</label>
+            <select asp-for="table.department" name="table.department" class="SearchTXT SearchCM">
+                <option value="0">گشتی</option>
+                <option value="پەرستاری">پەرستاری</option>
+                <option value="تەکنیکی ڤێتەرنەری">تەکنیکی ڤێتەرنەری</option>
+                <option value="تەکنەلۆجیای زانیاری">تەکنەلۆجیای زانیاری</option>
+                <option value="ڕوو پێوی">ڕوو پێوی</option>
+                <option value="کارگێری کا">کارگێری کار</option>
+                <option value="پرۆژە کشتوکاڵیەکان">پرۆژە کشتوکاڵیەکان</option>
+            </select>
+        </div>
+        <div class="SearchChild SearchBox">
+            <label asp-for="table.StartingYear" class="inLabel">گەڕان بە ساڵی دەستپێک</label>
+            <select asp-for="table.StartingYear" name="table.StartingYear" class="SearchCM SearchTXT">
+                <option value="0">گشتی</option>
+                @for (int year = 1990; year <= DateTime.Now.Year; year++)
+                {
+                    int yr = year + 1;
+                    <option value="@yr" class="YearOptions">@year - @yr </option>
+                }
+            </select>
+        </div>
+        <div class="button-container">
+            <button type="submit"  class="SearchBttn">گەڕان</button>
+        </div>
     </div>
-    <div class="SearchChild SearchBox">
-        <label for="StudentName" class="inLabel">گەڕان لە نێو بەشەکان</label>
-        <select class="SearchTXT SearchCM">
-            <option value="0">گشتی</option>
-            <option value="پەرستاری">پەرستاری</option>
-            <option value="تەکنیکی ڤێتەرنەری">تەکنیکی ڤێتەرنەری</option>
-            <option value="تەکنەلۆجیای زانیاری">تەکنەلۆجیای زانیاری</option>
-            <option value="ڕوو پێوی">ڕوو پێوی</option>
-            <option value="کارگێری کا">کارگێری کار</option>
-            <option value="پرۆژە کشتوکاڵیەکان">پرۆژە کشتوکاڵیەکان</option>
-        </select>
-    </div>
-    <div class="SearchChild SearchBox">
-        <label for="Graduate" class="inLabel">گەڕان بە ساڵی دەستپێک</label>
-        <select name="Graduate" class="SearchCM SearchTXT">
-            <option value="0">گشتی</option>
-            @for (int year = 1990; year <= DateTime.Now.Year; year++)
-            {
-                int yr = year + 1;
-                <option value="@yr" class="YearOptions">@year - @yr </option>
-            }
-        </select>
 
+</form>
 
-    </div>
-</div>
 <div class="content">
     <div class="table-container">
         <table>
             <thead>
                 <tr>
                     <th class="Header FirstColumn">
-                        @Html.DisplayNameFor(model => model.Name)
+                        @Html.DisplayNameFor(model => model.table.Name)
                     </th>
                     <th class="Header">
-                        @Html.DisplayNameFor(model => model.Acceptance)
+                        @Html.DisplayNameFor(model => model.table.Acceptance)
                     </th>
                     <th class="Header">
-                        @Html.DisplayNameFor(model => model.department)
+                        @Html.DisplayNameFor(model => model.table.department)
                     </th>
                     <th class="Header">
-                        @Html.DisplayNameFor(model => model.StartingYear)
+                        @Html.DisplayNameFor(model => model.table.StartingYear)
                     </th>
                     <th class="Header">
-                        @Html.DisplayNameFor(model => model.Stage)
+                        @Html.DisplayNameFor(model => model.table.Stage)
                     </th>
 
                     <th class="Header lastColumn"></th>
@@ -94,9 +76,7 @@
                     <td class="r1" />
                     <td class="r1" />
                 </tr>
-                @foreach (var item in Model)
-                {
-
+                @foreach (var item in Model.student){
                     <tr>
                         <td class="DgColumn @(item.isFirst ? "RowOneColumnOne" :"")">
                             @Html.DisplayFor(modelItem => item.Name)

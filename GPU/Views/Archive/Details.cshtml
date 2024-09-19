@@ -1,7 +1,7 @@
 ﻿@model (GPU.Models.PersonalStudent PersonalStudent, GPU.Models.StudentContactInfo StudentContactInfo,GPU.Models.StudentParentInfo StudentParentInfo,GPU.Models.Student12Grade Student12Grade,GPU.Models.StudentDepartmentInfo StudentDepartmentInfo,InvoiceInfo InvoiceInfo,StudentSupport studentSupport)
 
 @{
-    ViewData["Title"] = "پرۆفایلی خوێندکار";
+    ViewData["Title"] = "پرۆفایلی خوێندکار - ئەرشیف";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -273,6 +273,8 @@
             <h3>گەرەنتیدەر</h3>
             <hr />
             <div class="topProp">
+               
+                    
                 <h5>
                     @Html.DisplayNameFor(model => model.studentSupport.office)
                 </h5>
@@ -305,6 +307,7 @@
                     @Html.DisplayFor(model => model.studentSupport.Amount)
                 </h4>
             </div>
+
         </div>
         <div class="Col">
             <h3>زانیاری جۆری وەرگرتن</h3>

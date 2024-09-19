@@ -6,16 +6,16 @@ namespace GPU.Models
     {
         public int Id { get; set; }
 
-        [DisplayName("ناو")]
+        [DisplayName("ناوی بەخێوکەر")]
         public string Name { get; set; }
 
-        [DisplayName("پیشە")]
+        [DisplayName("پیشەی بەخێوکەر")]
         public string Profession { get; set; }
 
-        [DisplayName("ژمارە تەلەفوون")]
+        [DisplayName("ژمارە تەلەفوونی بەخێوکەر")]
         public string Phone { get; set; }
 
-        [DisplayName("ئیمەیڵ")]
+        [DisplayName("ئیمەیڵی بەخێوکەر")]
         public string Email { get; set; }
 
         [DisplayName("ژمارەی کارتی زانیاری")]

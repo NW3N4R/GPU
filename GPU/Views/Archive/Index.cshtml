@@ -1,11 +1,46 @@
-﻿@model IEnumerable<GPU.Models.StudentTableModel>
+﻿@model (IEnumerable<GPU.Models.StudentTableModel> student,GPU.Models.StudentTableModel table)
 
 @{
-    ViewData["Title"] = "لیستی خوێندکاران";
+    ViewData["Title"] = "لیستی ئەرشیفی خوێندکاران";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h4 class="Title">لیستی ئەرشیف</h4>
+<form method="post" asp-controller="Archive" asp-action="Search">
+    <div class="SearchBar">
+        <div class="SearchChild SearchBox">
+            <label asp-for="table.Name" class="control-label"></label>
+            <input asp-for="table.Name" name="table.Name" placeholder="ناوی خوێندکار" oninput="TxtChanged(this.value)" class="SearchTXT" />
+        </div>
+        <div class="SearchChild SearchBox">
+            <label for="StudentName" class="inLabel">گەڕان لە نێو بەشەکان</label>
+            <select asp-for="table.department" name="table.department" class="SearchTXT SearchCM">
+                <option value="0">گشتی</option>
+                <option value="پەرستاری">پەرستاری</option>
+                <option value="تەکنیکی ڤێتەرنەری">تەکنیکی ڤێتەرنەری</option>
+                <option value="تەکنەلۆجیای زانیاری">تەکنەلۆجیای زانیاری</option>
+                <option value="ڕوو پێوی">ڕوو پێوی</option>
+                <option value="کارگێری کا">کارگێری کار</option>
+                <option value="پرۆژە کشتوکاڵیەکان">پرۆژە کشتوکاڵیەکان</option>
+            </select>
+        </div>
+        <div class="SearchChild SearchBox">
+            <label asp-for="table.StartingYear" class="inLabel">گەڕان بە ساڵی دەستپێک</label>
+            <select asp-for="table.StartingYear" name="table.StartingYear" class="SearchCM SearchTXT">
+                <option value="0">گشتی</option>
+                @for (int year = 1990; year <= DateTime.Now.Year; year++)
+                {
+                    int yr = year + 1;
+                    <option value="@yr" class="YearOptions">@year - @yr </option>
+                }
+            </select>
+        </div>
+        <div class="button-container">
+            <button type="submit" class="SearchBttn">گەڕان</button>
+        </div>
+    </div>
+
+</form>
 <div class="content">
 
     <div class="table-container">
@@ -13,19 +48,19 @@
             <thead>
                 <tr>
                     <th class="Header FirstColumn">
-                        @Html.DisplayNameFor(model => model.Name)
+                        @Html.DisplayNameFor(model => model.table.Name)
                     </th>
                     <th class="Header">
-                        @Html.DisplayNameFor(model => model.Acceptance)
+                        @Html.DisplayNameFor(model => model.table.Acceptance)
                     </th>
                     <th class="Header">
-                        @Html.DisplayNameFor(model => model.department)
+                        @Html.DisplayNameFor(model => model.table.department)
                     </th>
                     <th class="Header">
-                        @Html.DisplayNameFor(model => model.StartingYear)
+                        @Html.DisplayNameFor(model => model.table.StartingYear)
                     </th>
                     <th class="Header">
-                        @Html.DisplayNameFor(model => model.Stage)
+                        @Html.DisplayNameFor(model => model.table.Stage)
                     </th>
 
                     <th class="Header lastColumn"></th>
@@ -41,7 +76,7 @@
                     <td class="r1" />
                     <td class="r1" />
                 </tr>
-                @foreach (var item in Model)
+                @foreach (var item in Model.student)
                 {
 
                     <tr>

@@ -280,12 +280,12 @@
                 <div class="form-container">
                     <div class="form-group">
                         <label asp-for="studentSupport.office" class="control-label"></label>
-                        <input asp-for="studentSupport.office" name="studentSupport.office" class="form-control" />
+                        <input asp-for="studentSupport.office" maxlength="30" placeholder="نموونە:- ب.پ گەرمیان" name="studentSupport.office" class="form-control" />
                         <span asp-validation-for="studentSupport.office" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="studentSupport.WrittenNo" class="control-label"></label>
-                        <input asp-for="studentSupport.WrittenNo" name="studentSupport.WrittenNo" class="form-control" />
+                        <input asp-for="studentSupport.WrittenNo"  name="studentSupport.WrittenNo" class="form-control" />
                         <span asp-validation-for="studentSupport.WrittenNo" class="text-danger"></span>
                     </div>
                     <div class="form-group">

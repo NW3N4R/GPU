@@ -15,7 +15,18 @@ namespace GPU.Helpers
         {
 
             await con.CloseAsync();
+        }
 
+        public static async Task LoadAll(string ar)
+        {
+            await Task.WhenAll(
+               Helper_PersonalStudent.GetStudents($"select * from {ar}PersonalStudent"),
+               Helper_StudentParentInfo.GetParent($"select * from {ar}StudentParentInfo"),
+               Helper_StudentContactInfo.GetContacts($"select * from {ar}StudentContactInfo"),
+               Helper_Student12Grade.GetGrades($"select * from {ar}Student12Grade"),
+               Helper_StudentSupport.GetSupports($"select * from {ar}studentsupport"),
+               Helper_StudentDepartmentInfo.GetDepartments($"select * from {ar}StudentDepartmentInfo")
+               );
         }
     }
 }

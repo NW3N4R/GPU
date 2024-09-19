@@ -7,10 +7,11 @@ namespace GPU.Helpers
     public class Helper_StudentSupport
     {
         public static ObservableCollection<StudentSupport> _Supports = new ObservableCollection<StudentSupport>();
-        public static async Task GetSupports()
+        public static async Task GetSupports(string queary)
         {
-            using (SqlCommand cmd = new SqlCommand("select* from studentsupport", DbConnectionHelper.con))
+            using (SqlCommand cmd = new SqlCommand("", DbConnectionHelper.con))
             {
+                cmd.CommandText = queary;
                 using (SqlDataReader rd = await cmd.ExecuteReaderAsync())
                 {
                     _Supports.Clear();

@@ -8,10 +8,11 @@ namespace GPU.Helpers
     public class Helper_StudentContactInfo
     {
         public static ObservableCollection<StudentContactInfo> _Contacts = new ObservableCollection<StudentContactInfo>();
-        public static async Task<ObservableCollection<StudentContactInfo>> GetContacts()
+        public static async Task<ObservableCollection<StudentContactInfo>> GetContacts(string queary)
         {
-            using (SqlCommand cmd = new SqlCommand("select * from StudentContactInfo", DbConnectionHelper.con))
+            using (SqlCommand cmd = new SqlCommand("", DbConnectionHelper.con))
             {
+                cmd.CommandText = queary;
                 using (SqlDataReader rd = await cmd.ExecuteReaderAsync())
                 {
                     _Contacts.Clear();

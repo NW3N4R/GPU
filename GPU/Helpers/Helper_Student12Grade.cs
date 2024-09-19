@@ -8,10 +8,11 @@ namespace GPU.Helpers
     {
         public static ObservableCollection<Student12Grade> _Grade = new ObservableCollection<Student12Grade>();
 
-        public static async Task GetGrades()
+        public static async Task GetGrades(string queary)
         {
-            using (SqlCommand cmd = new SqlCommand("select * from Student12Grade", DbConnectionHelper.con))
+            using (SqlCommand cmd = new SqlCommand("", DbConnectionHelper.con))
             {
+                cmd.CommandText = queary;
                 using (SqlDataReader rd = await cmd.ExecuteReaderAsync())
                 {
                     _Grade.Clear();
