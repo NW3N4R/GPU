@@ -26,7 +26,7 @@ namespace GPU.Controllers
         [HttpPost]
         public IActionResult Search([Bind(Prefix = "table")] StudentTableModel model)
         {
-            int z= 0, y=0;  
+            int z = 0, y = 0;
             if (!string.IsNullOrEmpty(model.Name) && model.department != "0" && model.StartingYear != "0")
             {
                 // search by all
@@ -45,7 +45,7 @@ namespace GPU.Controllers
             else if (!string.IsNullOrEmpty(model.Name) && model.department == "0" && model.StartingYear == "0")
             {
                 // search by name
-                students = Helper_StudentTable._stu.Where(x => !string.IsNullOrEmpty(x.Name) ? x.Name.Contains(model.Name) : z==y);
+                students = Helper_StudentTable._stu.Where(x => !string.IsNullOrEmpty(x.Name) ? x.Name.Contains(model.Name) : z == y);
             }
             else if (string.IsNullOrEmpty(model.Name) && model.department != "0" && model.StartingYear != "0")
             {
@@ -80,20 +80,20 @@ namespace GPU.Controllers
             await DbConnectionHelper.LoadAll("");
             if (id == null)
             {
-                return View("~/Views/Students/NotFound.cshtml");
+                return View("~/Views/Students/NotFound404.cshtml");
             }
 
             var personalStudent = Helper_PersonalStudent._Student.FirstOrDefault(x => x.Id == id) as PersonalStudent;
             var studentContactInfo = Helper_StudentContactInfo._Contacts.FirstOrDefault(x => x.SID == id) as StudentContactInfo;
             var studentParentInfo = Helper_StudentParentInfo._Parent.FirstOrDefault(x => x.SID == id) as StudentParentInfo;
             var student12Grade = Helper_Student12Grade._Grade.FirstOrDefault(x => x.SID == id) as Student12Grade;
-            var studentDepartmentInfo = Helper_StudentDepartmentInfo._departmen.FirstOrDefault(x => x.SID == id) as StudentDepartmentInfo;
+            var studentDepartmentInfo = Helper_StudentDepartmentInfo._department.FirstOrDefault(x => x.SID == id) as StudentDepartmentInfo;
             var invoice = Helper_Invoice._Invoices.FirstOrDefault(x => x.SID == id) as InvoiceInfo;
             var support = Helper_StudentSupport._Supports.FirstOrDefault(x => x.sid == id) as StudentSupport;
 
             if (personalStudent == null)
             {
-                return View("~/Views/Students/NotFound.cshtml");
+                return View("~/Views/Students/NotFound404.cshtml");
             }
 
             return View((PersonalStudent: personalStudent, StudentContactInfo: studentContactInfo,
@@ -134,6 +134,8 @@ namespace GPU.Controllers
 
             await Helper_PersonalStudent.Create(personalStudent, studentContactInfo, studentParentInfo, student12Grade, studentDepartmentInfo, invoice, studentSupport);
             return View((personalStudent, studentContactInfo, studentParentInfo, student12Grade, studentDepartmentInfo, invoice, studentSupport));
+
+
         }
 
 
@@ -144,23 +146,30 @@ namespace GPU.Controllers
             var studentContactInfo = Helper_StudentContactInfo._Contacts.FirstOrDefault(x => x.SID == id) as StudentContactInfo;
             var studentParentInfo = Helper_StudentParentInfo._Parent.FirstOrDefault(x => x.SID == id) as StudentParentInfo;
             var student12Grade = Helper_Student12Grade._Grade.FirstOrDefault(x => x.SID == id) as Student12Grade;
-            var studentDepartmentInfo = Helper_StudentDepartmentInfo._departmen.FirstOrDefault(x => x.SID == id) as StudentDepartmentInfo;
-            var invoice = Helper_Invoice._Invoices.FirstOrDefault(x => x.SID == id) as InvoiceInfo;
+            var studentDepartmentInfo = Helper_StudentDepartmentInfo._department.FirstOrDefault(x => x.SID == id) as StudentDepartmentInfo;
             var studentSupport = Helper_StudentSupport._Supports.FirstOrDefault(x => x.sid == id) as StudentSupport;
 
             return View((PersonalStudent: personalStudent, StudentContactInfo: studentContactInfo,
                              StudentParentInfo: studentParentInfo, Student12Grade: student12Grade,
-                             StudentDepartmentInfo: studentDepartmentInfo, InvoiceInfo: invoice,
-                             StudentSupport: studentSupport));
+                             StudentDepartmentInfo: studentDepartmentInfo,StudentSupport: studentSupport));
 
-            //return View("~/Views/Students/NotFound.cshtml");
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [Bind("Id,Name,Age,Sex,MartialStatus,BloodGroup,Religion,IdentityNo,Nationality,RationingFormNo")] PersonalStudent personalStudent)
+        public async Task<IActionResult> Edit(
+            [Bind(Prefix = "PersonalStudent")] PersonalStudent personalStudent,
+            [Bind(Prefix = "StudentContactInfo")] StudentContactInfo studentContactInfo,
+            [Bind(Prefix = "StudentParentInfo")] StudentParentInfo studentParentInfo,
+            [Bind(Prefix = "Student12Grade")] Student12Grade student12Grade,
+            [Bind(Prefix = "StudentDepartmentInfo")] StudentDepartmentInfo studentDepartmentInfo,
+            [Bind(Prefix = "studentSupport")] StudentSupport studentSupport)
         {
-            return View("~/Views/Students/NotFound.cshtml");
+
+            Debug.WriteLine($"the edit commited for the id of {personalStudent.Id}");
+            await Helper_PersonalStudent.Update(personalStudent, studentContactInfo, studentParentInfo, student12Grade, studentDepartmentInfo, studentSupport);
+            return View((personalStudent, studentContactInfo, studentParentInfo, student12Grade, studentDepartmentInfo, studentSupport));
+
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

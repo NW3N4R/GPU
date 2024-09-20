@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace GPU.Models
@@ -6,6 +7,9 @@ namespace GPU.Models
     public class InvoiceInfo
     {
         public int id { get; set; }
+
+        [DisplayName("ناوی خوێندکار")]
+        public string Name { get; set; }
 
         [DisplayName("ژمارەی وەسڵ")]
         public string? InvoiceId { get; set; }
@@ -16,6 +20,7 @@ namespace GPU.Models
         [DisplayName("بڕ")]
         public string? Amount { get; set; }
 
+        public bool isFirst { get; set; }
         public int SID { get; set; }
     }
 }

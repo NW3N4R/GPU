@@ -35,7 +35,6 @@ namespace GPU.Helpers
                 }
             }
             _stu.First().isFirst = true;
-            _stu.First().isLast = true;
             return _stu;
         }
     }

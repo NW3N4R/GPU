@@ -8,7 +8,7 @@ namespace GPU.Helpers
 {
     public class Helper_StudentDepartmentInfo
     {
-        public static ObservableCollection<StudentDepartmentInfo> _departmen = new ObservableCollection<StudentDepartmentInfo>();
+        public static ObservableCollection<StudentDepartmentInfo> _department = new ObservableCollection<StudentDepartmentInfo>();
 
         public static async Task GetDepartments(string queary)
         {
@@ -17,7 +17,7 @@ namespace GPU.Helpers
                 cmd.CommandText = queary;
                 using (SqlDataReader rd = await cmd.ExecuteReaderAsync())
                 {
-                    _departmen.Clear();
+                    _department.Clear();
                     while (await rd.ReadAsync())
                     {
                         if (cmd.CommandText != "select * from ar_StudentDepartmentInfo")
@@ -37,7 +37,7 @@ namespace GPU.Helpers
                                 ResidenceType = rd.GetString(9)
 
                             };
-                            _departmen.Add(model);
+                            _department.Add(model);
                         }
                         else
                         {
@@ -56,7 +56,7 @@ namespace GPU.Helpers
                                 ResidenceType = rd.GetString(10)
 
                             };
-                            _departmen.Add(model);
+                            _department.Add(model);
                         }
                     }
 

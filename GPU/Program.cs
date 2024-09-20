@@ -10,10 +10,10 @@ builder.Services.AddControllersWithViews();
 var app = builder.Build();
 app.UseStatusCodePages(async context =>
 {
-    await Task.Delay(500);
+    //await Task.Delay(500);
     if (context.HttpContext.Response.StatusCode == 404)
     {
-        context.HttpContext.Response.Redirect("/Students/NotFound");
+        context.HttpContext.Response.Redirect("/Students/NotFound404");
     }
 });
 if (!app.Environment.IsDevelopment())

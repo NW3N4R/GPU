@@ -43,66 +43,66 @@
 
 
     function handleTabValidity() {
-        //const isTab1Valid = checkDivValidity(divTab1); // Check entire form for tab1
-        //const isTab2Valid = checkDivValidity(divTab2);
-        //const isTab3Valid = checkDivValidity(divTab3);
-        //const isTab4Valid = checkDivValidity(divTab4);
-        //const isTab6Valid = checkDivValidity(divTab6);
+        const isTab1Valid = checkDivValidity(divTab1); // Check entire form for tab1
+        const isTab2Valid = checkDivValidity(divTab2);
+        const isTab3Valid = checkDivValidity(divTab3);
+        const isTab4Valid = checkDivValidity(divTab4);
+        const isTab6Valid = checkDivValidity(divTab6);
 
-        //const tab2 = document.getElementById('pivot-tab2');
-        //const tab3 = document.getElementById('pivot-tab3');
-        //const tab4 = document.getElementById('pivot-tab4');
-        //const tab5 = document.getElementById('pivot-tab5');
-        //const tab6 = document.getElementById('pivot-tab6');
+        const tab2 = document.getElementById('pivot-tab2');
+        const tab3 = document.getElementById('pivot-tab3');
+        const tab4 = document.getElementById('pivot-tab4');
+        const tab5 = document.getElementById('pivot-tab5');
+        const tab6 = document.getElementById('pivot-tab6');
 
-        //if (isTab1Valid) {
-        //    tab2.classList.remove('disabled');
-        //} else {
-        //    tab2.classList.add('disabled');
-        //    tab3.classList.add('disabled');
-        //    tab4.classList.add('disabled');
-        //    tab5.classList.add('disabled');
-        //    tab6.classList.add('disabled');
-        //    return;
-        //}
+        if (isTab1Valid) {
+            tab2.classList.remove('disabled');
+        } else {
+            tab2.classList.add('disabled');
+            tab3.classList.add('disabled');
+            tab4.classList.add('disabled');
+            tab5.classList.add('disabled');
+            tab6.classList.add('disabled');
+            return;
+        }
 
-        //if (isTab2Valid) {
-        //    tab3.classList.remove('disabled');
-        //} else {
-        //    tab3.classList.add('disabled');
-        //    tab4.classList.add('disabled');
-        //    tab5.classList.add('disabled');
-        //    tab6.classList.add('disabled');
-        //    return;
-        //}
+        if (isTab2Valid) {
+            tab3.classList.remove('disabled');
+        } else {
+            tab3.classList.add('disabled');
+            tab4.classList.add('disabled');
+            tab5.classList.add('disabled');
+            tab6.classList.add('disabled');
+            return;
+        }
 
-        //if (isTab3Valid) {
-        //    tab4.classList.remove('disabled');
-        //} else {
-        //    tab4.classList.add('disabled');
-        //    tab5.classList.add('disabled');
-        //    tab6.classList.add('disabled');
-        //    return;
-        //}
+        if (isTab3Valid) {
+            tab4.classList.remove('disabled');
+        } else {
+            tab4.classList.add('disabled');
+            tab5.classList.add('disabled');
+            tab6.classList.add('disabled');
+            return;
+        }
 
-        //if (isTab4Valid) {
-        //    tab5.classList.remove('disabled');
-        //    tab6.classList.remove('disabled');
-        //} else {
-        //    tab6.classList.add('disabled');
-        //}
+        if (isTab4Valid) {
+            tab5.classList.remove('disabled');
+            tab6.classList.remove('disabled');
+        } else {
+            tab6.classList.add('disabled');
+        }
 
-        //if (isTab6Valid) {
-        //    Savebttn.classList.add('saveenabled');
-        //    printbttn.classList.add('printEnabled');
-        //    printbttn.disabled = false;
-        //    Savebttn.disabled = false;
-        //} else {
-        //    Savebttn.classList.remove('saveenabled');
-        //    printbttn.classList.remove('printEnabled');
-        //    Savebttn.disabled = true;
-        //    printbttn.disabled = true;
-        //}
+        if (isTab6Valid) {
+            Savebttn.classList.add('saveenabled');
+            printbttn.classList.add('printEnabled');
+            printbttn.disabled = false;
+            Savebttn.disabled = false;
+        } else {
+            Savebttn.classList.remove('saveenabled');
+            printbttn.classList.remove('printEnabled');
+            Savebttn.disabled = true;
+            printbttn.disabled = true;
+        }
     }
 
     form.addEventListener('input', handleTabValidity);
@@ -130,23 +130,6 @@
         updateActiveTab(currentIndex);
     });
 });
-
-function acceptance() {
-
-    const selectElement = document.getElementById('AcceptanceTypeSelect');
-    // Add an event listener for the 'change' event
-    selectElement.addEventListener('change', function () {
-        var txt = document.getElementById('txtinvoiceid');
-
-
-        txt.value = '-';
-        checkDivValidity(divTab6);
-
-        alert("Selected value: " + selectElement.value);
-        handleTabValidity();
-    });
-}
-
 
 
 $(document).ready(function () {

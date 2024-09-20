@@ -1,6 +1,9 @@
 ﻿using GPU.Helpers;
 using GPU.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.FlowAnalysis.DataFlow;
+using Microsoft.EntityFrameworkCore.Storage;
+using System.Diagnostics;
 
 namespace GPU.Controllers
 {
@@ -13,7 +16,7 @@ namespace GPU.Controllers
             await Helper_StudentTable.GetStudent("ar_getstudents");
             return View((students, new StudentTableModel()));
         }
-
+       
         [HttpPost]
         public IActionResult Search([Bind(Prefix = "table")] StudentTableModel model)
         {
@@ -67,33 +70,65 @@ namespace GPU.Controllers
             return View("Index", viewModel);
 
         }
+     
         public async Task<IActionResult> Details(int? id)
         {
 
             await DbConnectionHelper.LoadAll("ar_");
             if (id == null)
             {
-                return NotFound();
+                return View("~/Views/Students/NotFound404.cshtml");
             }
 
             var personalStudent = Helper_PersonalStudent._Student.FirstOrDefault(x => x.Id == id) as PersonalStudent;
             var studentContactInfo = Helper_StudentContactInfo._Contacts.FirstOrDefault(x => x.SID == id) as StudentContactInfo;
             var studentParentInfo = Helper_StudentParentInfo._Parent.FirstOrDefault(x => x.SID == id) as StudentParentInfo;
             var student12Grade = Helper_Student12Grade._Grade.FirstOrDefault(x => x.SID == id) as Student12Grade;
-            var studentDepartmentInfo = Helper_StudentDepartmentInfo._departmen.FirstOrDefault(x => x.SID == id) as StudentDepartmentInfo;
+            var studentDepartmentInfo = Helper_StudentDepartmentInfo._department.FirstOrDefault(x => x.SID == id) as StudentDepartmentInfo;
             var invoice = Helper_Invoice._Invoices.FirstOrDefault(x => x.SID == id) as InvoiceInfo;
             var support = Helper_StudentSupport._Supports.FirstOrDefault(x => x.sid == id) as StudentSupport;
 
 
             if (personalStudent == null)
             {
-                return View("~/Views/Students/NotFound.cshtml");
+                return View("~/Views/Students/NotFound404.cshtml");
             }
 
             return View((PersonalStudent: personalStudent, StudentContactInfo: studentContactInfo,
                              StudentParentInfo: studentParentInfo, Student12Grade: student12Grade,
                              StudentDepartmentInfo: studentDepartmentInfo, InvoiceInfo: invoice,
                              StudentSupport: support));
+        }
+        
+        public IActionResult Edit(int? id)
+        {
+            var personalStudent = Helper_PersonalStudent._Student.FirstOrDefault(x => x.Id == id) as PersonalStudent;
+            var studentContactInfo = Helper_StudentContactInfo._Contacts.FirstOrDefault(x => x.SID == id) as StudentContactInfo;
+            var studentParentInfo = Helper_StudentParentInfo._Parent.FirstOrDefault(x => x.SID == id) as StudentParentInfo;
+            var student12Grade = Helper_Student12Grade._Grade.FirstOrDefault(x => x.SID == id) as Student12Grade;
+            var studentDepartmentInfo = Helper_StudentDepartmentInfo._department.FirstOrDefault(x => x.SID == id) as StudentDepartmentInfo;
+            var studentSupport = Helper_StudentSupport._Supports.FirstOrDefault(x => x.sid == id) as StudentSupport;
+
+            return View((PersonalStudent: personalStudent, StudentContactInfo: studentContactInfo,
+                             StudentParentInfo: studentParentInfo, Student12Grade: student12Grade,
+                             StudentDepartmentInfo: studentDepartmentInfo, StudentSupport: studentSupport));
+
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(
+            [Bind(Prefix = "PersonalStudent")] PersonalStudent personalStudent,
+            [Bind(Prefix = "StudentContactInfo")] StudentContactInfo studentContactInfo,
+            [Bind(Prefix = "StudentParentInfo")] StudentParentInfo studentParentInfo,
+            [Bind(Prefix = "Student12Grade")] Student12Grade student12Grade,
+            [Bind(Prefix = "StudentDepartmentInfo")] StudentDepartmentInfo studentDepartmentInfo,
+            [Bind(Prefix = "studentSupport")] StudentSupport studentSupport)
+        {
+
+            await Helper_PersonalStudent.Ar_Update(personalStudent, studentContactInfo, studentParentInfo, student12Grade, studentDepartmentInfo, studentSupport);
+            return View((personalStudent, studentContactInfo, studentParentInfo, student12Grade, studentDepartmentInfo, studentSupport));
+
         }
     }
 }

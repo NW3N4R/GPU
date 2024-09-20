@@ -1,0 +1,66 @@
+﻿@model (GPU.Models.StudentDepartmentInfo dep,IEnumerable<GPU.Models.InvoiceInfo> invoices, GPU.Models.InvoiceInfo InvoiceModel)
+@{
+    ViewData["Title"] = "ئەرشیف - وەسڵی خوێندکار";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h4 class="Title">وەسڵی خوێندکار - @Html.DisplayFor(model => model.InvoiceModel.Name)</h4>
+<form method="post" asp-controller="Invoices" asp-action="Search">
+    <div class="SearchBar">
+        <div class="SearchChild SearchBox">
+            <label asp-for="InvoiceModel.InvoiceDate" class="control-label"></label>
+            <input asp-for="InvoiceModel.InvoiceDate" name="InvoiceModel.InvoiceDate" type="date" style="min-width:20vh;" class="SearchTXT" />
+
+        </div>
+        <div class="button-container" style="margin-top:3%;">
+            <button type="submit" class="SearchBttn" asp-action="Search" asp-route-id="@Model.dep.SID">گەڕان</button>
+        </div>
+    </div>
+
+</form>
+<div class="DivToNewInvoiceBTTN">
+    <button type="submit" class="SearchBttn NewInvoice">وەسڵی نوێ</button>
+</div>
+
+<div class="content">
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th class="Header FirstColumn">
+                        @Html.DisplayNameFor(model => model.InvoiceModel.InvoiceId)
+                    </th>
+                    <th class="Header">
+                        @Html.DisplayNameFor(model => model.InvoiceModel.InvoiceDate)
+                    </th>
+                    <th class="Header lastColumn">
+                        @Html.DisplayNameFor(model => model.InvoiceModel.Amount)
+                    </th>
+                    
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td class="r1" />
+                    <td class="r1" />
+                    <td class="r1" />
+                </tr>
+                @foreach (var item in Model.invoices)
+                {
+                    <tr>
+                        <td class="DgColumn @(item.isFirst ? "RowOneColumnOne" :"")">
+                            @Html.DisplayFor(modelItem => item.InvoiceId)
+                        </td>
+                        <td class="DgColumn">
+                            @Html.DisplayFor(modelItem => item.InvoiceDate)
+                        </td>
+                        <td class="DgColumn @(item.isFirst ? "RowOneColumnLast" :"")">
+                            @Html.DisplayFor(modelItem => item.Amount)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+

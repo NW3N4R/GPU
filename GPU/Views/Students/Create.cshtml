@@ -8,11 +8,11 @@
     <div class="pivot-container">
         <nav class="pivot-nav">
             <a href="#tab1" class="pivot-tab active" id="pivot-tab1">زانیاری کەسی</a>
-            <a href="#tab2" class="pivot-tab disabled" id="pivot-tab2">زانیاری پەیوەندیکردن</a>
-            <a href="#tab3" class="pivot-tab disabled" id="pivot-tab3">زانیاری بەخێوکەر</a>
-            <a href="#tab4" class="pivot-tab disabled" id="pivot-tab4">زانیاری پۆلی ١٢</a>
-            <a href="#tab5" class="pivot-tab disabled" id="pivot-tab5">گەرەنتیدەر</a>
-            <a href="#tab6" class="pivot-tab disabled" id="pivot-tab6">زانیاری جۆری وەرگرتن</a>
+            <a href="#tab2" class="pivot-tab active" id="pivot-tab2">زانیاری پەیوەندیکردن</a>
+            <a href="#tab3" class="pivot-tab active" id="pivot-tab3">زانیاری بەخێوکەر</a>
+            <a href="#tab4" class="pivot-tab active" id="pivot-tab4">زانیاری پۆلی ١٢</a>
+            <a href="#tab5" class="pivot-tab active" id="pivot-tab5">گەرەنتیدەر</a>
+            <a href="#tab6" class="pivot-tab active" id="pivot-tab6">زانیاری جۆری وەرگرتن</a>
         </nav>
 
         <form method="post" asp-action="Create" id="infoForm">
@@ -247,7 +247,7 @@
                             <option value="هەولێر">هەولێر</option>
                             <option value="کەرکووک">کەرکووک</option>
                             <option value="دیالە">دیالە</option>
-                            <option value="دیالە">سەڵاحەدین</option>
+                            <option value="سەڵاحەدین">سەڵاحەدین</option>
 
                         </select>
                         <span asp-validation-for="Student12Grade.EducationAdministrator" class="text-danger"></span>
@@ -266,9 +266,9 @@
                     <div class="form-group">
                         <label asp-for="Student12Grade.Graduation" class="control-label"></label>
                         <select asp-for="Student12Grade.Graduation" name="Student12Grade.Graduation" class="form-control YearSelect" required>
-                            @for (int year = 1990; year <= DateTime.Now.Year; year++)
+                            @for (int year = DateTime.Now.Year; year >= 1995; year--)
                             {
-                                int yr = year + 1;
+                                int yr = year - 1;
                                 <option value="@yr" class="YearOptions">@year - @yr </option>
                             }
                         </select>
@@ -305,7 +305,7 @@
                     </div>
                     <div class="form-group">
                         <label asp-for="studentSupport.WrittenDate" class="control-label"></label>
-                        <input asp-for="studentSupport.WrittenDate" name="studentSupport.WrittenDate" class="form-control" />
+                        <input asp-for="studentSupport.WrittenDate" type="date" id="WrittenDate" name="studentSupport.WrittenDate" class="form-control" />
                         <span asp-validation-for="studentSupport.WrittenDate" class="text-danger"></span>
                     </div>
                     <div class="form-group">
@@ -340,7 +340,7 @@
                     </div>
                     <div class="form-group">
                         <label asp-for="StudentDepartmentInfo.AcceptanceType" class="control-label"></label>
-                        <select asp-for="StudentDepartmentInfo.AcceptanceType" onchange="acceptance()" name="StudentDepartmentInfo.AcceptanceType" class="form-control" id="AcceptanceTypeSelect">
+                        <select asp-for="StudentDepartmentInfo.AcceptanceType"  name="StudentDepartmentInfo.AcceptanceType" class="form-control" id="AcceptanceTypeSelect">
                             <option value="زانکۆلاین">زانکۆلاین</option>
                             <option value="پاراڵیل">پاراڵیل</option>
                             <option value="ئێواران">ئێواران</option>
@@ -388,9 +388,9 @@
                     <div class="form-group">
                         <label asp-for="StudentDepartmentInfo.startinYear" class="control-label"></label>
                         <select asp-for="StudentDepartmentInfo.startinYear" name="StudentDepartmentInfo.startinYear" class="form-control " required>
-                            @for (int year = 1990; year <= DateTime.Now.Year; year++)
+                            @for (int year = DateTime.Now.Year; year >= 1995; year--)
                             {
-                                int yr = year + 1;
+                                int yr = year - 1;
                                 <option value="@yr" class="YearOptions">@year - @yr </option>
                             }
                         </select>
@@ -403,7 +403,7 @@
                             @for (int year = DateTime.Now.Year; year >= 1995; year--)
                             {
                                 int yr = year - 1;
-                                <option value="@yr" class="YearOptions">@year + @yr </option>
+                                <option value="@yr" class="YearOptions">@year - @yr </option>
                             }
                         </select>
                         <span asp-validation-for="StudentDepartmentInfo.Graduate" class="text-danger"></span>
@@ -429,12 +429,14 @@
                     <script>
                         document.addEventListener('DOMContentLoaded', function () {
                             const dateInput = document.getElementById('invoicedate');
+                            const writtenDate = document.getElementById('WrittenDate');
 
                             // Get today's date in YYYY-MM-DD format
                             const today = new Date().toISOString().split('T')[0];
 
                             // Set the input's value to today's date
                             dateInput.value = today;
+                            writtenDate.value = today;
                         });
 
                     </script>
@@ -451,5 +453,6 @@
         </button>
     </div>
     <script src="~/lib/jquery/dist/jquery.min.js" ></script>
-    <script src="~/js/StudentInsertJS.js" > </script>
+    <script src="~/js/StudentInsertJS.js" asp-append-version="true"> </script>
+
 </div>

@@ -25,7 +25,8 @@ namespace GPU.Helpers
                Helper_StudentContactInfo.GetContacts($"select * from {ar}StudentContactInfo"),
                Helper_Student12Grade.GetGrades($"select * from {ar}Student12Grade"),
                Helper_StudentSupport.GetSupports($"select * from {ar}studentsupport"),
-               Helper_StudentDepartmentInfo.GetDepartments($"select * from {ar}StudentDepartmentInfo")
+               Helper_StudentDepartmentInfo.GetDepartments($"select * from {ar}StudentDepartmentInfo"),
+               Helper_Invoice.GetInvoices($"select * from {ar}InvoiceInfo")
                );
         }
     }
