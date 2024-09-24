@@ -6,12 +6,12 @@ namespace GPU.Helpers
     public class Helper_PersonalStudent
     {
         public static ObservableCollection<PersonalStudent> _Student = new ObservableCollection<PersonalStudent>();
+        public static ObservableCollection<PersonalStudent> ar_Student = new ObservableCollection<PersonalStudent>();
 
-        public static async Task<ObservableCollection<PersonalStudent>> GetStudents(string queary)
+        public static async Task<ObservableCollection<PersonalStudent>> GetStudents()
         {
-            using (SqlCommand cmd = new SqlCommand("", DbConnectionHelper.con))
+            using (SqlCommand cmd = new SqlCommand("select * from PersonalStudent", DbConnectionHelper.con))
             {
-                cmd.CommandText = queary;
                 using (SqlDataReader rd = await cmd.ExecuteReaderAsync())
                 {
                     _Student.Clear();
@@ -38,7 +38,36 @@ namespace GPU.Helpers
             }
             return _Student;
         }
+        public static async Task<ObservableCollection<PersonalStudent>> ar_GetStudents()
+        {
+            using (SqlCommand cmd = new SqlCommand("select * from ar_PersonalStudent", DbConnectionHelper.con))
+            {
+                using (SqlDataReader rd = await cmd.ExecuteReaderAsync())
+                {
+                    ar_Student.Clear();
+                    while (await rd.ReadAsync())
+                    {
+                        var model = new PersonalStudent
+                        {
+                            Id = rd.GetInt32(0),
+                            Name = rd.GetString(1),
+                            Age = rd.GetInt32(2),
+                            Sex = rd.GetString(3),
+                            MartialStatus = rd.GetString(4),
+                            BloodGroup = rd.GetString(5),
+                            Religion = rd.GetString(6),
+                            IdentityNo = rd.GetString(7),
+                            Nationality = rd.GetString(8),
+                            RationingFormNo = rd.GetString(9),
 
+                        };
+
+                        ar_Student.Add(model);
+                    }
+                }
+            }
+            return ar_Student;
+        }
         public static async Task Create(PersonalStudent student, StudentContactInfo contact,
                                         StudentParentInfo parent, Student12Grade school,
                                         StudentDepartmentInfo department, InvoiceInfo Invoice,
@@ -200,7 +229,6 @@ namespace GPU.Helpers
                                 invoiceCmd.Parameters.AddWithValue("@InvoiceDate", Invoice.InvoiceDate);
                                 invoiceCmd.Parameters.AddWithValue("@Amount", Invoice.Amount);
                                 invoiceCmd.Parameters.AddWithValue("@sid", sid);
-
                                 await invoiceCmd.ExecuteNonQueryAsync();
                             }
                         }
@@ -226,7 +254,7 @@ namespace GPU.Helpers
         {
             using (SqlCommand cmd = new SqlCommand("", DbConnectionHelper.con))
             {
-                
+
                 //-- Personal Info
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@id", student.Id);

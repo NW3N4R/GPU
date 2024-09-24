@@ -2,52 +2,58 @@
 .pivot-container {
     width: 100%;
     margin: 0 auto;
-    width:140vh;
-    margin-block:10px;
-    max-height:80vh;
+    width: 140vh;
+    margin-block: 10px;
+    max-height: 80vh;
 }
 
 .pivot-nav {
     display: flex;
     background-color: #E9E9E9;
     border-bottom: none;
-    border-radius:10px;
-    
-    padding-block:5px;
+    border-radius: 10px;
+    padding-block: 5px;
 }
 
 .pivot-tab {
-    margin-inline:30px;
-    padding:5px;
+    margin-inline: 30px;
+    padding: 5px;
     text-decoration: none;
     color: #008374;
     display: block;
     cursor: pointer;
     background-color: transparent;
     border: none;
-    border-radius:10px;
+    border-radius: 10px;
 }
 
     .pivot-tab:hover {
         background-color: #bbb;
     }
 
-    .pivot-tab.disabled {
-        opacity: 0.5;
-        pointer-events: none;
-    }
+.ActiveBG {
+    background-color: #008374;
+    color: white;
+}
+
+.pivot-tab.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
 
 
 
-    .pivot-tab:hover {
-        background-color: #bbb;
-    }
+.pivot-tab:hover {
+    background-color: #bbb;
+}
 
-    .pivot-tab.disabled {
-        opacity: 0.5;
-        pointer-events: none;
-    }
+.pivot-tab.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
 .pivot-content {
+    position: relative;
     display: none;
     min-width: 80vh;
     padding-inline: 20px;
@@ -70,18 +76,20 @@
 .ActionTitle {
     text-align: center;
 }
+
 .form-container {
     display: flex;
     flex-wrap: wrap;
     gap: 15px;
-    margin-top:5%;
+    margin-top: 5%;
 }
+
 .form-control {
     border: solid rgba(0, 131, 116, 0.5) 2px;
     padding: 4px;
     border-radius: 5px;
-    font-family:'Droid Arabic Kufi';
-    font-size:16px;
+    font-family: 'Droid Arabic Kufi';
+    font-size: 16px;
 }
 
 
@@ -92,9 +100,11 @@
     gap: 15px;
     min-width: 30vh;
 }
+
 .control-label {
     font-size: 14px;
 }
+
 .form-group {
     width: 100%;
     flex: 1 1 calc(50% - 15px);
@@ -122,54 +132,58 @@
     margin-top: 1%;
 }
 
-  
 
-.saveenabled {
-    background-color: dodgerblue;
-    color: white;
-}
-.printEnabled {
-    background-color: darkgrey;
-    color: white;
+
+.FormsActionbttn {
+    display: flex;
+    justify-content: left;
+    position: absolute; /* Ensures positioning is relative to its container */
+    margin-left: 4%;
+    margin-bottom: 2%;
+    bottom: 0; /* Sticks the button to the bottom */
+    left: 0;
 }
 
-    
-.pbttn {
-    padding-inline: 20px;
+    .FormsActionbttn button:hover {
+        font-size: 16px;
+        transition: 1s;
+    }
+    .FormsActionbttn button:active {
+        font-size: 18px;
+        transition: 1s;
+    }
+.SaveStudentBttn {
+    padding-inline: 50px;
     border: none;
     border-radius: 5px;
-    font-family:'Droid Arabic Kufi'
+    font-family: 'Droid Arabic Kufi';
+    transition: 1s;
 }
 
 
-.Header {
+/*.Header {
     font-weight: 100;
     text-align: center;
 }
 
 .DgColumn {
     text-align: center;
-}
-
-.FormsActionbttn {
-    margin-top: 1%;
+}*/
 
 
-}
 
 .ColumnForm {
-    flex-wrap:wrap;
+    flex-wrap: wrap;
     display: flex;
     width: 100%;
     gap: 15px;
-
-
 }
+
 #InvoiceDiv {
-    display: grid; 
-    grid-template-columns: repeat(3, 1fr); 
-    gap: 15px;  
-    width: 100%;  
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    width: 100%;
 }
 
     #InvoiceDiv .form-group {
@@ -178,23 +192,26 @@
 /*.FormCol {
     flex: 1 1 calc(50% - 15px); 
 }*/
-.drop{
-    height:60px;
+.drop {
+    height: 60px;
 }
+
 .fwidthElement {
     width: 100%;
-    box-sizing: border-box; 
+    box-sizing: border-box;
 }
+
 .icon {
     font-family: 'Segoe MDL2 Assets';
     font-size: 24px;
     transition: 0.2s;
 }
-.icon:hover{
-    transition:0.1s;
-    font-size:26px;
-    color:#008374;
-}
+
+    .icon:hover {
+        transition: 0.1s;
+        font-size: 26px;
+        color: #008374;
+    }
 
 
 
@@ -206,7 +223,7 @@
     background-color: transparent;
     cursor: pointer;
     border-radius: 5px;
-    border:solid dodgerblue 1px;
-    width:20%;
-    vertical-align:baseline;
+    border: solid dodgerblue 1px;
+    width: 20%;
+    vertical-align: baseline;
 }

@@ -8,7 +8,6 @@ namespace GPU.Models
 
 
         [DisplayName("بەشی وەرگیراو")]
-
         public string? Department { get; set; }
 
         [DisplayName("جۆری وەرگرتن")]

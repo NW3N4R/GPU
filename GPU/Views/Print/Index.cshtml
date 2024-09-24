@@ -1,0 +1,669 @@
+﻿@model GPU.Models.AllViewModel
+@{
+    Layout = null;
+}
+<style>
+    div {
+        font-family: 'Droid Arabic Kufi';
+        text-align: right;
+    }
+
+    .a4-paper {
+        width: 210mm;
+        height: 297mm;
+        box-sizing: border-box;
+        font-family: 'Droid Arabic Kufi';
+        position: relative;
+    }
+
+        .a4-paper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('/logo.png');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 700px 700px; /* Adjust size if needed */
+            opacity: 0.07; /* Adjust opacity for better readability */
+            z-index: -1;
+        }
+
+    .SectionBg {
+        position: relative;
+    }
+
+        .SectionBg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('/logo.png');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 600px 600px; /* Adjust size if needed */
+            opacity: 0.07; /* Adjust opacity for better readability */
+            z-index: -1;
+        }
+
+    .Header {
+        width: 100%;
+        height: 6vh;
+        background-color: #008374;
+        color: white;
+    }
+
+    .Centered-Child {
+        display: flex; /* Enables Flexbox */
+        align-items: center; /* Vertically centers the content */
+        justify-content: center; /* Horizontally centers the content */
+        text-align: center;
+    }
+
+    .CornerRadius {
+        border-radius: 10px;
+    }
+
+    hr {
+        width: 100%;
+        height: 2px;
+        background-color: #B4DBD6;
+        border: none;
+        margin-top: -2vh;
+    }
+
+    .OneRowSixColumn {
+        display: grid;
+        grid-template-columns: auto auto auto auto auto auto;
+        gap: 10px;
+        direction: rtl;
+    }
+
+    .OneRowFourColumn {
+        display: grid;
+        grid-template-columns: auto auto auto auto;
+        gap: 10px;
+        direction: rtl;
+    }
+
+    .TowRowOneColum {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .PropertyLabel {
+        color: #008374;
+    }
+
+    .ImageParent {
+        height: 14vh;
+        min-width: 14vh;
+    }
+
+    .PersonalImage {
+        border: solid 1px #008374;
+        border-radius: 3px;
+        width: 100%;
+        height: 100%;
+    }
+
+
+    .TowRowOneColum p,
+    .TowRowOneColum h4 {
+        margin: 0; /* Remove the default margin */
+        padding: 0; /* Remove any padding, just in case */
+    }
+
+    .TowRowOneColum p {
+        margin-bottom: 5px; /* Add a small space between the elements, if needed */
+    }
+
+    .TowRowOneColum h4 {
+        margin-top: 0; /* Ensure no extra space above the h4 */
+    }
+
+    .ParentDiv {
+        display: grid;
+        grid-template-columns: 1fr 20%;
+        direction: rtl;
+    }
+
+    .CardInfoParent {
+        width: 100%;
+        height: 100%;
+    }
+
+    .CardInfoimg {
+        border: solid 1px #008374;
+        border-radius: 3px;
+        width: 100%;
+        height: 100%;
+    }
+
+
+
+    .content {
+    }
+
+    .table-container {
+    }
+
+    ::-webkit-scrollbar {
+        display: none;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+
+    thead {
+        position: sticky;
+        top: 0%;
+        z-index: 1;
+    }
+
+        thead th.TblHeader {
+            padding: 10px;
+            background-color: #E9E9E9;
+            position: relative;
+            min-width: 100%;
+            color: #008374;
+        }
+
+    .FirstColumn {
+        border-bottom-right-radius: 10px;
+        border-top-right-radius: 10px;
+    }
+
+    .lastColumn {
+        border-bottom-left-radius: 10px;
+        border-top-left-radius: 10px;
+    }
+
+    tbody {
+        max-height: 10vh;
+        border-radius: 10px;
+        min-height: 100px;
+    }
+
+        tbody td {
+            padding: 10px;
+        }
+
+            tbody td.DgColumn {
+            }
+
+            tbody td:last-child {
+                text-align: center;
+            }
+
+
+
+    .SubActions {
+        color: black;
+        text-decoration: none;
+    }
+
+        .SubActions:hover {
+            text-decoration: underline;
+        }
+
+
+    .r1 {
+        background-color: white;
+    }
+
+    .RowOneColumnOne {
+        border-top-right-radius: 10px;
+    }
+
+    .RowOneColumnLast {
+        border-top-left-radius: 10px;
+    }
+
+    .LastRowColumnOne {
+        border-bottom-right-radius: 10px;
+    }
+
+    .LogoParent {
+        height: 100%;
+        display: flex;
+        text-align: center;
+        margin-left: 10px;
+    }
+
+    .LogoImg {
+        width: 100%;
+        height: auto;
+        margin: 4px;
+    }
+</style>
+<div class="a4-paper">
+    <header class="Centered-Child  CornerRadius Header">
+        <div>
+            <h4>پەیمانگای تەکنیکی کەلار - هۆبەی تۆمارگا</h4>
+            <h6 style="margin-top:-7%;">پوختەی دۆسیەی خوێندکار ~ @Model.PersonalStudent.Name</h6>
+        </div>
+        <div class="LogoParent">
+            <img class="LogoImg" src="\logo.png" />
+        </div>
+    </header>
+    <div id="SectionOne" style="margin-top:0%;">
+        <div>
+            <h4>زانیاری کەسی</h4>
+            <hr />
+        </div>
+        <div class="ParentDiv">
+            <div>
+                <div class="OneRowSixColumn">
+
+                    <div class="TowRowOneColum">
+                        <p class="PropertyLabel">ناوی خوێندکار</p>
+                        <h4 class="">@Model.PersonalStudent.Name</h4>
+                    </div>
+                    <div class="TowRowOneColum ">
+                        <p class="PropertyLabel ">ئاین</p>
+                        <h4 class="">@Model.PersonalStudent.Religion</h4>
+                    </div>
+                    <div class="TowRowOneColum ">
+                        <p class="PropertyLabel ">ڕەگەز</p>
+                        <h4 class=" ">@Model.PersonalStudent.Sex</h4>
+
+                    </div>
+                    <div class="TowRowOneColum  ">
+                        <p class="PropertyLabel">جۆری خوێن</p>
+                        <h4 class="">@Model.PersonalStudent.BloodGroup</h4>
+
+                    </div>
+
+                    <div class="TowRowOneColum ">
+                        <p class="PropertyLabel ">لەدایک بوون</p>
+                        <h4 class="">@Model.PersonalStudent.Age</h4>
+                    </div>
+
+                </div>
+                <div class="OneRowFourColumn" style="margin-top:10px;">
+                    <div class="TowRowOneColum ">
+                        <p class="PropertyLabel ">ژ.پێناسی کەسی</p>
+                        <h4 class="">@Model.PersonalStudent.IdentityNo</h4>
+                    </div>
+
+                    <div class="TowRowOneColum ">
+                        <p class="PropertyLabel ">ڕەوشی کەسێتی</p>
+                        <h4 class="‌">@Model.PersonalStudent.MartialStatus</h4>
+                    </div>
+
+                    <div class="TowRowOneColum ">
+                        <p class="PropertyLabel ">نەتەوە</p>
+                        <h4 class="">@Model.PersonalStudent.Nationality</h4>
+                    </div>
+                    <div class="TowRowOneColum ">
+                        <p class="PropertyLabel ">ژ. فۆرمی بەشە خۆراک</p>
+                        <h4 class="">@Model.PersonalStudent.IdentityNo</h4>
+                    </div>
+
+                </div>
+            </div>
+            <div class="CardInfoParent ">
+                <img class="CardInfoimg"  src="~/Personal Photo.jpg" />
+            </div>
+        </div>
+    </div>
+    <div id="SectionTow" style="margin-top:10%;">
+        <div>
+            <h4>زانیاری پەیوەندی کردن</h4>
+            <hr />
+        </div>
+        <div>
+            <div class="OneRowSixColumn">
+
+                <div class="TowRowOneColum">
+                    <p class="PropertyLabel">ژمارە مۆبایل</p>
+                    <h4 class="">@Model.StudentContactInfo.Phone</h4>
+                </div>
+                <div class="TowRowOneColum">
+                    <p class="PropertyLabel">ئیمەیڵ</p>
+                    <h4 class="">@Model.StudentContactInfo.StudentEmail</h4>
+                </div>
+                <div class="TowRowOneColum">
+                    <p class="PropertyLabel">پارێزگا</p>
+                    <h4 class=" ">@Model.StudentContactInfo.Province</h4>
+
+                </div>
+                <div class="TowRowOneColum">
+                    <p class="PropertyLabel">شار</p>
+                    <h4 class="">@Model.StudentContactInfo.City</h4>
+
+                </div>
+
+                <div class="TowRowOneColum">
+                    <p class="PropertyLabel">ناحیە</p>
+                    <h4 class="">@Model.StudentContactInfo.District</h4>
+                </div>
+                <div class="TowRowOneColum">
+                    <p class="PropertyLabel">گوند</p>
+                    <h4 class="">@Model.StudentContactInfo.Village</h4>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div id="SectionThree" style="margin-top:10%;">
+        <div>
+            <h4>
+                زانیاری بەخێوکەر
+            </h4>
+            <hr />
+        </div>
+        <div class="OneRowSixColumn">
+            <div class="TowRowOneColum">
+                <p class="PropertyLabel">
+                    ناوی بەخێوکەر
+                </p>
+                <h4 class="">@Model.StudentParentInfo.Name</h4>
+            </div>
+            <div class="TowRowOneColum">
+                <p class="PropertyLabel">
+                    پیشەی بەخێوکەر
+                </p>
+                <h4 class="">@Model.StudentParentInfo.Profession</h4>
+            </div>
+            <div class="TowRowOneColum">
+                <p class="PropertyLabel">
+                    ژمارە تەلەفوونی بەخێوکەر
+                </p>
+                <h4 class=" ">@Model.StudentParentInfo.Phone</h4>
+
+            </div>
+            <div class="TowRowOneColum">
+                <p class="PropertyLabel">
+                    ئیمەیڵی بەخێوکەر
+                </p>
+                <h4 class="">@Model.StudentParentInfo.Email</h4>
+
+            </div>
+
+        </div>
+        <div class="OneRowSixColumn" style="margin-top:3%;">
+
+
+            <div class="TowRowOneColum">
+                <p class="PropertyLabel">
+                    ژمارەی کارتی زانیاری
+                </p>
+                <h4 class="">@Model.StudentParentInfo.CardInfoNo</h4>
+            </div>
+            <div class="TowRowOneColum">
+                <p class="PropertyLabel">
+                    شوێنی دەرچوونی کارتی زانیاری
+                </p>
+                <h4 class="">@Model.StudentParentInfo.CardInfoIssuePlace</h4>
+            </div>
+
+        </div>
+
+    </div>
+    <div id="SectionFour" style="margin-top:10%;">
+        <div>
+            <h4>
+                زانیاری پۆلی ١٢
+            </h4>
+            <hr />
+        </div>
+        <div class="ParentDiv">
+            <div>
+                <div class="OneRowSixColumn">
+                    <div class="TowRowOneColum">
+                        <p class="PropertyLabel">
+                            ژ. ئەزموونی
+                        </p>
+                        <h4 class="">@Model.Student12Grade.ExamNo</h4>
+                    </div>
+                    <div class="TowRowOneColum">
+                        <p class="PropertyLabel">
+                            ناوی قووتابخانە
+                        </p>
+                        <h4 class="">@Model.Student12Grade.SchoolName</h4>
+                    </div>
+                    <div class="TowRowOneColum">
+                        <p class="PropertyLabel">
+                            بەڕێوبەرایەتی پەروەردە
+                        </p>
+                        <h4 class=" ">@Model.Student12Grade.EducationAdministrator</h4>
+
+                    </div>
+                    <div class="TowRowOneColum">
+                        <p class="PropertyLabel">
+                            جۆری خوێندن
+                        </p>
+                        <h4 class="">@Model.Student12Grade.EducationType</h4>
+
+                    </div>
+
+                </div>
+                <div class="OneRowSixColumn" style="margin-top:3%;">
+
+
+                    <div class="TowRowOneColum">
+                        <p class="PropertyLabel">
+                            ساڵی دەرچوون
+                        </p>
+                        <h4 class="">@Model.Student12Grade.Graduation</h4>
+                    </div>
+                    <div class="TowRowOneColum">
+                        <p class="PropertyLabel">
+                            کۆنمرە
+                        </p>
+                        <h4 class="">@Model.Student12Grade.TotalMark</h4>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <div class="SectionBg">
+
+        <div id="SectionFive " style="margin-top:28%;">
+            <header class="Centered-Child  CornerRadius Header">
+                <div>
+                    <h4>پەیمانگای تەکنیکی کەلار - هۆبەی تۆمارگا</h4>
+                    <h6 style="margin-top:-7%;">پوختەی دۆسیەی خوێندکار ~ @Model.PersonalStudent.Name</h6>
+                </div>                <div class="LogoParent">
+                    <img class="LogoImg" src="\logo.png" />
+                </div>
+            </header>
+            <div>
+                <h4>
+                    گەرەنتیدەر
+                </h4>
+                <hr />
+            </div>
+
+            <div class="OneRowSixColumn">
+                <div class="TowRowOneColum">
+                    <p class="PropertyLabel">
+                        فەرمانگە / بەرێوبەرایەتی
+                    </p>
+                    <h4 class="">@Model.StudentSupport.office</h4>
+                </div>
+                <div class="TowRowOneColum">
+                    <p class="PropertyLabel">
+                        ژمارەی نووسراو
+
+                    </p>
+                    <h4 class="">@Model.StudentSupport.WrittenNo</h4>
+                </div>
+                <div class="TowRowOneColum">
+                    <p class="PropertyLabel">
+                        بەرواری نووسراو
+                    </p>
+                    <h4 class=" ">@Model.StudentSupport.WrittenDate</h4>
+
+                </div>
+                <div class="TowRowOneColum">
+                    <p class="PropertyLabel">
+                        بڕی پارەی وەرگیراو
+                    </p>
+                    <h4 class="">@Model.StudentSupport.Amount</h4>
+
+                </div>
+            </div>
+
+
+        </div>
+
+        <div id="SectionSix " style="margin-top:10%;">
+
+
+            <div>
+                <h4>
+                    زانیاری جۆری وەرگرتن
+
+                </h4>
+                <hr />
+            </div>
+
+            <div class="OneRowSixColumn">
+                <div class="TowRowOneColum">
+                    <p class="PropertyLabel">
+                        بەشی وەرگیراو
+                    </p>
+                    <h4 class="">@Model.StudentDepartmentInfo.Department</h4>
+                </div>
+                <div class="TowRowOneColum">
+                    <p class="PropertyLabel">
+                        جۆری وەرگرتن
+
+
+                    </p>
+                    <h4 class="">@Model.StudentDepartmentInfo.AcceptanceType</h4>
+                </div>
+                <div class="TowRowOneColum">
+                    <p class="PropertyLabel">
+                        ژ. فەرمانی زانکۆیی
+                    </p>
+                    <h4 class=" ">@Model.StudentDepartmentInfo.UniversityCommandNo</h4>
+
+                </div>
+                <div class="TowRowOneColum">
+                    <p class="PropertyLabel">
+                        ژ.فەرمانی کارگێڕی
+                    </p>
+                    <h4 class=" ">@Model.StudentDepartmentInfo.AdministratorCommandNo</h4>
+
+                </div>
+                <div class="TowRowOneColum">
+                    <p class="PropertyLabel">
+                        زنجیرە
+                    </p>
+                    <h4 class=" ">@Model.StudentDepartmentInfo.Seq</h4>
+
+                </div>
+
+            </div>
+            <div class="OneRowSixColumn" style="margin-top:3%;">
+
+                <div class="TowRowOneColum">
+                    <p class="PropertyLabel">
+                        خوێندکاری بەشە ناوخۆییە؟
+
+                    </p>
+                    <h4 class=" ">@Model.StudentDepartmentInfo.ResidenceType</h4>
+
+                </div>
+                <div class="TowRowOneColum">
+                    <p class="PropertyLabel">
+                        ساڵی دەستپێک
+
+                    </p>
+                    <h4 class=" ">@Model.StudentDepartmentInfo.startinYear</h4>
+
+                </div>
+                <div class="TowRowOneColum">
+                    <p class="PropertyLabel">
+                        ساڵی دەرچوون
+                    </p>
+                    <h4 class=" ">@Model.StudentDepartmentInfo.Graduate</h4>
+
+                </div>
+                <div class="TowRowOneColum">
+                    <p class="PropertyLabel">
+                        قۆناغ
+                    </p>
+                    <h4 class=" ">@Model.StudentDepartmentInfo.Stage</h4>
+
+                </div>
+            </div>
+
+        </div>
+        <div id="SectionSeven" style="margin-top:10%;">
+
+            <div>
+                <h4>
+                    وەسڵەکانی خوێندکار @Model.PersonalStudent.Name
+                </h4>
+                <hr />
+                <div class="content">
+                    <div class="table-container">
+                        <table dir="rtl">
+                            <thead>
+                                <tr>
+                                    <th class="TblHeader FirstColumn">
+                                        @Html.DisplayNameFor(model => model.Invoice.InvoiceId)
+                                    </th>
+                                    <th class="TblHeader">
+                                        @Html.DisplayNameFor(model => model.Invoice.InvoiceDate)
+
+                                    </th>
+                                    <th class="TblHeader lastColumn">
+                                        @Html.DisplayNameFor(model => model.Invoice.Amount)
+                                    </th>
+
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <td class="r1" />
+                                    <td class="r1" />
+                                    <td class="r1" />
+                                </tr>
+                                @foreach (var item in Model.MyInvoice)
+                                {
+                                    <tr>
+                                        <td class="DgColumn @(item.isFirst ? "RowOneColumnOne" :"")">
+                                            @Html.DisplayFor(modelItem => item.InvoiceId)
+                                        </td>
+                                        <td class="DgColumn">
+                                            @Html.DisplayFor(modelItem => item.InvoiceDate)
+                                        </td>
+                                        <td class="DgColumn @(item.isFirst ? "RowOneColumnLast" :"")">
+                                            @Html.DisplayFor(modelItem => item.Amount)
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // // Trigger the print dialog on page load
+        // window.onload = function() {
+        //     window.print();
+        // };
+    </script>
+</div>
+

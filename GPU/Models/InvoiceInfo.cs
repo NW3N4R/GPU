@@ -21,6 +21,9 @@ namespace GPU.Models
         public string? Amount { get; set; }
 
         public bool isFirst { get; set; }
+
+        public bool isArchive { get; set; }
+
         public int SID { get; set; }
     }
 }

@@ -1,0 +1,102 @@
+﻿
+    .home-container {
+        display: grid;
+        grid-template-rows: 20% 70%;
+        gap: 10px;
+        min-width: 180vh;
+        min-height: 70vh;
+        margin-top: 10px;
+        height: 80vh;
+        width: 100%;
+    }
+    /*#region Row One */
+    .home-RowOne {
+        display: flex;
+        gap: 25px;
+        border-radius: 10px;
+        background-color: #E6E6E6;
+    }
+
+    .RightLogo, .LeftLogo {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .RightLogo {
+        align-items: flex-end;
+        text-align: left;
+    }
+
+    .LeftLogo {
+        align-items: flex-start;
+        text-align: right;
+    }
+
+    .fixTitle p, h2 {
+        margin: 0;
+        padding: 0;
+    }
+
+    .fixTitle {
+        margin-top: 2vh;
+    }
+
+    .CenterLogo {
+        width: 8%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .TopLogo {
+        width: 100%;
+        height: auto;
+    }
+
+    .TopHeaderTitle, .DaySet {
+        color: #008374;
+        font-weight: bold;
+    }
+
+    .TimeSet {
+        direction: rtl;
+    }
+
+    /*#endregion */
+    .home-RowTow {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        grid-template-rows: repeat(6, 13vh);
+        gap: 10px;
+        direction: rtl;
+    }
+
+        .home-RowTow div {
+            text-align: center;
+            padding: 10px;
+            transition: 0.2s;
+            border-radius: 10px;
+            background-color: #E6E6E6;
+            border: solid #C2EDE8 0.4px;
+            box-shadow:0px 0px 2px 0.2px #C2EDE8;
+        }
+
+        .home-RowTow div:hover {
+            background-color: #008374;
+            color: white;
+            transition: 0.2s;
+        }
+            .home-RowTow div:hover h2 {
+                color: white;
+                transition: 0.2s;
+            }
+                .home-RowTow h2 {
+                  color: #008374;
+                  font-weight: bolder;
+                }
+        .home-RowTow div h2,p {
+            padding: 0;
+            margin: 0;
+  
+        }

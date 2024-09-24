@@ -17,16 +17,58 @@ namespace GPU.Helpers
             await con.CloseAsync();
         }
 
-        public static async Task LoadAll(string ar)
+        public static async Task LoadAll()
         {
             await Task.WhenAll(
-               Helper_PersonalStudent.GetStudents($"select * from {ar}PersonalStudent"),
-               Helper_StudentParentInfo.GetParent($"select * from {ar}StudentParentInfo"),
-               Helper_StudentContactInfo.GetContacts($"select * from {ar}StudentContactInfo"),
-               Helper_Student12Grade.GetGrades($"select * from {ar}Student12Grade"),
-               Helper_StudentSupport.GetSupports($"select * from {ar}studentsupport"),
-               Helper_StudentDepartmentInfo.GetDepartments($"select * from {ar}StudentDepartmentInfo"),
-               Helper_Invoice.GetInvoices($"select * from {ar}InvoiceInfo")
+                  Helper_StudentTable.GetStudent(),
+                  Helper_StudentTable.ar_GetStudent(),
+                  StaticalHelper.GetStatical()
+                );
+
+            await Task.WhenAny(
+               Helper_PersonalStudent.GetStudents(),
+               Helper_PersonalStudent.ar_GetStudents(),
+               Helper_StudentParentInfo.GetParent(),
+               Helper_StudentParentInfo.ar_GetParent(),
+               Helper_StudentContactInfo.GetContacts(),
+               Helper_StudentContactInfo.ar_GetContacts(),
+               Helper_Student12Grade.GetGrades(),
+               Helper_Student12Grade.ar_GetGrades(),
+               Helper_StudentSupport.GetSupports(),
+               Helper_StudentSupport.ar_GetSupports(),
+               Helper_StudentDepartmentInfo.GetDepartments(),
+               Helper_StudentDepartmentInfo.ar_GetDepartments(),
+               Helper_Invoice.GetInvoices(),
+               Helper_Invoice.ar_GetInvoices()
+         
+               );
+        }
+
+        public static async Task LoadStudent()
+        {
+            await Task.WhenAll(
+            Helper_PersonalStudent.GetStudents(),
+            Helper_StudentParentInfo.GetParent(),
+            Helper_StudentContactInfo.GetContacts(),
+            Helper_Student12Grade.GetGrades(),
+            Helper_StudentSupport.GetSupports(),
+            Helper_StudentDepartmentInfo.GetDepartments(),
+            Helper_Invoice.GetInvoices(),
+            Helper_StudentTable.GetStudent(),
+            Helper_StudentTable.ar_GetStudent()
+            );
+        }
+
+        public static async Task LoadArchive()
+        {
+            await Task.WhenAll(
+               Helper_PersonalStudent.ar_GetStudents(),
+               Helper_StudentParentInfo.ar_GetParent(),
+               Helper_StudentContactInfo.ar_GetContacts(),
+               Helper_Student12Grade.ar_GetGrades(),
+               Helper_StudentSupport.ar_GetSupports(),
+               Helper_StudentDepartmentInfo.ar_GetDepartments(),
+               Helper_Invoice.ar_GetInvoices()
                );
         }
     }

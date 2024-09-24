@@ -1,13 +1,15 @@
 ﻿body {
 }
+
 header {
     background-color: #008374;
-    color:white;
+    color: white;
 }
+
 nav {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    width: 100%; 
+    width: 100%;
 }
 
 
@@ -17,28 +19,50 @@ nav {
 }
 
 .nav-li {
-    display: inline-block; /* Align items horizontally */
+    display: inline-block;
 }
 
 .nav-link {
-    color: white !important; /* Make text color white */
-    text-decoration: none; /* Remove underline from links */
-    padding: 10px 15px; /* Optional: Add padding for better spacing */
+    position: relative;
+    color: white !important;
+    text-decoration: none;
+    padding: 10px 15px;
 }
 
-.nav-link:hover {
-    color: #f0f0f0; /* Optional: Change color on hover for better UX */
-}
+    /* Create the sliding underline using a pseudo-element */
+    .nav-link::before {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: 0;
+        left: 50%;
+        background-color: white; /* The underline color */
+        transition: all 0.2s ease-out; /* Animation timing */
+        transform: translateX(-50%);
+    }
 
-
+    /* On hover, animate the underline */
+    .nav-link:hover::before {
+        width: 100%;
+        left: 0;
+        transform: translateX(0);
+    }
 
 
 .NavCenter {
-    padding-top:10px;
-    text-align: center; 
+    padding-top: 10px;
+    text-align: center;
 }
 .NavLogo {
-    width: 10%;
+    width:20%;
+    transition: transform 0.5s ease; /* Smooth transition on hover */
+}
+.ActionSide .NavLogo:hover {
+    transform: scaleX(-1); /* Flips the image horizontally on hover */
+}
+.NavLogo {
+    width: 15%;
 }
 
 .NavRight {
@@ -55,11 +79,39 @@ nav {
     box-sizing: border-box;
 }
 
-.NavLeft a{
-    color:white;
-    text-decoration:none;
+    .NavLeft a {
+        color: white;
+        text-decoration: none;
+    }
+
+.BottomSpan {
+    font-size: 13px;s
+    margin-top: -2vh;
 }
-.BottomSpan{
-    font-size:13px;
-    margin-top:-2vh;
+
+.li a {
+    position: relative;
+    transition: 1s;
+}
+
+.li2 a::after {
+    content: '';
+    position: absolute;
+    left: 50%; /* Start from the center */
+    bottom: 0; /* Position at the bottom of the link */
+    width: 0; /* Initially no width */
+    height: 2px; /* Height of the underline */
+    background-color: #008374; /* Underline color */
+    transition: width 0.4s ease, left 0.4s ease; /* Animation for width and position */
+}
+.li2:hover::after {
+    width: 100%; /* Expand the underline to full width */
+    left: 0; /* Move the starting point to the left */
+}
+.li3 a {
+}
+
+.NavTxt p {
+    margin: 0;
+    padding: 0;
 }

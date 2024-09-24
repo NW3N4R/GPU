@@ -1,0 +1,243 @@
+﻿@model (List<GPU.Models.StaticalTableModel> student,GPU.Models.StaticalTableModel table)
+
+@{
+    ViewData["Title"] = "ئاماری گشتی";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h4 class="Title">ئاماری گشتی</h4>
+<form method="post" asp-controller="Students" asp-action="Search">
+    <div class="StaticSearchBar">
+        <div class="Static-ColOne">
+
+            <input asp-for="table.Name"
+                   name="table.Name"
+                   class="StaticalNameTXT"
+                   placeholder="ناوی خوێندکار" />
+
+            <select asp-for="table.Department" name="table.department" class="SearchTXT SearchCM">
+                <option value="0">گشتی</option>
+                <option value="پەرستاری">پەرستاری</option>
+                <option value="تەکنیکی ڤێتەرنەری">تەکنیکی ڤێتەرنەری</option>
+                <option value="تەکنەلۆجیای زانیاری">تەکنەلۆجیای زانیاری</option>
+                <option value="ڕوو پێوی">ڕوو پێوی</option>
+                <option value="کارگێری کار">کارگێری کار</option>
+                <option value="پرۆژە کشتوکاڵیەکان">پرۆژە کشتوکاڵیەکان</option>
+            </select>
+            <select asp-for="table.Age" name="table.Age" class="form-control YearSelect">
+                @for (int year = 1980; year <= DateTime.Now.Year - 16; year++)
+                {
+                    <option value="@year" class="YearOptions">@year</option>
+                }
+            </select>
+            <select asp-for="table.MartialStatus" name="PersonalStudent.MartialStatus" class="form-control">
+                <option value="سەڵت">سەڵت</option>
+                <option value="خێزاندار">خێزاندار</option>
+                <option value="جیابووە">جیابووە</option>
+            </select>
+        </div>
+        <div>
+            <div class="button-container">
+                <button type="submit" class="SearchBttn ">&#xF78B;</button>
+            </div>
+            <div class="button-container">
+                <button asp-action="Search" asp-route-DoPrint="@true" class="SearchBttn ">&#xEC51;</button>
+            </div>
+
+        </div>
+        @*   *@
+        @*     <div class="SearchChild SearchBox">
+        <label class="control-label">گەڕان لە نێو بەشەکان</label>
+
+        </div>
+        <div class="SearchChild SearchBox">
+        <label class="control-label">گەڕان بە ساڵی دەستپێک</label>
+        <select asp-for="table.StartingYear" name="table.StartingYear" class="SearchCM SearchTXT">
+        <option value="0">گشتی</option>
+        @for (int year = 1990; year <= DateTime.Now.Year; year++)
+        {
+        int yr = year + 1;
+        <option value="@yr" class="YearOptions">@year - @yr </option>
+        }
+        </select>
+        </div> *@
+
+    </div>
+
+</form>
+
+<div class="content">
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th class="FirstColumn">
+                        زنجیرە
+                    </th>
+                    <th class="spHeader">
+                        زانیاری کەسی
+                    </th>
+                    <th class="spHeader">
+                        پۆلی ١٢
+                    </th>
+                    <th class="spHeader">
+                        زانیاری وەرگرتن
+                    </th>
+                    <th class="lastColumn">
+                        @Model.student.Count()
+                    </th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td class="r1" />
+                    <td class="r1" />
+                    <td class="r1" />
+                    <td class="r1" />
+                    <td class="r1" />
+                    <td class="r1" />
+                </tr>
+                @{
+                    int x = 0;
+                }
+                @foreach (var item in Model.student)
+                {
+                    x++;
+                    <tr>
+                        <td class="DgColumn">
+                            @x
+                        </td>
+                        <td class="DgColumn">
+                            <div class="ThreeColumnOnerow">
+                                <div class="OneFrame">
+                                    <p>
+                                        @Html.DisplayNameFor(model => model.table.Name)
+                                    </p>
+                                    <h5>
+                                        @Html.DisplayFor(modelItem => item.Name)
+                                    </h5>
+
+                                </div>
+                                <div class="OneFrame">
+                                    <p>
+                                        @Html.DisplayNameFor(model => model.table.MartialStatus)
+                                    </p>
+                                    <h5>
+                                        @Html.DisplayFor(modelItem => item.MartialStatus)
+                                    </h5>
+                                </div>
+
+                                <div class="OneFrame">
+                                    <p>
+                                        @Html.DisplayNameFor(model => model.table.Age)
+                                    </p>
+                                    <h5>
+                                        @Html.DisplayFor(modelItem => item.Age)
+                                    </h5>
+                                </div>
+
+                                <div class="OneFrame">
+
+                                    <p>
+                                        @Html.DisplayNameFor(model => model.table.Religion)
+                                    </p>
+                                    <h5>
+                                        @Html.DisplayFor(modelItem => item.Religion)
+                                    </h5>
+                                </div>
+                                <div class="OneFrame">
+                                    <p>
+                                        @Html.DisplayNameFor(model => model.table.Nationality)
+                                    </p>
+                                    <h5>
+                                        @Html.DisplayFor(modelItem => item.Nationality)
+                                    </h5>
+                                </div>
+                                <div class="OneFrame">
+                                    <p>
+                                        @Html.DisplayNameFor(model => model.table.Province)
+                                    </p>
+                                    <h5>
+                                        @Html.DisplayFor(modelItem => item.Province)
+                                    </h5>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td class="DgColumn">
+                            <div class="TowRowOneColumn-Column">
+                                <div class="OneFrame">
+                                    <p>
+                                        @Html.DisplayNameFor(model => model.table.EducationType)
+                                    </p>
+                                    <h5>
+                                        @Html.DisplayFor(modelItem => item.EducationType)
+                                    </h5>
+                                </div>
+                                <div class="OneFrame">
+                                    <p>
+                                        @Html.DisplayNameFor(model => model.table.SchoolGraduation)
+                                    </p>
+                                    <h5>
+                                        @Html.DisplayFor(modelItem => item.SchoolGraduation)
+                                    </h5>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="spColumn">
+                            <div class="ThreeColumnOnerow">
+
+                                <div class="OneFrame">
+                                    <p>
+                                        @Html.DisplayNameFor(model => model.table.Department)
+                                    </p>
+                                    <h5>
+                                        @Html.DisplayFor(modelItem => item.Department)
+                                    </h5>
+                                </div>
+                                <div class="OneFrame">
+                                    <p>
+                                        @Html.DisplayNameFor(model => model.table.AcceptanceType)
+                                    </p>
+                                    <h5>
+                                        @Html.DisplayFor(modelItem => item.AcceptanceType)
+                                    </h5>
+                                </div>
+                                <div class="OneFrame">
+                                    <p>
+                                        @Html.DisplayNameFor(model => model.table.Stage)
+                                    </p>
+                                    <h5>
+                                        @Html.DisplayFor(modelItem => item.Stage)
+                                    </h5>
+                                </div>
+                                <div class="OneFrame">
+                                    <p>
+                                        @Html.DisplayNameFor(model => model.table.ResidenceType)
+                                    </p>
+                                    <h5>
+                                        @Html.DisplayFor(modelItem => item.ResidenceType)
+                                    </h5>
+                                </div>
+                                <div class="OneFrame">
+                                    <p>
+                                        @Html.DisplayNameFor(model => model.table.StartingYear)
+                                    </p>
+                                    <h5>
+                                        @Html.DisplayFor(modelItem => item.StartingYear)
+                                    </h5>
+                                </div>
+
+                            </div>
+
+                        </td>
+                        <td class="DgColumn"></td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+</div>

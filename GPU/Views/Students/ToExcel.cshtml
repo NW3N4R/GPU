@@ -1,0 +1,24 @@
+﻿@{
+    ViewData["Title"] = "Export to Excel";
+}
+
+<h2>Export to Excel</h2>
+
+<p>Your Excel file is being prepared. The download will start automatically.</p>
+
+<script type="text/javascript">
+    // Automatically trigger the download when the page loads
+    window.onload = function() {
+        var downloadUrl = '@Url.Action("DownloadExcelFile", "StudentsController")';
+        var anchorElement = document.createElement('a');
+        anchorElement.href = downloadUrl;
+        anchorElement.download = '';
+        document.body.appendChild(anchorElement);
+        anchorElement.click();
+        document.body.removeChild(anchorElement);
+        setTimeout(function () {
+            window.location.href = '@Url.Action("Index", "StudentsController")'; // Replace with your original action and controller
+        }, 1000);
+
+    };
+</script>

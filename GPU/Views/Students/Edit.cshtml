@@ -7,16 +7,16 @@
 
     <div class="pivot-container">
         <nav class="pivot-nav">
-            <a href="#tab1" class="pivot-tab active" id="pivot-tab1">زانیاری کەسی</a>
-            <a href="#tab2" class="pivot-tab active" id="pivot-tab2">زانیاری پەیوەندیکردن</a>
-            <a href="#tab3" class="pivot-tab active" id="pivot-tab3">زانیاری بەخێوکەر</a>
-            <a href="#tab4" class="pivot-tab active" id="pivot-tab4">زانیاری پۆلی ١٢</a>
-            <a href="#tab5" class="pivot-tab active" id="pivot-tab5">گەرەنتیدەر</a>
-            <a href="#tab6" class="pivot-tab active" id="pivot-tab6">زانیاری جۆری وەرگرتن</a>
+            <a href="#tab1" onclick="OntabClick(1)" class="pivot-tab active ActiveBG" id="pivot-tab1">زانیاری کەسی</a>
+            <a href="#tab2" onclick="OntabClick(2)" class="pivot-tab active" id="pivot-tab2">زانیاری پەیوەندیکردن</a>
+            <a href="#tab3" onclick="OntabClick(3)" class="pivot-tab active" id="pivot-tab3">زانیاری بەخێوکەر</a>
+            <a href="#tab4" onclick="OntabClick(4)" class="pivot-tab active" id="pivot-tab4">زانیاری پۆلی ١٢</a>
+            <a href="#tab5" onclick="OntabClick(5)" class="pivot-tab active" id="pivot-tab5">گەرەنتیدەر</a>
+            <a href="#tab6" onclick="OntabClick(6)" class="pivot-tab active" id="pivot-tab6">زانیاری جۆری وەرگرتن</a>
         </nav>
 
         <form method="post" asp-action="Edit" id="infoForm">
-            <div id="tab1" class="pivot-content">
+            <div id="1" class="pivot-content active">
                 <div class="TitleHeader">
                     <h3>زانیاری کەسی</h3>
                     <h3 class="ActionTitle"> نوێکردنەوەی قوتابی</h3>
@@ -24,13 +24,13 @@
                 <div class="form-container">
                     <div class="form-group">
                         <label asp-for="PersonalStudent.Name" class="control-label"></label>
-                        <input asp-for="PersonalStudent.Name" name="PersonalStudent.Name" class="form-control" required />
+                        <input asp-for="PersonalStudent.Name" name="PersonalStudent.Name" class="form-control"  />
                         <span asp-validation-for="PersonalStudent.Name" class="text-danger"></span>
                     </div>
 
                     <div class="form-group">
                         <label asp-for="PersonalStudent.Age" class="control-label"></label>
-                        <select asp-for="PersonalStudent.Age" name="PersonalStudent.Age" class="form-control YearSelect" required>
+                        <select asp-for="PersonalStudent.Age" name="PersonalStudent.Age" class="form-control YearSelect" >
                             @for (int year = 1980; year <= DateTime.Now.Year - 16; year++)
                             {
                                 <option value="@year" class="YearOptions">@year</option>
@@ -94,7 +94,7 @@
                     </div>
                     <div class="form-group">
                         <label asp-for="PersonalStudent.IdentityNo" class="control-label"></label>
-                        <input asp-for="PersonalStudent.IdentityNo" name="PersonalStudent.IdentityNo" class="form-control" required />
+                        <input asp-for="PersonalStudent.IdentityNo" name="PersonalStudent.IdentityNo" class="form-control"  />
                         <span asp-validation-for="PersonalStudent.IdentityNo" class="text-danger"></span>
                     </div>
 
@@ -122,7 +122,7 @@
 
                 </div>
             </div>
-            <div id="tab2" class="pivot-content">
+            <div id="2" class="pivot-content">
                 <div class="TitleHeader">
                     <h3>زانیاری پەیوەندیکردن</h3>
                     <h3 class="ActionTitle"> نوێکردنەوەی قوتابی</h3>
@@ -174,7 +174,7 @@
 
                 </div>
             </div>
-            <div id="tab3" class="pivot-content">
+            <div id="3" class="pivot-content">
                 <div class="TitleHeader">
                     <h3>زانیاری بەخێوکەر</h3>
                     <h3 class="ActionTitle"> نوێکردنەوەی قوتابی</h3>
@@ -221,7 +221,7 @@
                     </div>
                 </div>
             </div>
-            <div id="tab4" class="pivot-content">
+            <div id="4" class="pivot-content">
                 <div class="TitleHeader">
                     <h3>زانیاری پۆلی ١٢</h3>
                     <h3 class="ActionTitle"> نوێکردنەوەی قوتابی</h3>
@@ -265,11 +265,12 @@
 
                     <div class="form-group">
                         <label asp-for="Student12Grade.Graduation" class="control-label"></label>
-                        <select asp-for="Student12Grade.Graduation" name="Student12Grade.Graduation" class="form-control YearSelect" required>
+                        <select asp-for="Student12Grade.Graduation" name="Student12Grade.Graduation" class="form-control YearSelect" >
                             @for (int year = DateTime.Now.Year; year >= 1995; year--)
                             {
                                 int yr = year - 1;
-                                <option value="@yr" class="YearOptions">@year - @yr </option>
+                                string yrr = $"{@year} - {@yr}";
+                                <option value="@yrr" class="YearOptions">@year - @yr </option>
                             }
                         </select>
                         <span asp-validation-for="Student12Grade.Graduation" class="text-danger"></span>
@@ -287,7 +288,7 @@
                     </div>
                 </div>
             </div>
-            <div id="tab5" class="pivot-content">
+            <div id="5" class="pivot-content">
                 <div class="TitleHeader">
                     <h3>گەرەنتیدەر</h3>
                     <h3 class="ActionTitle"> نوێکردنەوەی قوتابی</h3>
@@ -319,7 +320,7 @@
                     </div>
                 </div>
             </div>
-            <div id="tab6" class="pivot-content">
+            <div id="6" class="pivot-content">
                 <div class="TitleHeader">
                     <h3>زانیاری جۆری وەرگرتن</h3>
                     <h3 class="ActionTitle"> نوێکردنەوەی قوتابی</h3>
@@ -332,7 +333,7 @@
                             <option value="تەکنیکی ڤێتەرنەری">تەکنیکی ڤێتەرنەری</option>
                             <option value="تەکنەلۆجیای زانیاری">تەکنەلۆجیای زانیاری</option>
                             <option value="ڕوو پێوی">ڕوو پێوی</option>
-                            <option value="کارگێری کا">کارگێری کار</option>
+                            <option value="کارگێری کار">کارگێری کار</option>
                             <option value="پرۆژە کشتوکاڵیەکان">پرۆژە کشتوکاڵیەکان</option>
 
                         </select>
@@ -367,7 +368,7 @@
 
                         <div class="form-group">
                             <label asp-for="StudentDepartmentInfo.Stage" class="control-label"></label>
-                            <select asp-for="StudentDepartmentInfo.Stage" name="StudentDepartmentInfo.Stage" class="form-control YearSelect" required>
+                            <select asp-for="StudentDepartmentInfo.Stage" name="StudentDepartmentInfo.Stage" class="form-control YearSelect" >
                                 <option value="1" class="YearOptions">1</option>
                                 <option value="2" class="YearOptions">2</option>
                             </select>
@@ -376,7 +377,7 @@
                     </div>
                     <div class="form-group">
                         <label asp-for="StudentDepartmentInfo.ResidenceType" class="control-label"></label>
-                        <select asp-for="StudentDepartmentInfo.ResidenceType" name="StudentDepartmentInfo.ResidenceType" class="form-control YearSelect" required>
+                        <select asp-for="StudentDepartmentInfo.ResidenceType" name="StudentDepartmentInfo.ResidenceType" class="form-control YearSelect" >
                             <option value="نەخێر" class="YearOptions">نەخێر</option>
                             <option value="بەڵی" class="YearOptions">بەڵێ</option>
                         </select>
@@ -384,23 +385,25 @@
                     </div>
                     <div class="form-group">
                         <label asp-for="StudentDepartmentInfo.startinYear" class="control-label"></label>
-                        <select asp-for="StudentDepartmentInfo.startinYear" name="StudentDepartmentInfo.startinYear" class="form-control " required>
-                            @for (int year = DateTime.Now.Year; year >= 1995; year--)
+                        <select asp-for="StudentDepartmentInfo.startinYear" name="StudentDepartmentInfo.startinYear" class="form-control " >
+                            @for (int year = DateTime.Now.Year + 1; year >= 1995; year--)
                             {
                                 int yr = year - 1;
-                                <option value="@yr" class="YearOptions">@year - @yr </option>
+                                string yrr = $"{@year} - {@yr}";
+                                <option value="@yrr" class="YearOptions">@year - @yr </option>
                             }
                         </select>
                         <span asp-validation-for="StudentDepartmentInfo.startinYear" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="StudentDepartmentInfo.Graduate" class="control-label"></label>
-                        <select asp-for="StudentDepartmentInfo.Graduate" name="StudentDepartmentInfo.Graduate" class="form-control " required>
+                        <select asp-for="StudentDepartmentInfo.Graduate" name="StudentDepartmentInfo.Graduate" class="form-control " >
                             <option value="0" class="YearOptions">بەردەوامە</option>
                             @for (int year = DateTime.Now.Year; year >= 1995; year--)
                             {
                                 int yr = year - 1;
-                                <option value="@yr" class="YearOptions">@year - @yr </option>
+                                string yrr = $"{@year} - {@yr}";
+                                <option value="@yrr" class="YearOptions">@year - @yr </option>
                             }
                         </select>
                         <span asp-validation-for="StudentDepartmentInfo.Graduate" class="text-danger"></span>
@@ -415,15 +418,13 @@
                 </div>
                 <div class="FormsActionbttn">
                     <input asp-for="PersonalStudent.Id" id="skip" name="PersonalStudent.Id" hidden />
-                    <button type="submit" id="SaveStudentBttn" class="SaveStudentBttn bttnDisabled  pbttn" disabled>نوێ کردنەوە</button>
-                    <button id="PrintStudentBttn" class="PrintBttn bttnDisabled  pbttn" disabled>پرنت کردن</button>
+                    <button type="submit" id="SaveStudentBttn" class="SaveStudentBttn bttnDisabled  pbttn" >نوێ کردنەوە</button>
+                    @* <button id="PrintStudentBttn" class="PrintBttn bttnDisabled  pbttn" disabled>پرنت کردن</button> *@
                 </div>
             </div>
 
         </form>
-        <button id="nextTabButton" class="btn btn-primary">
-            <span class="icon">&#xE7EA;</span>
-        </button>
+   
     </div>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/js/StudentInsertJS.js" asp-append-version="true"> </script>

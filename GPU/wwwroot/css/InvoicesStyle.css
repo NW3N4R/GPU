@@ -1,0 +1,16 @@
+﻿.dgActionBttn {
+    border-radius:5px;
+    border:none;
+    padding-inline:5px;
+    padding-block:2px;
+    font-size:16px;
+    font-family:'Droid Arabic Kufi';
+    background-color:white;
+    color:black;
+    text-decoration:none;
+
+}
+.dgActionBttn :focus {
+    padding-inline: 7px;
+    padding-block: 4px;
+}

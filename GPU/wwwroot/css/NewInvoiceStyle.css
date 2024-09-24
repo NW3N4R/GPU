@@ -1,0 +1,55 @@
+﻿.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; 
+    margin-top: 10%;
+    padding: 20px;
+    border: 2px solid #B4DBD6;
+    width: 40%; 
+    min-height: 40vh;
+    text-align: center;
+    border-radius: 10px;
+}
+.FormOfInsert {
+    background-color: #B4DBD6;
+    padding:10px;
+    border-radius:10px;
+}
+.close {
+    color: black;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    transition: 1s;
+}
+
+    .close:hover,
+    .close:focus {
+        color: #B4DBD6;
+        transition: 1s;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+.InsertFooter{
+    margin-top:10px;
+    text-align:left;    
+}
+.SaveNewInvoiceBttn {
+    font-family: 'Droid Arabic Kufi';
+    border-radius: 10px;
+    font-size: 16px;
+    background-color: white;
+    padding-inline: 10px;
+    border: none;
+}

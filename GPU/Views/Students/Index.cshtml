@@ -9,23 +9,23 @@
 <form method="post" asp-controller="Students" asp-action="Search">
     <div class="SearchBar">
         <div class="SearchChild SearchBox">
-            <label asp-for="table.Name"  class="control-label"></label>
-            <input asp-for="table.Name" name="table.Name" placeholder="ناوی خوێندکار" oninput="TxtChanged(this.value)" class="SearchTXT" />
+            <label class="control-label">گەران بەپێی ناو</label>
+            <input asp-for="table.Name" name="table.Name" placeholder="ناوی خوێندکار"  class="SearchTXT" />
         </div>
         <div class="SearchChild SearchBox">
-            <label for="StudentName" class="inLabel">گەڕان لە نێو بەشەکان</label>
+            <label class="control-label">گەڕان لە نێو بەشەکان</label>
             <select asp-for="table.department" name="table.department" class="SearchTXT SearchCM">
                 <option value="0">گشتی</option>
                 <option value="پەرستاری">پەرستاری</option>
                 <option value="تەکنیکی ڤێتەرنەری">تەکنیکی ڤێتەرنەری</option>
                 <option value="تەکنەلۆجیای زانیاری">تەکنەلۆجیای زانیاری</option>
                 <option value="ڕوو پێوی">ڕوو پێوی</option>
-                <option value="کارگێری کا">کارگێری کار</option>
+                <option value="کارگێری کار">کارگێری کار</option>
                 <option value="پرۆژە کشتوکاڵیەکان">پرۆژە کشتوکاڵیەکان</option>
             </select>
         </div>
         <div class="SearchChild SearchBox">
-            <label asp-for="table.StartingYear" class="inLabel">گەڕان بە ساڵی دەستپێک</label>
+            <label class="control-label">گەڕان بە ساڵی دەستپێک</label>
             <select asp-for="table.StartingYear" name="table.StartingYear" class="SearchCM SearchTXT">
                 <option value="0">گشتی</option>
                 @for (int year = 1990; year <= DateTime.Now.Year; year++)
@@ -35,8 +35,17 @@
                 }
             </select>
         </div>
-        <div class="button-container">
-            <button type="submit"  class="SearchBttn">گەڕان</button>
+        <div class="ActionContainer">
+
+            <div class="button-container">
+                <button type="submit" class="SearchBttn ">&#xF78B;</button>
+            </div>
+
+              <div class="button-container">
+                <button asp-action="Search" asp-route-DoPrint="@true" class="SearchBttn ">&#xEC51;</button>
+            </div>
+
+
         </div>
     </div>
 
@@ -47,7 +56,10 @@
         <table>
             <thead>
                 <tr>
-                    <th class="Header FirstColumn">
+                    <th class="FirstColumn">
+                        زنجیرە
+                    </th>
+                    <th class="Header ">
                         @Html.DisplayNameFor(model => model.table.Name)
                     </th>
                     <th class="Header">
@@ -63,7 +75,9 @@
                         @Html.DisplayNameFor(model => model.table.Stage)
                     </th>
 
-                    <th class="Header lastColumn"></th>
+                    <th class="lastColumn">
+                        @Model.student.Count()
+                    </th>
                 </tr>
             </thead>
 
@@ -76,9 +90,17 @@
                     <td class="r1" />
                     <td class="r1" />
                 </tr>
-                @foreach (var item in Model.student){
+                @{
+                    int x = 0;
+                }
+                @foreach (var item in Model.student)
+                {
+                    x++;
                     <tr>
                         <td class="DgColumn @(item.isFirst ? "RowOneColumnOne" :"")">
+                            @x
+                        </td>
+                        <td class="DgColumn ">
                             @Html.DisplayFor(modelItem => item.Name)
                         </td>
                         <td class="DgColumn">
@@ -94,8 +116,26 @@
                         <td class="DgColumn">
                             @Html.DisplayFor(modelItem => item.Stage)
                         </td>
-                        <td class=" @(item.isFirst ? "RowOneColumnLast" :"")">
-                            <a asp-action="Details" asp-route-id="@item.id" class="SubActions">زانیاریەکان</a>
+                        <td class="TblLastColumn @(item.isFirst ? "RowOneColumnLast" :"")">
+                            <a asp-action="GetEdit"
+                               asp-route-id="@item.id"
+                               class="DgActionBttn">
+                                <span class="Segoe DgA">&#xEB7E;</span>
+                            </a>
+                            <a asp-controller="Print"
+                               asp-action="DoLoadPrint"
+                               asp-route-id="@item.id"
+                               class="DgActionBttn">
+                                <span class="Segoe DgA">&#xE749;</span>
+                            </a>
+
+                            <a asp-action="Details"
+                               asp-route-id="@item.id"
+                               class="DgActionBttn">
+                                <span class="Segoe DgA">&#xE779;</span>
+                            </a>
+
+
                         </td>
 
                     </tr>

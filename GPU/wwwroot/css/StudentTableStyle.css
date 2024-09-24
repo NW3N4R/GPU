@@ -30,19 +30,24 @@ thead {
 
     thead th.Header {
         background-color: #E9E9E9;
-        color: #343a40;
         padding: 10px;
         position: relative;
-        min-width: 200px;
         color: #008374;
+        min-width: 200px;
+        font-weight:bold;
+        text-align:center;
     }
 
 .FirstColumn {
+    color: #008374;
+    background-color: #E9E9E9;
     border-bottom-right-radius: 10px;
     border-top-right-radius: 10px;
 }
 
 .lastColumn {
+    color: #008374;
+    background-color: #E9E9E9;
     border-bottom-left-radius: 10px;
     border-top-left-radius: 10px;
 }
@@ -58,12 +63,23 @@ tbody {
     }
 
         tbody td.DgColumn {
+            text-align:center;
         }
 
         tbody td:last-child {
             text-align: center;
         }
-
+    tbody tr:nth-child(odd) {
+        background-color: rgba(194, 237, 232, 0.3); /* 50% opacity */
+    }
+    tbody tr {
+        transition: 0.3s;
+    }
+    tbody tr:hover {
+        background-color: #008374; /* Light gray */
+        color:white;
+        transition:0.3s;
+    }
 .DgColumn {
 }
 
@@ -92,7 +108,8 @@ tbody {
 .LastRowColumnOne {
     border-bottom-right-radius: 10px;
 }
-
+.TblLastColumn{
+}
 .SearchBar {
     display: flex;
     flex-direction: row;
@@ -124,25 +141,61 @@ tbody {
 }
 
 .SearchBttn {
-    background-color: transparent;
+    background-color: #008374;
     border: none;
-    color: #008374;
-    font-family: 'Droid Arabic Kufi';
+    color: white;
+    padding:10px;
+    border-radius:10px;
+    font-size: 15px;
+    direction: rtl;
+    font-family: 'Segoe MDL2 Assets';
+    transition: 0.2s;
 }
-
+.button-container :hover {
+    font-size: 18px;
+    background-color: white;
+}
+.button-container button:hover {
+    color:#008374;
+    transition: 0.2s;
+}
+.button-container button:focus {
+    transition: 0.2s;
+}
+.ActionContainer {
+    display: flex;
+    flex-direction:row;
+    margin-top: 1.5%;
+}
 .button-container {
     display: flex;
     margin-top: 1.5%;
+    margin-inline:10px;
     justify-content: center;
     align-items: center;
 }
 
 .NewInvoice {
     transition: 1s;
-    font-size:12px;
+    font-size:14px;
 }
 
 .DivToNewInvoiceBTTN :hover {
     transition: 1s;
-    font-size: 14px;
+    font-size: 15px;
+}
+
+.DgActionBttn {
+    background: white;
+    border-radius: 10px;
+    padding-inline: 10px;
+    padding-block:5px;
+    text-decoration: none;
+    color: #008374;
+    display: inline-flex; 
+    align-items: center;  
+    justify-content: center;
+}
+.DgA{
+    font-size:20px;
 }

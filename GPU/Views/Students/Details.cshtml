@@ -382,14 +382,9 @@
         </div>
     </div>
     <div class="bttnContainer">
-        <button class="EditBttn">
-            <a asp-action="Edit" class="EditBttn" asp-route-id="@Model.PersonalStudent.Id">نوێ کردنەوە</a>
-
-        </button>
-        <button class="EditBttn">
-            <a asp-action="Edit" class="EditBttn" asp-route-id="@Model.PersonalStudent.Id">پرنت کردن</a>
-        </button>
-
+        <a asp-controller="Print" asp-action="Index" class="EditBttn" asp-route-id="@Model.PersonalStudent.Id">پرنت کردن</a>
+        <a asp-controller="Invoices" asp-action="Index" class="EditBttn" asp-route-id="@Model.PersonalStudent.Id">وەسڵەکان</a>
+        <a asp-action="Edit" class="EditBttn" asp-route-id="@Model.PersonalStudent.Id">نوێ کردنەوە</a>
     </div>
 </div>
 

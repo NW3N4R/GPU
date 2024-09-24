@@ -273,8 +273,8 @@
             <h3>گەرەنتیدەر</h3>
             <hr />
             <div class="topProp">
-               
-                    
+
+
                 <h5>
                     @Html.DisplayNameFor(model => model.studentSupport.office)
                 </h5>
@@ -346,16 +346,6 @@
                     @Html.DisplayFor(model => model.StudentDepartmentInfo.AdministratorCommandNo)
                 </h4>
             </div>
-
-            <div class="PropInfo">
-                <h5>
-                    @Html.DisplayNameFor(model => model.StudentDepartmentInfo.Seq)
-                </h5>
-                <h4>
-                    @Html.DisplayFor(model => model.StudentDepartmentInfo.Seq)
-                </h4>
-            </div>
-
             <div class="PropInfo">
                 <h5>
                     @Html.DisplayNameFor(model => model.StudentDepartmentInfo.ResidenceType)
@@ -364,6 +354,27 @@
                     @Html.DisplayFor(model => model.StudentDepartmentInfo.ResidenceType)
                 </h4>
             </div>
+            <div class="OneRowTowColumn PropInfo">
+
+                <div class="PropInfo">
+                    <h5>
+                        @Html.DisplayNameFor(model => model.StudentDepartmentInfo.Seq)
+                    </h5>
+                    <h4>
+                        @Html.DisplayFor(model => model.StudentDepartmentInfo.Seq)
+                    </h4>
+
+                </div>
+                <div class="PropInfo">
+                    <h5>
+                        @Html.DisplayNameFor(model => model.StudentDepartmentInfo.Stage)
+                    </h5>
+                    <h4>
+                        @Html.DisplayFor(model => model.StudentDepartmentInfo.Stage)
+                    </h4>
+                </div>
+            </div>
+       
             <div class="OneRowTowColumn PropInfo">
                 <div class="PropInfo">
                     <h5>
@@ -374,28 +385,25 @@
                     </h4>
                 </div>
 
+
                 <div class="PropInfo">
                     <h5>
-                        @Html.DisplayNameFor(model => model.StudentDepartmentInfo.Stage)
+                        @Html.DisplayNameFor(model => model.StudentDepartmentInfo.Graduate)
                     </h5>
                     <h4>
-                        @Html.DisplayFor(model => model.StudentDepartmentInfo.Stage)
+                        @Html.DisplayFor(model => model.StudentDepartmentInfo.Graduate)
                     </h4>
                 </div>
+            </div>
+            <div class="OneRowTowColumn PropInfo">
             </div>
         </div>
     </div>
     <div class="bttnContainer">
-        <button class="EditBttn">
-            <a class="EditBttn" asp-route-id="@Model.PersonalStudent.Id">پرنت کردن</a>
-        </button>
-        <button class="EditBttn">
-            <a asp-controller="Invoices" asp-action="Index" class="EditBttn" asp-route-id="@Model.PersonalStudent.Id">وەسڵەکان</a>
-        </button>
-        <button class="EditBttn">
+            <a asp-controller="Print" asp-action="IndexArchive" class="EditBttn" asp-route-id="@Model.PersonalStudent.Id">پرنت کردن</a>
+            <a asp-controller="Invoices" asp-action="ArchiveInvoice" class="EditBttn" asp-route-id="@Model.PersonalStudent.Id">وەسڵەکان</a>
             <a asp-action="Edit" class="EditBttn" asp-route-id="@Model.PersonalStudent.Id">نوێ کردنەوە</a>
-        </button>
-    
+
     </div>
 </div>
 

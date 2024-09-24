@@ -2,20 +2,17 @@
 }
 
 .ParentAll {
-    min-width: 193vh;
-    max-width: 200vh;
-    margin-top: 1%;
-    background-color: #B4DBD6;
-    border-radius: 10px;
-    min-height: 78vh;
-    max-height: 78vh;
-    padding: 10px;
-    gap: 10px;
+        max-width: 200vh;
+        margin-top: 1%;
+        background-color: #B4DBD6;
+        border-radius: 10px;
+        max-height: 72vh;
+        padding: 10px;
 }
 
 .DetailContainer {
     min-width: 190vh;
-    min-height: 72vh;
+    min-height: 70vh;
     padding: 10px;
     display: grid;
     gap:10px;
@@ -85,26 +82,26 @@ hr{
 .bttnContainer{
     display:flex;
     flex-direction:row;
-    justify-content:left;
+    justify-content:center;
+    margin-top:-0.5%;
 }
-.EditBttn{
-    border:none;
+.EditBttn {
+    padding-inline: 10px;
     border-radius:10px;
-    padding-inline:10px;
-    min-width:15vh;
-    margin-left:1%;
-    font-family:'Droid Arabic Kufi';
+    min-width: 15vh;
+    margin-left: 1%;
+    border: none;
+    background-color: white;
+    text-decoration: none;
+    color: #008374;
+    text-align: center;
+    font-family: 'Droid Arabic Kufi';
+    transition: 0.3s;
+    font-weight:bold;
 }
-.EditBttn a{
-    color:black;
-    text-decoration:none;
-}
-    .EditBttn a :active {
-        color: black;
-        text-decoration: none;
-    }
-
-    .EditBttn a :focus {
-        color: black;
-        text-decoration: none;
-    }
+  .EditBttn:hover{
+      background-color:#008374;
+      color:white;
+      transition:0.3s;
+      border-radius:10px;
+  }

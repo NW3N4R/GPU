@@ -10,36 +10,64 @@
     <link rel="stylesheet" href="~/css/NavCss.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/StudentInsertStyle.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/StudentTableStyle.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/InvoicesStyle.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/HomeStyle.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/StaticalSearchBar.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/StaticalTableSpecialStyle.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/NewInvoiceStyle.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/GPU/styles.css" asp-append-version="true" />
     <link rel="icon" type="image/x-icon" href="~/favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="~/logo.png">
     <link rel="icon" type="image/png" sizes="16x16" href="~/logo.png">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 </head>
 <body>
     <header>
         <nav>
             <div class="NavRight">
                 <ul class="nav-nav flex-grow-1">
+                    <li class="nav-li ">
+                        <a class="nav-link  "
+                           asp-area=""
+                           asp-controller="Home"
+                           asp-action="Index">سەرەتا</a>
+                    </li>
+                    <li class="nav-li ">
+                        <a class="nav-link  "
+                        asp-area="" 
+                        asp-controller="Students" 
+                        asp-action="Index">خوێندکاران</a>
+                    </li>
+                    <li class="nav-li ">
+                        <a class="nav-link "
+                        asp-area=""
+                        asp-controller="Archive"
+                        asp-action="Index">ئەرشیف</a>
+                    </li>
+                    <li class="nav-li ">
+                        <a class="nav-link "
+                        asp-area="" 
+                        asp-controller="Students"
+                        asp-action="Create">تۆمارکردن</a>
+                    </li>
 
-                    <li class="nav-li">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Students" asp-action="Index">خوێندکاران</a>
-                    </li>
-                    <li class="nav-li">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Archive" asp-action="Index">ئەرشیف</a>
-                    </li>
-                    <li class="nav-li">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Students" asp-action="Create">تۆمارکردن</a>
+                    <li class="nav-li ">
+                        <a class="nav-link "
+                           asp-area=""
+                           asp-controller="StaticalView"
+                           asp-action="Index">ئامار</a>
                     </li>
                 </ul>
 
             </div>
             <div class="NavCenter">
-                <a class="ActionSide" asp-area="" asp-controller="Students" asp-action="Index">
+                <a class="ActionSide" asp-area="" asp-controller="Home" asp-action="Index">
                     <img src="~/logo.png" class="NavLogo" />
                 </a>
             </div>
             <div class="NavLeft">
-                <a class="ActionSide" asp-area="" asp-controller="Students" asp-action="Index">
+                <a class="ActionSide" asp-area="" asp-controller="Home" asp-action="Index">
                     <div class="NavTxt">
                         <p>پەیمانگای تەکنیکی کەلار</p>
                         <p class="BottomSpan">هۆبـەی تـۆمـارگـا</p>
@@ -58,8 +86,13 @@
 
     <footer class="border-top footer text-muted">
         <div class="finner">
+            <span>
+                هۆبەی تۆمارگای پەیمانگای تەکنیکی کەلار  &copy;
+            </span>
+            <span style="margin-right:40px;">
+                Developed By Hiwa A. Abbas
+            </span>
 
-            هۆبەی تۆمارگای پەیمانگای تەکنیکی کەلار - 2024  &copy;
         </div>
 
     </footer>

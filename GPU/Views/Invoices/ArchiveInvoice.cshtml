@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <h4 class="Title">وەسڵی خوێندکار - @Html.DisplayFor(model => model.InvoiceModel.Name)</h4>
-<form method="post" asp-controller="Invoices" asp-action="Search">
+<form method="post" asp-controller="Invoices" asp-action="ARSearch">
     <div class="SearchBar">
         <div class="SearchChild SearchBox">
             <label asp-for="InvoiceModel.InvoiceDate" class="control-label"></label>
@@ -12,7 +12,7 @@
 
         </div>
         <div class="button-container" style="margin-top:3%;">
-            <button type="submit" class="SearchBttn" asp-action="Search" asp-route-id="@Model.dep.SID">گەڕان</button>
+            <button type="submit" class="SearchBttn" asp-action="ARSearch" asp-route-id="@Model.dep.SID">گەڕان</button>
         </div>
     </div>
 
@@ -78,7 +78,7 @@
     <div class="modal-content">
         <span class="close">&times;</span>
         <h2>وەسڵی نوێ بۆ خوێندکار - <span style="color:#008374;">@Html.DisplayFor(model => model.InvoiceModel.Name)</span> </h2>
-        <form method="post" asp-action="NewInvoice" class="FormOfInsert">
+        <form method="post" asp-action="ArNewInvoice" class="FormOfInsert">
             <div class="form-group">
                 <label asp-for="InvoiceModel.InvoiceId" style="text-align:right;" class="control-label"></label>
                 <input asp-for="InvoiceModel.InvoiceId" name="InvoiceModel.InvoiceId" class="form-control" />
@@ -110,7 +110,7 @@
     <div class="modal-content">
         <span class="close" id="CloseEdit">&times;</span>
         <h2> نوێ کردنەوەی وەسڵ بۆ خوێندکار - <span style="color:#008374;">@Html.DisplayFor(model => model.InvoiceModel.Name)</span> </h2>
-        <form method="post" asp-action="EditInvoice" class="FormOfInsert">
+        <form method="post" asp-action="arEditInvoice" class="FormOfInsert">
             <div class="form-group">
                 <label asp-for="InvoiceModel.InvoiceId" style="text-align:right;" class="control-label"></label>
                 <input asp-for="InvoiceModel.InvoiceId" id="invoiceIdField" name="InvoiceModel.InvoiceId" class="form-control" />

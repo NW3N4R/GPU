@@ -1,0 +1,86 @@
+﻿@using System.ComponentModel
+@model (List<GPU.Models.HomeModel> model,int RowCount)
+@{
+    ViewData["Title"] = "سەرەتا";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="home-container">
+    <div class="home-RowOne CardProps">
+        <div class="RightLogo fixTitle">
+            <h2 class="TopHeaderTitle">پەیمانگای تەکنیکی کەلار</h2>
+            <p>@Model.RowCount خوێندکار تۆمار کراوە</p>
+            <p>هیوا عزیز عەباس</p>
+        </div>
+        <div class="CenterLogo ">
+            <img src="./logo.png" class="TopLogo" />
+        </div>
+        <div class="LeftLogo fixTitle">
+            <h2 class="TopHeaderTitle">هـــۆبـــەی تـــۆمـــارگـــە</h2>
+            @{
+                string tt = DateTime.Now.ToString("tt") == "AM" ? "پ.ن" : "د.ن";
+            }
+            <p>
+
+                <span class="TimeSet"> @DateTime.Now.ToString("mm : hh ") @tt </span>
+                @{
+                    string Day = "";
+                    switch (DateTime.Now.DayOfWeek)
+                    {
+                        case DayOfWeek.Sunday:
+                            Day = "یەک شەممە";
+                            break;
+                        case DayOfWeek.Monday:
+                            Day = "دوو شەممە";
+                            break;
+                        case DayOfWeek.Tuesday:
+                            Day = "سێ شەممە";
+                            break;
+                        case DayOfWeek.Wednesday:
+                            Day = "چوار شەممە";
+                            break;
+                        case DayOfWeek.Thursday:
+                            Day = "پێن جشەممە";
+                            break;
+                        case DayOfWeek.Friday:
+                            Day = "هەینی";
+                            break;
+                        case DayOfWeek.Saturday:
+                            Day = "شەممە";
+                            break;
+                    }
+                }
+                <span class="DaySet"> @Day</span>
+            </p>
+            <span class="TimeSet"> @DateTime.Now.ToString("yyyy - MM - dd")  </span>
+
+        </div>
+    </div>
+    <div class="home-RowTow">
+        @foreach (var item in Model.model)
+        {
+            var properties = item.GetType().GetProperties();
+            foreach (var prop in properties)
+            {
+                // Get the DisplayName attribute, if it exists
+                var displayNameAttr = prop.GetCustomAttributes(typeof(DisplayNameAttribute), false)
+                .Cast<DisplayNameAttribute>()
+                .FirstOrDefault();
+
+                // If DisplayName attribute exists, use it, otherwise use the property name
+                var displayName = displayNameAttr != null ? displayNameAttr.DisplayName : prop.Name;
+
+                // Get the value of the property for the current item
+                var value = prop.GetValue(item, null);
+                if (displayName != "RowCount")
+                {
+                    <div>
+                        <h2>@value</h2> <!-- Display the DisplayName or property name -->
+                        <p>@displayName</p> <!-- Display the property value -->
+                    </div>
+                }
+            }
+        }
+
+    </div>
+</div>

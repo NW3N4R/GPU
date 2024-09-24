@@ -17,7 +17,6 @@ namespace GPU.Models
         [DisplayName("ڕەگەز")]
         public string? Sex { get; set; }
 
-
         [DisplayName("ڕەوشی کەسێتی")]
         public  string? MartialStatus { get; set; }
 
