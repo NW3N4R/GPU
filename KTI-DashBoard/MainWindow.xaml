@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Window x:Class="KTI_DashBoard.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="using:KTI_DashBoard"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        Title="Kti"
+        mc:Ignorable="d">
+    <NavigationView x:Name="NavView"
+                    Loaded="NavView_Loaded"
+                    IsBackEnabled="True"
+                    PointerPressed="Window_PointerPressed"
+                    BackRequested="NavView_BackRequested"
+                    ItemInvoked="NavView_ItemInvoked">
+        <NavigationView.MenuItems>
+            <NavigationViewItem Icon="Home"
+                                Content="Home"
+                                Tag="Home" />
+            <NavigationViewItem Icon="Trim"
+                                Content="Properties"
+                                Tag="PropertiesView" />
+            <NavigationViewItem Icon="Globe"
+                                Content="DataBase"
+                                Tag="DataBaseManager" />
+            <NavigationViewItem Icon="People"
+                                Content="Users"
+                                Tag="UsersView" />
+        </NavigationView.MenuItems>
+        <Frame x:Name="ContentFrame"></Frame>
+    </NavigationView>
+</Window>

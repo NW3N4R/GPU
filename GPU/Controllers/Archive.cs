@@ -1,85 +1,39 @@
 ﻿using GPU.Helpers;
 using GPU.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.FlowAnalysis.DataFlow;
-using Microsoft.EntityFrameworkCore.Storage;
-using System.Diagnostics;
 
 namespace GPU.Controllers
 {
     public class Archive : Controller
     {
 
-        IEnumerable<StudentTableModel> students = Helper_StudentTable.ar_stu;
         public async Task<IActionResult> Index()
         {
-            await Helper_StudentTable.ar_GetStudent();
-            return View((students, new StudentTableModel()));
+            return View((Helper_StudentTable.GetArchiveStudentTable(), new StaticalTableModel()));
         }
 
         [HttpPost]
-        public async Task<IActionResult> Search([Bind(Prefix = "table")] StudentTableModel model, bool DoPrint)
+        public async Task<IActionResult> Search([Bind(Prefix = "table")] StaticalTableModel tbl, bool DoPrint, bool doSearch = true)
         {
-            int z = 0, y = 0;
+            if (doSearch)
+            {
+                var viewModel = ((Helper_StudentTable.ArSearchHelper(tbl), tbl));
+                if (DoPrint)
+                {
+                    var fileContent = await ToExcelPrint.DoPrint((Helper_StudentTable.ArSearchHelper(tbl)),1);
+                    string fileName = $"لیستی خوێندکاران {DateTime.Now:yyyy-MM-dd-HH-mm-ss}.xlsx";
+                    string contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 
-            if (!string.IsNullOrEmpty(model.Name) && model.department != "0" && model.StartingYear != "0")
-            {
-                // search by all
-                students = Helper_StudentTable.ar_stu.Where(x => !string.IsNullOrEmpty(x.Name) ? x.Name.Contains(model.Name) : z == y && x.department == model.department && x.StartingYear == model.StartingYear);
-            }
-            else if (!string.IsNullOrEmpty(model.Name) && model.department != "0" && model.StartingYear == "0")
-            {
-                //search by name and dep
-                students = Helper_StudentTable.ar_stu.Where(x => !string.IsNullOrEmpty(x.Name) ? x.Name.Contains(model.Name) : z == y && x.department == model.department);
-            }
-            else if (!string.IsNullOrEmpty(model.Name) && model.department == "0" && model.StartingYear != "0")
-            {
-                //search by name and starting year
-                students = Helper_StudentTable.ar_stu.Where(x => !string.IsNullOrEmpty(x.Name) ? x.Name.Contains(model.Name) : z == y && x.StartingYear == model.StartingYear);
-            }
-            else if (!string.IsNullOrEmpty(model.Name) && model.department == "0" && model.StartingYear == "0")
-            {
-                // search by name
-                students = Helper_StudentTable.ar_stu.Where(x => !string.IsNullOrEmpty(x.Name) ? x.Name.Contains(model.Name) : z == y);
-            }
-            else if (string.IsNullOrEmpty(model.Name) && model.department != "0" && model.StartingYear != "0")
-            {
-                //search by dep and starting year
-                students = Helper_StudentTable.ar_stu.Where(x => x.department == model.department && x.StartingYear == model.StartingYear);
-            }
-            else if (string.IsNullOrEmpty(model.Name) && model.department != "0" && model.StartingYear == "0")
-            {
-                // search by dep
-                students = Helper_StudentTable.ar_stu.Where(x => x.department == model.department);
-            }
-            else if (string.IsNullOrEmpty(model.Name) && model.department == "0" && model.StartingYear != "0")
-            {
-                // search by year
-                students = Helper_StudentTable.ar_stu.Where(x => x.StartingYear == model.StartingYear);
-            }
-            else
-            {
-                // no result return all
-                students = Helper_StudentTable.ar_stu;
-            }
-            var tbl = new StudentTableModel();
-            tbl.Name = model.Name;
-            tbl.department = model.department;
-            tbl.StartingYear = model.StartingYear;
-            var viewModel = (StudentTableModel: students, tbl);
-            if (!DoPrint)
-            {
+                    return File(fileContent, contentType, fileName);
+                }
                 return View("Index", viewModel);
             }
             else
             {
+                return View("Index", (Helper_StudentTable.GetArchiveStudentTable(), new StaticalTableModel()));
 
-                var fileContent = await ToExcelPrint.DoPrint(students.ToList(),2);
-                string fileName = $"لیستی ئەرشیف {DateTime.Now:yyyy-MM-dd-HH-mm-ss}.xlsx";
-                string contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-
-                return File(fileContent, contentType, fileName);
             }
+
         }
 
         public async Task<IActionResult> Details(int? id)
@@ -137,7 +91,7 @@ namespace GPU.Controllers
             var viewModel = (PersonalStudent: personalStudent, StudentContactInfo: studentContactInfo,
                              StudentParentInfo: studentParentInfo, Student12Grade: student12Grade,
                              StudentDepartmentInfo: studentDepartmentInfo, StudentSupport: studentSupport);
-            return View("Edit",viewModel);
+            return View("Edit", viewModel);
 
         }
         [HttpPost]

@@ -1,29 +1,71 @@
-﻿body {
-}
+﻿
 .StaticSearchBar {
     display: grid;
     grid-template-columns: 90% 10%;
-    gap: 10px;
-    max-width: 100vh;
+    gap: 5px;
+    max-width: 160vh;
     margin: 0 auto;
-    margin-bottom:4px;
+    margin-block: 10px;
 }
+
 .Static-ColOne {
-    background: red;
-    background-color: #E9E9E9;
+    background-color: rgba(233, 233, 233, 0.7);
     border-radius: 10px;
     display: grid;
-    grid-template-rows: repeat(8px, auto);
-    grid-template-columns: 50% 50%;
+    grid-template-columns: repeat(7, auto);
+    grid-template-rows: auto auto;
     padding: 10px;
     gap: 10px;
 }
+
+.columnSpan {
+    grid-column: span 2;
+}
+
 .StaticalNameTXT {
     border: none;
     border-radius: 5px;
     padding: 4px;
-    font-size: 15px;
-    border: solid #B4DBD6 2px;
+    font-size: 14px;
+    border: solid 2px;
+    border-color: transparent;
+    font-family: 'Droid Arabic Kufi';
+    transition: 0.2s;
 }
-.StaticSearchBar div {
+
+.Static-ColOne .StaticalNameTXT:hover {
+    transition: 0.1s;
+    border: solid #37B7AF 2px;
 }
+
+.Static-ColTow {
+    display: grid;
+    grid-template-columns:repeat(2,auto);
+    flex-direction: row; /* Items will be in a row */
+    align-items: center; /* Vertically centers the items within the row */
+    justify-content: center; /* Centers the items horizontally */
+    gap: 10px;
+    text-align: center; /* Centers text inside each flex item */
+}
+
+    .Static-ColTow button {
+        color: #008374;
+        border: none;
+        background-color: transparent;
+        padding: 10px;
+        border-radius: 10px;
+        font-size: 20px;
+        direction: rtl;
+        font-family: 'Segoe MDL2 Assets';
+        border: none;
+        transition: 0.2s ease; /* Smooth transition on width change */
+    }
+
+        .Static-ColTow button:hover {
+            transition: 0.2s; 
+            font-weight:bolder;
+            font-size:27.5px;
+        }
+
+
+      

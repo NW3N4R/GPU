@@ -1,11 +1,24 @@
 ﻿@using System.ComponentModel
 @model (List<GPU.Models.HomeModel> model,int RowCount)
 @{
+   
+
+
+
     ViewData["Title"] = "سەرەتا";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var infoMessage = TempData["InfoMessage"];
+
 }
 
 <div class="home-container">
+    @if (ViewData["InfoMessage"] != null)
+    {
+    @*     <div class="alert alert-info">
+            @ViewData["InfoMessage"]
+        </div> *@
+    }
+
     <div class="home-RowOne CardProps">
         <div class="RightLogo fixTitle">
             <h2 class="TopHeaderTitle">پەیمانگای تەکنیکی کەلار</h2>
@@ -13,7 +26,7 @@
             <p>هیوا عزیز عەباس</p>
         </div>
         <div class="CenterLogo ">
-            <img src="./logo.png" class="TopLogo" />
+            <img src="~/logo.png" class="TopLogo" />
         </div>
         <div class="LeftLogo fixTitle">
             <h2 class="TopHeaderTitle">هـــۆبـــەی تـــۆمـــارگـــە</h2>
@@ -40,7 +53,7 @@
                             Day = "چوار شەممە";
                             break;
                         case DayOfWeek.Thursday:
-                            Day = "پێن جشەممە";
+                            Day = "پێنج شەممە";
                             break;
                         case DayOfWeek.Friday:
                             Day = "هەینی";

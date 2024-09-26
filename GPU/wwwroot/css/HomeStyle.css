@@ -10,12 +10,12 @@
         width: 100%;
     }
     /*#region Row One */
-    .home-RowOne {
-        display: flex;
-        gap: 25px;
-        border-radius: 10px;
-        background-color: #E6E6E6;
-    }
+.home-RowOne {
+    display: flex;
+    gap: 25px;
+    border-radius: 10px;
+    background-color: #008374;
+}
 
     .RightLogo, .LeftLogo {
         flex: 1;
@@ -54,10 +54,9 @@
         height: auto;
     }
 
-    .TopHeaderTitle, .DaySet {
-        color: #008374;
-        font-weight: bold;
-    }
+.fixTitle {
+    color: white;
+}
 
     .TimeSet {
         direction: rtl;
@@ -79,12 +78,14 @@
             border-radius: 10px;
             background-color: #E6E6E6;
             border: solid #C2EDE8 0.4px;
-            box-shadow:0px 0px 2px 0.2px #C2EDE8;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease-in-out;
         }
 
         .home-RowTow div:hover {
             background-color: #008374;
             color: white;
+             transform: translateY(-5px);
             transition: 0.2s;
         }
             .home-RowTow div:hover h2 {

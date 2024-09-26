@@ -4,6 +4,8 @@ namespace GPU.Models
 {
     public class StaticalTableModel
     {
+
+        public int id { get; set; }
         [DisplayName("ناو")]
         public string? Name { get; set; }
 
@@ -42,5 +44,7 @@ namespace GPU.Models
 
         [DisplayName("قۆناغ")]
         public int Stage { get; set; }
+
+        public bool isFirst { get; set; }
     }
 }

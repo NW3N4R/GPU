@@ -80,7 +80,6 @@
                     <div class="form-group">
                         <label asp-for="PersonalStudent.Religion" class="control-label"></label>
                         <select asp-for="PersonalStudent.Religion" id="skip" name="PersonalStudent.Religion" class="form-control">
-
                             <option value="-">دیاری نەکراو</option>
                             <option value="ئیسلام">ئیسلام</option>
                             <option value="مەسیحی">مەسیحی</option>
@@ -258,7 +257,6 @@
                             <option value="زانستی">زانستی</option>
                             <option value="وێژەیی">وێژەیی</option>
                             <option value="پیشەیی">پیشەیی</option>
-
                         </select>
                         <span asp-validation-for="Student12Grade.EducationType" class="text-danger"></span>
                     </div>
@@ -341,7 +339,12 @@
                     </div>
                     <div class="form-group">
                         <label asp-for="StudentDepartmentInfo.AcceptanceType" class="control-label"></label>
-                        <select asp-for="StudentDepartmentInfo.AcceptanceType"  name="StudentDepartmentInfo.AcceptanceType" class="form-control" id="AcceptanceTypeSelect">
+                        <select 
+                            asp-for="StudentDepartmentInfo.AcceptanceType" 
+                            name="StudentDepartmentInfo.AcceptanceType"
+                            class="form-control"
+                            onchange="Acceptance()"
+                            id="AcceptanceSelection">
                             <option value="زانکۆلاین">زانکۆلاین</option>
                             <option value="پاراڵیل">پاراڵیل</option>
                             <option value="ئێواران">ئێواران</option>
@@ -412,8 +415,8 @@
                         </select>
                         <span asp-validation-for="StudentDepartmentInfo.Graduate" class="text-danger"></span>
                     </div>
-                    <div class="formcol" id="InvoiceDiv">
-                        <div class="form-group">
+                    <div class="ThreeInvoiceRow hidden"  id="InvoicePart">
+                        <div class="form-group" >
                             <label asp-for="InvoiceInfo.InvoiceId" class="control-label"></label>
                             <input asp-for="InvoiceInfo.InvoiceId" value="-" id="txtinvoiceid" name="InvoiceInfo.InvoiceId" class="form-control txtinvoice" />
                             <span asp-validation-for="InvoiceInfo.InvoiceId" class="text-danger"></span>

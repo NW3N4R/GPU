@@ -17,81 +17,32 @@ namespace GPU.Controllers
 {
     public class StudentsController : Controller
     {
-        IEnumerable<StudentTableModel> students = Helper_StudentTable._stu;
         public async Task<IActionResult> Index()
         {
-            await Helper_StudentTable.GetStudent();
-            return View((students, new StudentTableModel()));
+            return View((Helper_StudentTable.GetStudentTable(), new StaticalTableModel()));
         }
 
 
         [HttpPost]
-        public async Task<IActionResult> Search([Bind(Prefix = "table")] StudentTableModel model, bool DoPrint)
+        public async Task<IActionResult> Search([Bind(Prefix = "table")] StaticalTableModel tbl, bool DoPrint, bool doSearch = true)
         {
-            int z = 0, y = 0;
-            if (!string.IsNullOrEmpty(model.Name) && model.department != "0" && model.StartingYear != "0")
+            if (doSearch)
             {
-                // search by all
-                students = Helper_StudentTable._stu.Where(x => !string.IsNullOrEmpty(x.Name) ? x.Name.Contains(model.Name) : z == y && x.department == model.department && x.StartingYear == model.StartingYear);
-            }
-            else if (!string.IsNullOrEmpty(model.Name) && model.department != "0" && model.StartingYear == "0")
-            {
-                //search by name and dep
-                students = Helper_StudentTable._stu.Where(x => !string.IsNullOrEmpty(x.Name) ? x.Name.Contains(model.Name) : z == y && x.department == model.department);
-            }
-            else if (!string.IsNullOrEmpty(model.Name) && model.department == "0" && model.StartingYear != "0")
-            {
-                //search by name and starting year
-                students = Helper_StudentTable._stu.Where(x => !string.IsNullOrEmpty(x.Name) ? x.Name.Contains(model.Name) : z == y && x.StartingYear == model.StartingYear);
-            }
-            else if (!string.IsNullOrEmpty(model.Name) && model.department == "0" && model.StartingYear == "0")
-            {
-                // search by name
-                students = Helper_StudentTable._stu.Where(x => !string.IsNullOrEmpty(x.Name) ? x.Name.Contains(model.Name) : z == y);
-            }
-            else if (string.IsNullOrEmpty(model.Name) && model.department != "0" && model.StartingYear != "0")
-            {
-                //search by dep and starting year
-                students = Helper_StudentTable._stu.Where(x => x.department == model.department && x.StartingYear == model.StartingYear);
-            }
-            else if (string.IsNullOrEmpty(model.Name) && model.department != "0" && model.StartingYear == "0")
-            {
-                // search by dep
-                students = Helper_StudentTable._stu.Where(x => x.department == model.department);
-            }
-            else if (string.IsNullOrEmpty(model.Name) && model.department == "0" && model.StartingYear != "0")
-            {
-                // search by year
-                students = Helper_StudentTable._stu.Where(x => x.StartingYear == model.StartingYear);
-            }
-            else
-            {
-                // no result return all
-                students = Helper_StudentTable._stu;
-            }
+                var viewModel = ((Helper_StudentTable.SearchHelper(tbl), tbl));
+                if (DoPrint)
+                {
+                    var fileContent = await ToExcelPrint.DoPrint((Helper_StudentTable.SearchHelper(tbl)), 0);
+                    string fileName = $"لیستی خوێندکاران {DateTime.Now:yyyy-MM-dd-HH-mm-ss}.xlsx";
+                    string contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 
-            foreach (var item in students)
-            {
-                Debug.WriteLine(item.Name);
-            }
-            var tbl = new StudentTableModel();
-            tbl.Name = model.Name;
-            tbl.department = model.department;
-            tbl.StartingYear = model.StartingYear;
-            var viewModel = (StudentTableModel: students, tbl);
-            if (!DoPrint)
-            {
-
+                    return File(fileContent, contentType, fileName);
+                }
                 return View("Index", viewModel);
             }
             else
             {
+                return View("Index", (Helper_StudentTable.GetStudentTable(), new StaticalTableModel()));
 
-                var fileContent = await ToExcelPrint.DoPrint(students.ToList());
-                string fileName = $"لیستی خوێندکاران {DateTime.Now:yyyy-MM-dd-HH-mm-ss}.xlsx";
-                string contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-
-                return File(fileContent, contentType, fileName);
             }
 
         }

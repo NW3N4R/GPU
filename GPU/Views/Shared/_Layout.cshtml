@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="~/css/StaticalSearchBar.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/StaticalTableSpecialStyle.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/NewInvoiceStyle.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/GPU/styles.css" asp-append-version="true" />
+    @* <link rel="stylesheet" href="~/GPU/styles.css" asp-append-version="true" /> *@
     <link rel="icon" type="image/x-icon" href="~/favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="~/logo.png">
     <link rel="icon" type="image/png" sizes="16x16" href="~/logo.png">
@@ -45,7 +45,15 @@
                         asp-controller="Archive"
                         asp-action="Index">ئەرشیف</a>
                     </li>
+                 
                     <li class="nav-li ">
+                        <a class="nav-link "
+                           asp-area=""
+                           asp-controller="StaticalView"
+                           asp-action="Index">ئامار</a>
+                    </li>
+
+                       <li class="nav-li ">
                         <a class="nav-link "
                         asp-area="" 
                         asp-controller="Students"
@@ -55,8 +63,8 @@
                     <li class="nav-li ">
                         <a class="nav-link "
                            asp-area=""
-                           asp-controller="StaticalView"
-                           asp-action="Index">ئامار</a>
+                           asp-controller="Home"
+                           asp-action="Index">بڕوانامەکان</a>
                     </li>
                 </ul>
 

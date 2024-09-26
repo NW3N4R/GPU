@@ -2,248 +2,8 @@
 @{
     Layout = null;
 }
-<style>
-    div {
-        font-family: 'Droid Arabic Kufi';
-        text-align: right;
-    }
+<link rel="stylesheet" href="~/css/PrintPageStyle.css" />
 
-    .a4-paper {
-        width: 210mm;
-        height: 297mm;
-        box-sizing: border-box;
-        font-family: 'Droid Arabic Kufi';
-        position: relative;
-    }
-
-        .a4-paper::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-image: url('/logo.png');
-            background-repeat: no-repeat;
-            background-position: center;
-            background-size: 700px 700px; /* Adjust size if needed */
-            opacity: 0.07; /* Adjust opacity for better readability */
-            z-index: -1;
-        }
-
-    .SectionBg {
-        position: relative;
-    }
-
-        .SectionBg::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-image: url('/logo.png');
-            background-repeat: no-repeat;
-            background-position: center;
-            background-size: 600px 600px; /* Adjust size if needed */
-            opacity: 0.07; /* Adjust opacity for better readability */
-            z-index: -1;
-        }
-
-    .Header {
-        width: 100%;
-        height: 6vh;
-        background-color: #008374;
-        color: white;
-    }
-
-    .Centered-Child {
-        display: flex; /* Enables Flexbox */
-        align-items: center; /* Vertically centers the content */
-        justify-content: center; /* Horizontally centers the content */
-        text-align: center;
-    }
-
-    .CornerRadius {
-        border-radius: 10px;
-    }
-
-    hr {
-        width: 100%;
-        height: 2px;
-        background-color: #B4DBD6;
-        border: none;
-        margin-top: -2vh;
-    }
-
-    .OneRowSixColumn {
-        display: grid;
-        grid-template-columns: auto auto auto auto auto auto;
-        gap: 10px;
-        direction: rtl;
-    }
-
-    .OneRowFourColumn {
-        display: grid;
-        grid-template-columns: auto auto auto auto;
-        gap: 10px;
-        direction: rtl;
-    }
-
-    .TowRowOneColum {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .PropertyLabel {
-        color: #008374;
-    }
-
-    .ImageParent {
-        height: 14vh;
-        min-width: 14vh;
-    }
-
-    .PersonalImage {
-        border: solid 1px #008374;
-        border-radius: 3px;
-        width: 100%;
-        height: 100%;
-    }
-
-
-    .TowRowOneColum p,
-    .TowRowOneColum h4 {
-        margin: 0; /* Remove the default margin */
-        padding: 0; /* Remove any padding, just in case */
-    }
-
-    .TowRowOneColum p {
-        margin-bottom: 5px; /* Add a small space between the elements, if needed */
-    }
-
-    .TowRowOneColum h4 {
-        margin-top: 0; /* Ensure no extra space above the h4 */
-    }
-
-    .ParentDiv {
-        display: grid;
-        grid-template-columns: 1fr 20%;
-        direction: rtl;
-    }
-
-    .CardInfoParent {
-        width: 100%;
-        height: 100%;
-    }
-
-    .CardInfoimg {
-        border: solid 1px #008374;
-        border-radius: 3px;
-        width: 100%;
-        height: 100%;
-    }
-
-
-
-    .content {
-    }
-
-    .table-container {
-    }
-
-    ::-webkit-scrollbar {
-        display: none;
-    }
-
-    table {
-        width: 100%;
-        border-collapse: separate;
-        border-spacing: 0;
-    }
-
-    thead {
-        position: sticky;
-        top: 0%;
-        z-index: 1;
-    }
-
-        thead th.TblHeader {
-            padding: 10px;
-            background-color: #E9E9E9;
-            position: relative;
-            min-width: 100%;
-            color: #008374;
-        }
-
-    .FirstColumn {
-        border-bottom-right-radius: 10px;
-        border-top-right-radius: 10px;
-    }
-
-    .lastColumn {
-        border-bottom-left-radius: 10px;
-        border-top-left-radius: 10px;
-    }
-
-    tbody {
-        max-height: 10vh;
-        border-radius: 10px;
-        min-height: 100px;
-    }
-
-        tbody td {
-            padding: 10px;
-        }
-
-            tbody td.DgColumn {
-            }
-
-            tbody td:last-child {
-                text-align: center;
-            }
-
-
-
-    .SubActions {
-        color: black;
-        text-decoration: none;
-    }
-
-        .SubActions:hover {
-            text-decoration: underline;
-        }
-
-
-    .r1 {
-        background-color: white;
-    }
-
-    .RowOneColumnOne {
-        border-top-right-radius: 10px;
-    }
-
-    .RowOneColumnLast {
-        border-top-left-radius: 10px;
-    }
-
-    .LastRowColumnOne {
-        border-bottom-right-radius: 10px;
-    }
-
-    .LogoParent {
-        height: 100%;
-        display: flex;
-        text-align: center;
-        margin-left: 10px;
-    }
-
-    .LogoImg {
-        width: 100%;
-        height: auto;
-        margin: 4px;
-    }
-</style>
 <div class="a4-paper">
     <header class="Centered-Child  CornerRadius Header">
         <div>
@@ -311,7 +71,7 @@
                 </div>
             </div>
             <div class="CardInfoParent ">
-                <img class="CardInfoimg"  src="~/Personal Photo.jpg" />
+                <img class="CardInfoimg" src="~/Personal Photo.jpg" />
             </div>
         </div>
     </div>
@@ -472,7 +232,6 @@
 
 
     <div class="SectionBg">
-
         <div id="SectionFive " style="margin-top:28%;">
             <header class="Centered-Child  CornerRadius Header">
                 <div>
@@ -660,10 +419,9 @@
         </div>
     </div>
     <script>
-        // // Trigger the print dialog on page load
-        // window.onload = function() {
-        //     window.print();
-        // };
+        window.onload = function() {
+            window.print();
+        };
     </script>
 </div>
 

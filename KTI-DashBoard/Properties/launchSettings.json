@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "KTI-DashBoard (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "KTI-DashBoard (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

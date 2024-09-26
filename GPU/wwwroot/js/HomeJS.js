@@ -53,3 +53,15 @@ function clearActive() {
     document.getElementById("pivot-tab6").classList.remove('ActiveBG');
 }
 
+
+function Acceptance() {
+    var div = document.getElementById("InvoicePart");
+    var selction = document.getElementById("AcceptanceSelection");
+    if (selction.value == 'زانکۆلاین') {
+        div.classList.add('hidden');
+    }
+    else {
+
+        div.classList.remove('hidden');
+    }
+}

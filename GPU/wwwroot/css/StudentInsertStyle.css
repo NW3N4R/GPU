@@ -179,7 +179,7 @@
     gap: 15px;
 }
 
-#InvoiceDiv {
+.ThreeInvoiceRow {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 15px;
@@ -226,4 +226,8 @@
     border: solid dodgerblue 1px;
     width: 20%;
     vertical-align: baseline;
+}
+
+.hidden{
+    display:none;
 }

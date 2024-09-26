@@ -1,4 +1,4 @@
-﻿@model (IEnumerable<GPU.Models.StudentTableModel> student,GPU.Models.StudentTableModel table)
+﻿@model (List<GPU.Models.StaticalTableModel> student,GPU.Models.StaticalTableModel table)
 
 @{
     ViewData["Title"] = "لیستی ئەرشیفی خوێندکاران";
@@ -7,15 +7,17 @@
 
 <h4 class="Title">لیستی ئەرشیف</h4>
 <form method="post" asp-controller="Archive" asp-action="Search">
-    <div class="SearchBar">
-        <div class="SearchChild SearchBox">
-            <label class="control-label">گەران بەپێی ناو</label>
-            <input asp-for="table.Name" name="table.Name" placeholder="ناوی خوێندکار"  class="SearchTXT" />
-        </div>
-        <div class="SearchChild SearchBox">
-            <label class="control-label">گەڕان لە نێو بەشەکان</label>
-            <select asp-for="table.department" name="table.department" class="SearchTXT SearchCM">
-                <option value="0">گشتی</option>
+    <div class="StaticSearchBar">
+        <div class="Static-ColOne">
+            <input asp-for="table.Name"
+                   name="table.Name"
+                   id="searchInput"
+                   class="StaticalNameTXT columnSpan"
+                   placeholder="ناوی خوێندکار" />
+
+            <select asp-for="table.Department" name="table.Department"
+                    class="StaticalNameTXT">
+                <option value="-">بەش</option>
                 <option value="پەرستاری">پەرستاری</option>
                 <option value="تەکنیکی ڤێتەرنەری">تەکنیکی ڤێتەرنەری</option>
                 <option value="تەکنەلۆجیای زانیاری">تەکنەلۆجیای زانیاری</option>
@@ -23,29 +25,100 @@
                 <option value="کارگێری کار">کارگێری کار</option>
                 <option value="پرۆژە کشتوکاڵیەکان">پرۆژە کشتوکاڵیەکان</option>
             </select>
-        </div>
-        <div class="SearchChild SearchBox">
-            <label class="control-label">گەڕان بە ساڵی دەستپێک</label>
-            <select asp-for="table.StartingYear" name="table.StartingYear" class="SearchCM SearchTXT">
-                <option value="0">گشتی</option>
-                @for (int year = 1990; year <= DateTime.Now.Year; year++)
+            <select asp-for="table.Age" name="table.Age" class="StaticalNameTXT">
+                <option value="0" class="YearOptions">تەمەن</option>
+
+                @for (int year = 1980; year <= DateTime.Now.Year - 16; year++)
                 {
-                    int yr = year + 1;
-                    <option value="@yr" class="YearOptions">@year - @yr </option>
+                    <option value="@year" class="YearOptions">@year</option>
+                }
+            </select>
+            <select asp-for="table.MartialStatus" name="table.MartialStatus" class="StaticalNameTXT">
+                <option value="-">ڕەوشی کەسێتی</option>
+                <option value="سەڵت">سەڵت</option>
+                <option value="خێزاندار">خێزاندار</option>
+                <option value="جیابووە">جیابووە</option>
+            </select>
+            <select asp-for="table.Religion" name="table.Religion" class="StaticalNameTXT">
+                <option value="-">ئاین</option>
+                <option value="ئیسلام">ئیسلام</option>
+                <option value="مەسیحی">مەسیحی</option>
+                <option value="جوو">جوو</option>
+                <option value="زەردەشتی">زەردەشتی</option>
+                <option value="زەردەشتی">یارسانی</option>
+
+            </select>
+            <select asp-for="table.Nationality" name="table.Nationality" class="StaticalNameTXT">
+                <option value="-">نەتەوە</option>
+                <option value="کورد">کورد</option>
+                <option value="عەرەب">عەرەب</option>
+                <option value="تورکمان">تورکمان</option>
+            </select>
+            <select asp-for="table.SchoolGraduation" name="table.SchoolGraduation" class="StaticalNameTXT">
+                <option value="-" class="YearOptions">ساڵی دەرچوونی پۆلی ١٢</option>
+
+                @for (int year = DateTime.Now.Year; year >= 1995; year--)
+                {
+                    int yr = year - 1;
+                    string yrr = $"{@year} - {@yr}";
+                    <option value="@yrr" class="YearOptions">@year - @yr </option>
+                }
+            </select>
+            <select asp-for="table.EducationType" name="table.EducationType" class="StaticalNameTXT">
+                <option value="-">لق</option>
+                <option value="زانستی">زانستی</option>
+                <option value="وێژەیی">وێژەیی</option>
+                <option value="پیشەیی">پیشەیی</option>
+            </select>
+            <select asp-for="table.Province" name="table.Province" class="StaticalNameTXT">
+                <option value="-">پارێزێگا</option>
+                <option value="گەرمیان">گەرمیان</option>
+                <option value="سلێمانی">سلێمانی</option>
+                <option value="هەولێر">هەولێر</option>
+                <option value="کەرکووک">کەرکووک</option>
+                <option value="دیالە">دیالە</option>
+            </select>
+            <select asp-for="table.AcceptanceType" name="table.AcceptanceType" class="StaticalNameTXT">
+                <option value="-">جۆری خوێندن</option>
+                <option value="زانکۆلاین">زانکۆلاین</option>
+                <option value="پاراڵیل">پاراڵیل</option>
+                <option value="ئێواران">ئێواران</option>
+
+            </select>
+            <select asp-for="table.Stage" name="table.Stage" class="StaticalNameTXT">
+                <option value="0" class="YearOptions">قۆناغ</option>
+                <option value="1" class="YearOptions">1</option>
+                <option value="2" class="YearOptions">2</option>
+            </select>
+            <select asp-for="table.ResidenceType" name="table.ResidenceType" class="StaticalNameTXT">
+                <option value="-" class="YearOptions">بەشەناوخۆی</option>
+                <option value="نەخێر" class="YearOptions">نەخێر</option>
+                <option value="بەڵی" class="YearOptions">بەڵێ</option>
+            </select>
+            <select asp-for="table.StartingYear" name="table.StartingYear" class="StaticalNameTXT">
+                <option value="-" class="YearOptions">ساڵی دەستپێک</option>
+
+                @for (int year = DateTime.Now.Year + 1; year >= 1995; year--)
+                {
+                    int yr = year - 1;
+                    string yrr = $"{@year} - {@yr}";
+                    <option value="@yrr" class="YearOptions">@year - @yr </option>
                 }
             </select>
         </div>
-        <div class="ActionContainer">
-
-            <div class="button-container">
-                <button type="submit" class="SearchBttn ">&#xF78B;</button>
-            </div>
-
-            <div class="button-container">
-                <button asp-action="Search" asp-route-DoPrint="@true" class="SearchBttn ">&#xEC51;</button>
-            </div>
-
+        <div class="Static-ColTow">
+            <button class="SBttn"
+                    type="submit">
+                &#xF78B;
+            </button>
+            <button  asp-controller="Archive" asp-action="Search" class="SBttn" asp-route-DoPrint="@true">
+                &#xEC51;
+            </button>
+            <button asp-controller="Archive" asp-action="Search" asp-route-doSearch="@false">
+                &#xE711;
+            </button>
         </div>
+
     </div>
 
 </form>
@@ -62,10 +135,10 @@
                         @Html.DisplayNameFor(model => model.table.Name)
                     </th>
                     <th class="Header">
-                        @Html.DisplayNameFor(model => model.table.Acceptance)
+                        @Html.DisplayNameFor(model => model.table.AcceptanceType)
                     </th>
                     <th class="Header">
-                        @Html.DisplayNameFor(model => model.table.department)
+                        @Html.DisplayNameFor(model => model.table.Department)
                     </th>
                     <th class="Header">
                         @Html.DisplayNameFor(model => model.table.StartingYear)
@@ -104,10 +177,10 @@
                             @Html.DisplayFor(modelItem => item.Name)
                         </td>
                         <td class="DgColumn">
-                            @Html.DisplayFor(modelItem => item.Acceptance)
+                            @Html.DisplayFor(modelItem => item.AcceptanceType)
                         </td>
                         <td class="DgColumn">
-                            @Html.DisplayFor(modelItem => item.department)
+                            @Html.DisplayFor(modelItem => item.Department)
                         </td>
 
                         <td class="DgColumn">
@@ -116,7 +189,7 @@
                         <td class="DgColumn">
                             @Html.DisplayFor(modelItem => item.Stage)
                         </td>
-                        <td class=" @(item.isFirst ? "RowOneColumnLast" :"")">
+                        <td class="DgColumn @(item.isFirst ? "RowOneColumnLast" :"")">
                             <a asp-action="GetEdit"
                                asp-route-id="@item.id"
                                class="DgActionBttn">

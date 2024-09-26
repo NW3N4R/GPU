@@ -1,7 +1,9 @@
-﻿using GPU.Models;
+﻿using KTI_DashBoard.Models;
+using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Threading.Tasks;
 
-namespace GPU.Helpers
+namespace KTI_DashBoard.Helpers
 {
     public class StaticalHelper
     {

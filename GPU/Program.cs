@@ -36,5 +36,4 @@ app.MapControllerRoute(
 await DbConnectionHelper.OpenConnection();
 
 await DbConnectionHelper.LoadAll();
-
 app.Run();

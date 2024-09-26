@@ -8,7 +8,7 @@ header {
 
 nav {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 40% 20% 40%;
     width: 100%;
 }
 
@@ -58,9 +58,9 @@ nav {
     width:20%;
     transition: transform 0.5s ease; /* Smooth transition on hover */
 }
-.ActionSide .NavLogo:hover {
-    transform: scaleX(-1); /* Flips the image horizontally on hover */
-}
+/*.ActionSide .NavLogo:hover {
+    transform: scaleX(-1);*/ /* Flips the image horizontally on hover */
+/*}*/
 .NavLogo {
     width: 15%;
 }

@@ -7,75 +7,126 @@ namespace GPU.Helpers
 {
     public class Helper_StudentTable
     {
-        public static ObservableCollection<StudentTableModel> _stu = new ObservableCollection<StudentTableModel>();
-        public static ObservableCollection<StudentTableModel> ar_stu = new ObservableCollection<StudentTableModel>();
+        public static List<StaticalTableModel> _student = new List<StaticalTableModel>();
+        public static List<StaticalTableModel> arStudents = new List<StaticalTableModel>();
+        public static List<StaticalTableModel> combinedStudents = new List<StaticalTableModel>();
 
-        public static async Task<ObservableCollection<StudentTableModel>> GetStudent()
+        public static List<StaticalTableModel> GetStudentTable()
         {
-            using (SqlCommand cmd = new SqlCommand("getstudents", DbConnectionHelper.con))
+
+            _student.Clear();
+            foreach (var student in Helper_PersonalStudent._Student)
             {
-                cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                using (SqlDataReader rd = await cmd.ExecuteReaderAsync())
+                var contact = Helper_StudentContactInfo._Contacts.FirstOrDefault(x => x.SID == student.Id);
+                var school = Helper_Student12Grade._Grade.FirstOrDefault(x => x.SID == student.Id);
+                var dep = Helper_StudentDepartmentInfo._department.FirstOrDefault(x => x.SID == student.Id);
+                var model = new StaticalTableModel
                 {
-                    _stu.Clear();
-                    while (await rd.ReadAsync())
-                    {
-                        var model = new StudentTableModel
-                        {
-                            id = rd.GetInt32(0),
-                            Name = rd.GetString(1),
-                            Acceptance = rd.GetString(2),
-                            department = rd.GetString(3),
-                            StartingYear = rd.GetString(4),
-                            Stage = rd.GetInt32(5),
+                    id = student.Id,
+                    Name = student.Name,
+                    MartialStatus = student.MartialStatus,
+                    Age = student.Age,
+                    Religion = student.Religion,
+                    Nationality = student.Nationality,
+                    Province = contact?.Province,
+                    EducationType = school?.EducationType,
+                    SchoolGraduation = school?.Graduation,
+                    Department = dep?.Department,
+                    AcceptanceType = dep?.AcceptanceType,
+                    ResidenceType = dep?.ResidenceType,
+                    StartingYear = dep?.startinYear,
+                    Stage = dep.Stage
+                };
 
-                        };
-                        _stu.Add(model);
-                    }
-                }
+                _student.Add(model);
             }
-            if (_stu.Any())
-            {
-                _stu.First().isFirst = true;
-            }
-            return _stu;
+            return _student;
         }
-        public static async Task<ObservableCollection<StudentTableModel>> ar_GetStudent()
+        public static List<StaticalTableModel> SearchHelper(StaticalTableModel tbl)
         {
-            using (SqlCommand cmd = new SqlCommand("ar_getstudents", DbConnectionHelper.con))
+            var model = _student.Where(
+             x => (!string.IsNullOrWhiteSpace(tbl.Name) ? (x.Name != null && x.Name.Contains(tbl.Name)) : true) &&
+            (!string.IsNullOrWhiteSpace(tbl.Department) && tbl.Department != "-" ? (x.Department != null && x.Department.Contains(tbl.Department)) : true) &&
+            (tbl.Age != 0 ? x.Age == tbl.Age : true) &&
+            (!string.IsNullOrWhiteSpace(tbl.MartialStatus) && tbl.MartialStatus != "-" ? (x.MartialStatus != null && x.MartialStatus.Contains(tbl.MartialStatus)) : true) &&
+            (!string.IsNullOrWhiteSpace(tbl.Religion) && tbl.Religion != "-" ? (x.Religion != null && x.Religion.Contains(tbl.Religion)) : true) &&
+            (!string.IsNullOrWhiteSpace(tbl.Nationality) && tbl.Nationality != "-" ? (x.Nationality != null && x.Nationality.Contains(tbl.Nationality)) : true) &&
+            (!string.IsNullOrWhiteSpace(tbl.SchoolGraduation) && tbl.SchoolGraduation != "-" ? (x.SchoolGraduation != null && x.SchoolGraduation.Contains(tbl.SchoolGraduation)) : true) &&
+            (!string.IsNullOrWhiteSpace(tbl.EducationType) && tbl.EducationType != "-" ? (x.EducationType != null && x.EducationType.Contains(tbl.EducationType)) : true) &&
+            (!string.IsNullOrWhiteSpace(tbl.Province) && tbl.Province != "-" ? (x.Province != null && x.Province.Contains(tbl.Province)) : true) &&
+            (!string.IsNullOrWhiteSpace(tbl.AcceptanceType) && tbl.AcceptanceType != "-" ? (x.AcceptanceType != null && x.AcceptanceType.Contains(tbl.AcceptanceType)) : true) &&
+            (tbl.Stage != 0 ? x.Stage == tbl.Stage : true) &&
+            (!string.IsNullOrWhiteSpace(tbl.ResidenceType) && tbl.ResidenceType != "-" ? (x.ResidenceType != null && x.ResidenceType.Contains(tbl.ResidenceType)) : true) &&
+            (!string.IsNullOrWhiteSpace(tbl.StartingYear) && tbl.StartingYear != "-" ? (x.StartingYear != null && x.StartingYear.Contains(tbl.StartingYear)) : true)).ToList();
+
+            return model;
+        }
+        public static List<StaticalTableModel> GetArchiveStudentTable()
+        {
+
+            arStudents.Clear();
+            foreach (var student in Helper_PersonalStudent.ar_Student)
             {
-                cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                using (SqlDataReader rd = await cmd.ExecuteReaderAsync())
+                var contact = Helper_StudentContactInfo.ar_Contacts.FirstOrDefault(x => x.SID == student.Id);
+                var school = Helper_Student12Grade.ar_Grade.FirstOrDefault(x => x.SID == student.Id);
+                var dep = Helper_StudentDepartmentInfo.ar_department.FirstOrDefault(x => x.SID == student.Id);
+                var model = new StaticalTableModel
                 {
-                    ar_stu.Clear();
-                    while (await rd.ReadAsync())
-                    {
-                        var model = new StudentTableModel
-                        {
-                            id = rd.GetInt32(0),
-                            Name = rd.GetString(1),
-                            Acceptance = rd.GetString(2),
-                            department = rd.GetString(3),
-                            StartingYear = rd.GetString(4),
-                            Stage = rd.GetInt32(5),
+                    id = student.Id,
+                    Name = student.Name,
+                    MartialStatus = student.MartialStatus,
+                    Age = student.Age,
+                    Religion = student.Religion,
+                    Nationality = student.Nationality,
+                    Province = contact?.Province,
+                    EducationType = school?.EducationType,
+                    SchoolGraduation = school?.Graduation,
+                    Department = dep?.Department,
+                    AcceptanceType = dep?.AcceptanceType,
+                    ResidenceType = dep?.ResidenceType,
+                    StartingYear = dep?.startinYear,
+                    Stage = dep.Stage
+                };
 
-                        };
-                        ar_stu.Add(model);
-                    }
-                }
+                arStudents.Add(model);
             }
-            if (ar_stu.Any())
-            {
-                ar_stu.First().isFirst = true;
-            }
-            return ar_stu;
+            return arStudents;
         }
-
-        public static List<StudentTableModel> CombineCollections()
+        public static List<StaticalTableModel> ArSearchHelper(StaticalTableModel tbl)
         {
-            List<StudentTableModel> combinedList = new List<StudentTableModel>(_stu);
-            combinedList.AddRange(ar_stu);
-            return new List<StudentTableModel>(combinedList);
+            var model = arStudents.Where(
+             x => (!string.IsNullOrWhiteSpace(tbl.Name) ? (x.Name != null && x.Name.Contains(tbl.Name)) : true) &&
+            (!string.IsNullOrWhiteSpace(tbl.Department) && tbl.Department != "-" ? (x.Department != null && x.Department.Contains(tbl.Department)) : true) &&
+            (tbl.Age != 0 ? x.Age == tbl.Age : true) &&
+            (!string.IsNullOrWhiteSpace(tbl.MartialStatus) && tbl.MartialStatus != "-" ? (x.MartialStatus != null && x.MartialStatus.Contains(tbl.MartialStatus)) : true) &&
+            (!string.IsNullOrWhiteSpace(tbl.Religion) && tbl.Religion != "-" ? (x.Religion != null && x.Religion.Contains(tbl.Religion)) : true) &&
+            (!string.IsNullOrWhiteSpace(tbl.Nationality) && tbl.Nationality != "-" ? (x.Nationality != null && x.Nationality.Contains(tbl.Nationality)) : true) &&
+            (!string.IsNullOrWhiteSpace(tbl.SchoolGraduation) && tbl.SchoolGraduation != "-" ? (x.SchoolGraduation != null && x.SchoolGraduation.Contains(tbl.SchoolGraduation)) : true) &&
+            (!string.IsNullOrWhiteSpace(tbl.EducationType) && tbl.EducationType != "-" ? (x.EducationType != null && x.EducationType.Contains(tbl.EducationType)) : true) &&
+            (!string.IsNullOrWhiteSpace(tbl.Province) && tbl.Province != "-" ? (x.Province != null && x.Province.Contains(tbl.Province)) : true) &&
+            (!string.IsNullOrWhiteSpace(tbl.AcceptanceType) && tbl.AcceptanceType != "-" ? (x.AcceptanceType != null && x.AcceptanceType.Contains(tbl.AcceptanceType)) : true) &&
+            (tbl.Stage != 0 ? x.Stage == tbl.Stage : true) &&
+            (!string.IsNullOrWhiteSpace(tbl.ResidenceType) && tbl.ResidenceType != "-" ? (x.ResidenceType != null && x.ResidenceType.Contains(tbl.ResidenceType)) : true) &&
+            (!string.IsNullOrWhiteSpace(tbl.StartingYear) && tbl.StartingYear != "-" ? (x.StartingYear != null && x.StartingYear.Contains(tbl.StartingYear)) : true)).ToList();
+
+            return model;
         }
+        public static List<StaticalTableModel> GetStatical()
+        {
+            combinedStudents.Clear();
+            GetStudentTable();
+            GetArchiveStudentTable();
+            combinedStudents.AddRange(_student);
+            combinedStudents.AddRange(arStudents);
+            return combinedStudents;
+        }
+        public static List<StaticalTableModel> StaticalSearch(StaticalTableModel tbl)
+        {
+            combinedStudents.Clear();
+            combinedStudents.AddRange(SearchHelper(tbl));
+            combinedStudents.AddRange(ArSearchHelper(tbl));
+            return combinedStudents;
+        }
+
     }
 }

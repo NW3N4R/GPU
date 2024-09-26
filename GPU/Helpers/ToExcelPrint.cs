@@ -1,4 +1,5 @@
 ﻿using GPU.Models;
+using Microsoft.AspNetCore.Components.Web;
 using OfficeOpenXml;
 using System.Collections.Generic;
 
@@ -6,7 +7,7 @@ namespace GPU.Helpers
 {
     public class ToExcelPrint
     {
-        public static async Task<MemoryStream> DoPrint(IEnumerable<StudentTableModel> students, int pre = 0)
+        public static async Task<MemoryStream> DoPrint(List<StaticalTableModel> students, int pre = 0)
         {
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial; // For non-commercial use
             ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.Commercial;
@@ -76,9 +77,10 @@ namespace GPU.Helpers
             rowIndex = 2;
             foreach (var item in students)
             {
+                bool isFound = false;
                 if (pre == 0 || pre == 2)
                 {
-
+                    isFound = Helper_PersonalStudent._Student?.Any(x => x.Id == item.id) ?? false;
                     worksheet.Cells[rowIndex, 1].Value = Helper_PersonalStudent._Student?.FirstOrDefault(x => x.Id == item.id)?.Name;
                     worksheet.Cells[rowIndex, 2].Value = Helper_PersonalStudent._Student?.FirstOrDefault(x => x.Id == item.id)?.Age;
                     worksheet.Cells[rowIndex, 3].Value = Helper_PersonalStudent._Student?.FirstOrDefault(x => x.Id == item.id)?.Sex;
@@ -127,6 +129,7 @@ namespace GPU.Helpers
                 }
                 if (pre == 1 || pre == 2)
                 {
+                    if (isFound) { rowIndex++; }
                     worksheet.Cells[rowIndex, 1].Value = Helper_PersonalStudent.ar_Student?.FirstOrDefault(x => x.Id == item.id)?.Name;
                     worksheet.Cells[rowIndex, 2].Value = Helper_PersonalStudent.ar_Student?.FirstOrDefault(x => x.Id == item.id)?.Age;
                     worksheet.Cells[rowIndex, 3].Value = Helper_PersonalStudent.ar_Student?.FirstOrDefault(x => x.Id == item.id)?.Sex;
@@ -135,7 +138,7 @@ namespace GPU.Helpers
                     worksheet.Cells[rowIndex, 6].Value = Helper_PersonalStudent.ar_Student?.FirstOrDefault(x => x.Id == item.id)?.Religion;
                     worksheet.Cells[rowIndex, 7].Value = Helper_PersonalStudent.ar_Student?.FirstOrDefault(x => x.Id == item.id)?.IdentityNo;
                     worksheet.Cells[rowIndex, 8].Value = Helper_PersonalStudent.ar_Student?.FirstOrDefault(x => x.Id == item.id)?.Nationality;
-                    worksheet.Cells[rowIndex, 9].Value = Helper_PersonalStudent._Student?.FirstOrDefault(x => x.Id == item.id)?.RationingFormNo;
+                    worksheet.Cells[rowIndex, 9].Value = Helper_PersonalStudent.ar_Student?.FirstOrDefault(x => x.Id == item.id)?.RationingFormNo;
 
                     worksheet.Cells[rowIndex, 10].Value = Helper_StudentContactInfo.ar_Contacts?.FirstOrDefault(x => x.SID == item.id)?.Phone;
                     worksheet.Cells[rowIndex, 11].Value = Helper_StudentContactInfo.ar_Contacts?.FirstOrDefault(x => x.SID == item.id)?.StudentEmail;
@@ -173,7 +176,10 @@ namespace GPU.Helpers
                     worksheet.Cells[rowIndex, 39].Value = Helper_StudentDepartmentInfo.ar_department?.FirstOrDefault(x => x.SID == item.id)?.Stage;
                     worksheet.Cells[rowIndex, 40].Value = Helper_StudentDepartmentInfo.ar_department?.FirstOrDefault(x => x.SID == item.id)?.ResidenceType;
                 }
-                rowIndex++;
+                if (!isFound)
+                {
+                    rowIndex++;
+                }
             }
 
             worksheet.Cells[rowIndex - 1, 3].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Right;

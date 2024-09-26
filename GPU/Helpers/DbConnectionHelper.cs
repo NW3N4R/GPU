@@ -19,11 +19,7 @@ namespace GPU.Helpers
 
         public static async Task LoadAll()
         {
-            await Task.WhenAll(
-                  Helper_StudentTable.GetStudent(),
-                  Helper_StudentTable.ar_GetStudent(),
-                  StaticalHelper.GetStatical()
-                );
+       
 
             await Task.WhenAny(
                Helper_PersonalStudent.GetStudents(),
@@ -53,9 +49,7 @@ namespace GPU.Helpers
             Helper_Student12Grade.GetGrades(),
             Helper_StudentSupport.GetSupports(),
             Helper_StudentDepartmentInfo.GetDepartments(),
-            Helper_Invoice.GetInvoices(),
-            Helper_StudentTable.GetStudent(),
-            Helper_StudentTable.ar_GetStudent()
+            Helper_Invoice.GetInvoices()
             );
         }
 
