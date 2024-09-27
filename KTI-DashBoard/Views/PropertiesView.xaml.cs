@@ -1,3 +1,4 @@
+using KTI_DashBoard.Editors;
 using KTI_DashBoard.Helpers;
 using KTI_DashBoard.Models;
 using Microsoft.EntityFrameworkCore.Diagnostics;
@@ -22,86 +23,163 @@ namespace KTI_DashBoard.Views
 {
     public sealed partial class PropertiesView : Page
     {
+
         public PropertiesView()
         {
             this.InitializeComponent();
         }
-
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            provinceList.ItemsSource = WebPropertiesHelper._Province;
+            MartialList.ItemsSource = WebPropertiesHelper._Martial;
+            AdminiList.ItemsSource = WebPropertiesHelper._EduAdmini;
+            NationalityList.ItemsSource = WebPropertiesHelper._Nationality;
+            ReligionList.ItemsSource = WebPropertiesHelper._Religion;
+        }
         private void NewProvinceName_TextChanging(TextBox sender, TextBoxTextChangingEventArgs args)
         {
-            SaveNewProvinceName.IsEnabled = sender.Text.Length > 0 && !WebPropertiesHelper._Province.Any(x => x.Name.Contains(sender.Text));
-        }
+            if (sender == NewProvinceName)
+            {
+                SaveNewProvinceName.IsEnabled = sender.Text.Length > 0 && !WebPropertiesHelper._Province.Any(x => x.Name.Contains(sender.Text));
+            }
+            else if (sender == NewMartiaName)
+            {
+                SaveNewMartialName.IsEnabled = sender.Text.Length > 0 && !WebPropertiesHelper._Martial.Any(x => x.Name.Contains(sender.Text));
+            }
+            else if (sender == NewAdminiName)
+            {
+                SaveNewAdminiName.IsEnabled = sender.Text.Length > 0 && !WebPropertiesHelper._EduAdmini.Any(x => x.Name.Contains(sender.Text));
+            }
+            else if (sender == NewNationalityName) 
+            {
+                SaveNationalityName.IsEnabled = sender.Text.Length > 0 && !WebPropertiesHelper._Nationality.Any(x => x.Name.Contains(sender.Text));
+            }
+            else
+            {
+                SaveReligionName.IsEnabled = sender.Text.Length > 0 && !WebPropertiesHelper._Religion.Any(x => x.Name.Contains(sender.Text));
 
+            }
+        }
+        #region Province
         private async void SaveNewProvinceName_Click(object sender, RoutedEventArgs e)
         {
             await WebPropertiesHelper.addProperties("province", NewProvinceName.Text);
             NewProvinceName.Text = "";
         }
-
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private async void ProvinceCheckBox_Click(object sender, RoutedEventArgs e)
         {
-            provinceList.ItemsSource = WebPropertiesHelper._Province;
-        }
-
-        private void provinceList_Loaded(object sender, RoutedEventArgs e)
-        {
-            foreach (var item in WebPropertiesHelper._Province.Where(x => x.isActive == true))
+            CheckBox ch = sender as CheckBox;
+            if (ch != null)
             {
-                var listViewItem = provinceList.ContainerFromItem(item) as ListViewItem;
-                if (listViewItem != null)
-                {
-                    listViewItem.IsSelected = item.isActive;
-                }
+                int id = Int32.Parse(ch.Tag.ToString());
+                bool isActive = ch.IsChecked == true ? true : false;
+                await WebPropertiesHelper.UpdatePropStatus("province", id, isActive);
             }
         }
-
-        private  void provinceList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void OpenProvinceUpdaterTip_Click(object sender, RoutedEventArgs e)
         {
-            var listView = sender as ListView;
-            if (listView != null && listView.SelectedItem != null)
-            {
-                foreach (var item in e.AddedItems)
-                {
-                    var province = item as WebProperties;
-                    if (province != null)
-                    {
-                        Debug.WriteLine($"{province.Name} is selected.");
-                    }
-                }
+            ProvinceUpdaterTip.Target = sender as Button;
+            ProvinceUpdaterTip.IsOpen = !ProvinceUpdaterTip.IsOpen;
+            int id = Int32.Parse((sender as Button).Tag.ToString());
+            ProvinceUpdater.current.load(id);
+        }
 
-                foreach (var item in e.RemovedItems)
-                {
-                    var province = item as WebProperties;
-                    if (province != null)
-                    {
-                        Debug.WriteLine($"{province.Name} is not selected.");
-                    }
-                }
+        #endregion
+        #region Martial Status
+        private async void SaveNewMartialName_Click(object sender, RoutedEventArgs e)
+        {
+            await WebPropertiesHelper.addProperties("martialstatus", NewMartiaName.Text);
+            NewMartiaName.Text = "";
+        }
+        private void OpenMartialUpdaterTip_Click(object sender, RoutedEventArgs e)
+        {
+            MartialUpdaterTip.Target = sender as Button;
+            MartialUpdaterTip.IsOpen = !MartialUpdaterTip.IsOpen;
+            int id = Int32.Parse((sender as Button).Tag.ToString());
+            MartialUpdater.current.load(id);
+        }
+        private async void MartialCheckBox_Click(object sender, RoutedEventArgs e)
+        {
+            CheckBox ch = sender as CheckBox;
+            if (ch != null)
+            {
+                int id = Int32.Parse(ch.Tag.ToString());
+                bool isActive = ch.IsChecked == true ? true : false;
+                await WebPropertiesHelper.UpdatePropStatus("martialstatus", id, isActive);
             }
         }
-
-        private async void provinceList_ItemClick(object sender, ItemClickEventArgs e)
+        #endregion
+        #region Admini
+        private async void SaveNewAdminiName_Click(object sender, RoutedEventArgs e)
         {
-
-            //var item = e.ClickedItem as WebProperties;
-            //var listView = sender as ListView;
-
-            //if (item != null && listView != null)
-            //{
-            //    bool isSelected = listView.SelectedItems.Contains(item);
-
-            //    if (isSelected)
-            //    {
-            //        Debug.WriteLine($"{item.Name} is selected.");
-            //    }
-            //    else
-            //    {
-            //        Debug.WriteLine($"{item.Name} is not selected.");
-            //    }
-            //    await WebPropertiesHelper.UpdatePropStatus("province", item.id, true);
-
-            //}
-           
+            await WebPropertiesHelper.addProperties("EducationAdministrator", NewAdminiName.Text);
+            NewAdminiName.Text = "";
         }
+        private async void AdminiCheckBox_Click(object sender, RoutedEventArgs e)
+        {
+            CheckBox ch = sender as CheckBox;
+            if (ch != null)
+            {
+                int id = Int32.Parse(ch.Tag.ToString());
+                bool isActive = ch.IsChecked == true ? true : false;
+                await WebPropertiesHelper.UpdatePropStatus("EducationAdministrator", id, isActive);
+            }
+        }
+        private void OpenAdminiUpdaterTip_Click(object sender, RoutedEventArgs e)
+        {
+            AdminiUpdaterTip.Target = sender as Button;
+            AdminiUpdaterTip.IsOpen = !AdminiUpdaterTip.IsOpen;
+            int id = Int32.Parse((sender as Button).Tag.ToString());
+            AdminiEditor.current.load(id);
+        }
+        #endregion
+        #region Nationality
+        private async void SaveNewNationalityName_Click(object sender, RoutedEventArgs e)
+        {
+            await WebPropertiesHelper.addProperties("Nationality", NewNationalityName.Text);
+            NewNationalityName.Text = "";
+        }
+        private async void NationalityCheckBox_Click(object sender, RoutedEventArgs e)
+        {
+            CheckBox ch = sender as CheckBox;
+            if (ch != null)
+            {
+                int id = Int32.Parse(ch.Tag.ToString());
+                bool isActive = ch.IsChecked == true ? true : false;
+                await WebPropertiesHelper.UpdatePropStatus("Nationality", id, isActive);
+            }
+        }
+        private void OpenNationalityUpdaterTip_Click(object sender, RoutedEventArgs e)
+        {
+            NationalityUpdaterTip.Target = sender as Button;
+            NationalityUpdaterTip.IsOpen = !NationalityUpdaterTip.IsOpen;
+            int id = Int32.Parse((sender as Button).Tag.ToString());
+            Nationality.current.load(id);
+        }
+
+        #endregion
+        private async void SaveNewReligionName_Click(object sender, RoutedEventArgs e)
+        {
+            await WebPropertiesHelper.addProperties("Religion", NewReligionName.Text);
+            NewReligionName.Text = "";
+        }
+        private async void ReligionCheckBox_Click(object sender, RoutedEventArgs e)
+        {
+            CheckBox ch = sender as CheckBox;
+            if (ch != null)
+            {
+                int id = Int32.Parse(ch.Tag.ToString());
+                bool isActive = ch.IsChecked == true ? true : false;
+                await WebPropertiesHelper.UpdatePropStatus("Religion", id, isActive);
+            }
+        }
+        private void OpenreligionUpdaterTip_Click(object sender, RoutedEventArgs e)
+        {
+            ReligionUpdaterTip.Target = sender as Button;
+            ReligionUpdaterTip.IsOpen = !ReligionUpdaterTip.IsOpen;
+            int id = Int32.Parse((sender as Button).Tag.ToString());
+            ReligionEditor.current.load(id);
+        }
+
     }
 }

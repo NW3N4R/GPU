@@ -7,27 +7,27 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       mc:Ignorable="d"
       Loaded="Page_Loaded"
+      xmlns:Updater="using:KTI_DashBoard.Editors"
       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Grid Tag="PropertiesView"
+          ColumnSpacing="10"
           RowSpacing="10"
           Padding="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-        <Expander Grid.Row="1"
+        <Expander Grid.Row="0"
+                  VerticalAlignment="Top"
                   HorizontalContentAlignment="Stretch"
                   HorizontalAlignment="Stretch">
             <Expander.Header>
                 <Grid Padding="10">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="auto" />
                         <ColumnDefinition Width="auto" />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
@@ -37,13 +37,15 @@
                     <TextBlock Text="Contact Provinces "
                                VerticalAlignment="Center"
                                Style="{StaticResource SubtitleTextBlockStyle}" />
-                    <TextBlock Text="these items will be used on the student contact info is province selection list"
+                    <TextBlock Text="these items will be used on the student contact info is province selection list, Write the texts in Central Kurdish"
                                Padding="0,0,10,0"
                                VerticalAlignment="Center"
                                Grid.Row="1"
                                Style="{StaticResource CaptionTextBlockStyle}" />
                     <Button Content="Add province"
                             Grid.RowSpan="2"
+                            HorizontalAlignment="Right"
+                            HorizontalContentAlignment="Stretch"
                             Grid.Column="1">
                         <Button.Flyout>
                             <Flyout>
@@ -85,11 +87,7 @@
             <Grid>
                 <ListView x:Name="provinceList"
                           HorizontalAlignment="Stretch"
-                          SelectionMode="Multiple"
-                          IsItemClickEnabled="True"
-                          ItemClick="provinceList_ItemClick"
-                          Loaded="provinceList_Loaded"
-                          SelectionChanged="provinceList_SelectionChanged"
+                          SelectionMode="None"
                           HorizontalContentAlignment="Stretch">
                     <ListView.ItemTemplate>
                         <DataTemplate>
@@ -98,10 +96,16 @@
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="auto" />
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Text="{Binding Name}"
-                                           VerticalAlignment="Center" />
+                                <CheckBox Content="{Binding Name}"
+                                          Tag="{Binding id}"
+                                          HorizontalAlignment="Stretch"
+                                          IsChecked="{Binding isActive}"
+                                          Click="ProvinceCheckBox_Click" />
                                 <AppBarButton LabelPosition="Collapsed"
                                               Icon="Edit"
+                                              Tag="{Binding id}"
+                                              x:Name="OpenProvinceUpdaterTip"
+                                              Click="OpenProvinceUpdaterTip_Click"
                                               Grid.Column="2" />
                             </Grid>
                         </DataTemplate>
@@ -109,5 +113,389 @@
                 </ListView>
             </Grid>
         </Expander>
+        <Expander Grid.Row="1"
+                  VerticalAlignment="Top"
+                  HorizontalContentAlignment="Stretch"
+                  HorizontalAlignment="Stretch">
+            <Expander.Header>
+                <Grid Padding="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="auto" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Martial Status"
+                               VerticalAlignment="Center"
+                               Style="{StaticResource SubtitleTextBlockStyle}" />
+                    <TextBlock Text="these items will be used on the Personal student info is Martial selection list, Write the texts in Central Kurdish"
+                               Padding="0,0,10,0"
+                               VerticalAlignment="Center"
+                               Grid.Row="1"
+                               Style="{StaticResource CaptionTextBlockStyle}" />
+                    <Button Content="Add Martial Status"
+                            Grid.RowSpan="2"
+                            Grid.Column="1">
+                        <Button.Flyout>
+                            <Flyout>
+                                <Grid MinWidth="200"
+                                      RowSpacing="10">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto" />
+                                        <RowDefinition Height="auto" />
+                                    </Grid.RowDefinitions>
+                                    <TextBox PlaceholderText="Name?"
+                                             Header="Name?"
+                                             TextChanging="NewProvinceName_TextChanging"
+                                             x:Name="NewMartiaName" />
+                                    <Button x:Name="SaveNewMartialName"
+                                            Click="SaveNewMartialName_Click"
+                                            Grid.Row="1"
+                                            IsEnabled="False"
+                                            HorizontalAlignment="Stretch"
+                                            HorizontalContentAlignment="Stretch">
+                                        <Button.Content>
+                                            <Grid FlowDirection="RightToLeft">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <SymbolIcon Symbol="Accept" />
+                                                <TextBlock Text="وەرگرتن"
+                                                           TextAlignment="Center"
+                                                           Grid.Column="1" />
+                                            </Grid>
+                                        </Button.Content>
+                                    </Button>
+                                </Grid>
+                            </Flyout>
+                        </Button.Flyout>
+                    </Button>
+                </Grid>
+            </Expander.Header>
+            <Grid>
+                <ListView x:Name="MartialList"
+                          HorizontalAlignment="Stretch"
+                          SelectionMode="None"
+                          HorizontalContentAlignment="Stretch">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid HorizontalAlignment="Stretch">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="auto" />
+                                </Grid.ColumnDefinitions>
+                                <CheckBox Content="{Binding Name}"
+                                          Tag="{Binding id}"
+                                          HorizontalAlignment="Stretch"
+                                          IsChecked="{Binding isActive}"
+                                          Click="MartialCheckBox_Click" />
+                                <AppBarButton LabelPosition="Collapsed"
+                                              Icon="Edit"
+                                              Tag="{Binding id}"
+                                              x:Name="OpenMartiaUpdaterTip"
+                                              Click="OpenMartialUpdaterTip_Click"
+                                              Grid.Column="2" />
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+        </Expander>
+        <Expander Grid.Row="2"
+                  VerticalAlignment="Top"
+                  HorizontalContentAlignment="Stretch"
+                  HorizontalAlignment="Stretch">
+            <Expander.Header>
+                <Grid Padding="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="auto" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Nationality"
+                               VerticalAlignment="Center"
+                               Style="{StaticResource SubtitleTextBlockStyle}" />
+                    <TextBlock Text="these items will be used on the Personal student  info is Nationality Selection List, Write the texts in Central Kurdish"
+                               Padding="0,0,10,0"
+                               VerticalAlignment="Center"
+                               Grid.Row="1"
+                               Style="{StaticResource CaptionTextBlockStyle}" />
+                    <Button Content="Add Nationality"
+                            Grid.RowSpan="2"
+                            Grid.Column="1">
+                        <Button.Flyout>
+                            <Flyout>
+                                <Grid MinWidth="200"
+                                      RowSpacing="10">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto" />
+                                        <RowDefinition Height="auto" />
+                                    </Grid.RowDefinitions>
+                                    <TextBox PlaceholderText="Name?"
+                                             Header="Name?"
+                                             TextChanging="NewProvinceName_TextChanging"
+                                             x:Name="NewNationalityName" />
+                                    <Button x:Name="SaveNationalityName"
+                                            Click="SaveNewNationalityName_Click"
+                                            Grid.Row="1"
+                                            IsEnabled="False"
+                                            HorizontalAlignment="Stretch"
+                                            HorizontalContentAlignment="Stretch">
+                                        <Button.Content>
+                                            <Grid FlowDirection="RightToLeft">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <SymbolIcon Symbol="Accept" />
+                                                <TextBlock Text="وەرگرتن"
+                                                           TextAlignment="Center"
+                                                           Grid.Column="1" />
+                                            </Grid>
+                                        </Button.Content>
+                                    </Button>
+                                </Grid>
+                            </Flyout>
+                        </Button.Flyout>
+                    </Button>
+                </Grid>
+            </Expander.Header>
+            <Grid>
+                <ListView x:Name="NationalityList"
+                          HorizontalAlignment="Stretch"
+                          SelectionMode="None"
+                          HorizontalContentAlignment="Stretch">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid HorizontalAlignment="Stretch">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="auto" />
+                                </Grid.ColumnDefinitions>
+                                <CheckBox Content="{Binding Name}"
+                                          Tag="{Binding id}"
+                                          HorizontalAlignment="Stretch"
+                                          IsChecked="{Binding isActive}"
+                                          Click="NationalityCheckBox_Click" />
+                                <AppBarButton LabelPosition="Collapsed"
+                                              Icon="Edit"
+                                              Tag="{Binding id}"
+                                              Click="OpenNationalityUpdaterTip_Click"
+                                              Grid.Column="2" />
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+        </Expander>
+        <Expander Grid.Row="3"
+                  VerticalAlignment="Top"
+                  HorizontalContentAlignment="Stretch"
+                  HorizontalAlignment="Stretch">
+            <Expander.Header>
+                <Grid Padding="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="auto" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Religion"
+                               VerticalAlignment="Center"
+                               Style="{StaticResource SubtitleTextBlockStyle}" />
+                    <TextBlock Text="these items will be used on the Personal student info is Religion Selection List, Write the texts in Central Kurdish"
+                               Padding="0,0,10,0"
+                               VerticalAlignment="Center"
+                               Grid.Row="1"
+                               Style="{StaticResource CaptionTextBlockStyle}" />
+                    <Button Content="Add Religion"
+                            Grid.RowSpan="2"
+                            Grid.Column="1">
+                        <Button.Flyout>
+                            <Flyout>
+                                <Grid MinWidth="200"
+                                      RowSpacing="10">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto" />
+                                        <RowDefinition Height="auto" />
+                                    </Grid.RowDefinitions>
+                                    <TextBox PlaceholderText="Name?"
+                                             Header="Name?"
+                                             TextChanging="NewProvinceName_TextChanging"
+                                             x:Name="NewReligionName" />
+                                    <Button x:Name="SaveReligionName"
+                                            Click="SaveNewReligionName_Click"
+                                            Grid.Row="1"
+                                            IsEnabled="False"
+                                            HorizontalAlignment="Stretch"
+                                            HorizontalContentAlignment="Stretch">
+                                        <Button.Content>
+                                            <Grid FlowDirection="RightToLeft">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <SymbolIcon Symbol="Accept" />
+                                                <TextBlock Text="وەرگرتن"
+                                                           TextAlignment="Center"
+                                                           Grid.Column="1" />
+                                            </Grid>
+                                        </Button.Content>
+                                    </Button>
+                                </Grid>
+                            </Flyout>
+                        </Button.Flyout>
+                    </Button>
+                </Grid>
+            </Expander.Header>
+            <Grid>
+                <ListView x:Name="ReligionList"
+                          HorizontalAlignment="Stretch"
+                          SelectionMode="None"
+                          HorizontalContentAlignment="Stretch">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid HorizontalAlignment="Stretch">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="auto" />
+                                </Grid.ColumnDefinitions>
+                                <CheckBox Content="{Binding Name}"
+                                          Tag="{Binding id}"
+                                          HorizontalAlignment="Stretch"
+                                          IsChecked="{Binding isActive}"
+                                          Click="ReligionCheckBox_Click" />
+                                <AppBarButton LabelPosition="Collapsed"
+                                              Icon="Edit"
+                                              Tag="{Binding id}"
+                                              Click="OpenreligionUpdaterTip_Click"
+                                              Grid.Column="2" />
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+        </Expander>
+        <Expander Grid.Row="4"
+                  VerticalAlignment="Top"
+                  HorizontalContentAlignment="Stretch"
+                  HorizontalAlignment="Stretch">
+            <Expander.Header>
+                <Grid Padding="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="auto" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Education Administrators"
+                               VerticalAlignment="Center"
+                               Style="{StaticResource SubtitleTextBlockStyle}" />
+                    <TextBlock Text="these items will be used on the student 12 Grade EDU-ADMINI is selection list, Write the texts in Central Kurdish"
+                               Padding="0,0,10,0"
+                               VerticalAlignment="Center"
+                               Grid.Row="1"
+                               Style="{StaticResource CaptionTextBlockStyle}" />
+                    <Button Content="Add Martial Status"
+                            Grid.RowSpan="2"
+                            Grid.Column="1">
+                        <Button.Flyout>
+                            <Flyout>
+                                <Grid MinWidth="200"
+                                      RowSpacing="10">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto" />
+                                        <RowDefinition Height="auto" />
+                                    </Grid.RowDefinitions>
+                                    <TextBox PlaceholderText="Name?"
+                                             Header="Name?"
+                                             TextChanging="NewProvinceName_TextChanging"
+                                             x:Name="NewAdminiName" />
+                                    <Button x:Name="SaveNewAdminiName"
+                                            Click="SaveNewAdminiName_Click"
+                                            Grid.Row="1"
+                                            IsEnabled="False"
+                                            HorizontalAlignment="Stretch"
+                                            HorizontalContentAlignment="Stretch">
+                                        <Button.Content>
+                                            <Grid FlowDirection="RightToLeft">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <SymbolIcon Symbol="Accept" />
+                                                <TextBlock Text="وەرگرتن"
+                                                           TextAlignment="Center"
+                                                           Grid.Column="1" />
+                                            </Grid>
+                                        </Button.Content>
+                                    </Button>
+                                </Grid>
+                            </Flyout>
+                        </Button.Flyout>
+                    </Button>
+                </Grid>
+            </Expander.Header>
+            <Grid>
+                <ListView x:Name="AdminiList"
+                          HorizontalAlignment="Stretch"
+                          SelectionMode="None"
+                          HorizontalContentAlignment="Stretch">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid HorizontalAlignment="Stretch">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="auto" />
+                                </Grid.ColumnDefinitions>
+                                <CheckBox Content="{Binding Name}"
+                                          Tag="{Binding id}"
+                                          HorizontalAlignment="Stretch"
+                                          IsChecked="{Binding isActive}"
+                                          Click="AdminiCheckBox_Click" />
+                                <AppBarButton LabelPosition="Collapsed"
+                                              Icon="Edit"
+                                              Tag="{Binding id}"
+                                              Click="OpenAdminiUpdaterTip_Click"
+                                              Grid.Column="2" />
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+        </Expander>
+        <TeachingTip x:Name="ProvinceUpdaterTip"
+                     IsOpen="False">
+            <Updater:ProvinceUpdater />
+        </TeachingTip>
+        <TeachingTip x:Name="MartialUpdaterTip"
+                     IsOpen="False">
+            <Updater:MartialUpdater />
+        </TeachingTip>
+        <TeachingTip x:Name="AdminiUpdaterTip"
+                     IsOpen="False">
+            <Updater:AdminiEditor />
+        </TeachingTip>
+        <TeachingTip x:Name="NationalityUpdaterTip"
+                     IsOpen="False">
+            <Updater:Nationality />
+        </TeachingTip>
+        <TeachingTip x:Name="ReligionUpdaterTip"
+                     IsOpen="False">
+            <Updater:ReligionEditor />
+        </TeachingTip>
     </Grid>
 </Page>

@@ -26,6 +26,11 @@
     <Content Remove="Assets\Pngs\logo.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="Editors\AdminiEditor.xaml" />
+    <None Remove="Editors\MartialUpdater.xaml" />
+    <None Remove="Editors\Nationality.xaml" />
+    <None Remove="Editors\ProvinceUpdater.xaml" />
+    <None Remove="Editors\ReligionEditor.xaml" />
     <None Remove="Views\DataBaseManager.xaml" />
     <None Remove="Views\Home.xaml" />
     <None Remove="Views\PropertiesView.xaml" />
@@ -59,8 +64,32 @@
     <ProjectCapability Include="Msix" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Editors\" />
     <Folder Include="Uploaders\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Editors\ReligionEditor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Editors\Nationality.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Editors\AdminiEditor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Editors\MartialUpdater.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Editors\ProvinceUpdater.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\UsersView.xaml">

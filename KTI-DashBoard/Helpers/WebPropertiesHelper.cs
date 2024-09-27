@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace KTI_DashBoard.Helpers
 {
@@ -85,7 +86,6 @@ namespace KTI_DashBoard.Helpers
             }
         }
 
-
         public static async Task<bool> addProperties(string tbl, string name)
         {
             using (SqlCommand cmd = new SqlCommand("", DbConnectionHelper.con))
@@ -105,6 +105,19 @@ namespace KTI_DashBoard.Helpers
                 cmd.CommandText = $"update {tbl} set isActive = @isactive where id =@id";
                 cmd.Parameters.AddWithValue("@id", id);
                 cmd.Parameters.AddWithValue("@isactive", status);
+
+                await cmd.ExecuteNonQueryAsync();
+            }
+            return true;
+        }
+
+        public static async Task<bool> UpdateProp(string tbl, int id, string name)
+        {
+            using (SqlCommand cmd = new SqlCommand("", DbConnectionHelper.con))
+            {
+                cmd.CommandText = $"update {tbl} set Name = @Name where id =@id";
+                cmd.Parameters.AddWithValue("@id", id);
+                cmd.Parameters.AddWithValue("@Name", name);
 
                 await cmd.ExecuteNonQueryAsync();
             }

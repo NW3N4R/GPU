@@ -5,7 +5,7 @@
         xmlns:local="using:KTI_DashBoard"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        Title="Kti"
+        Title="KTI-Control Panel"
         mc:Ignorable="d">
     <NavigationView x:Name="NavView"
                     Loaded="NavView_Loaded"
@@ -17,6 +17,7 @@
             <NavigationViewItem Icon="Home"
                                 Content="Home"
                                 Tag="Home" />
+            <NavigationViewItemHeader Content="Managers" />
             <NavigationViewItem Icon="Trim"
                                 Content="Properties"
                                 Tag="PropertiesView" />
@@ -26,7 +27,24 @@
             <NavigationViewItem Icon="People"
                                 Content="Users"
                                 Tag="UsersView" />
+            <NavigationViewItemHeader Content="Records" />
+            <NavigationViewItem Icon="PhoneBook"
+                                Content="Students"
+                                Tag="Home" />
+            <NavigationViewItem Icon="ContactInfo"
+                                Content="Archive"
+                                Tag="Home" />
+            <NavigationViewItem Icon="WebCam"
+                                Content="Statical"
+                                Tag="Home" />
+            <NavigationViewItemHeader Content="CRUD Operations" />
+            <NavigationViewItem Icon="SaveLocal"
+                                Content="New Students"
+                                Tag="Home" />
+            <NavigationViewItem Icon="Switch"
+                                Content="Move Students"
+                                Tag="Home" />
         </NavigationView.MenuItems>
-        <Frame x:Name="ContentFrame"></Frame>
+        <Frame x:Name="ContentFrame" FontFamily="Droid Arabic Kufi"></Frame>
     </NavigationView>
 </Window>
