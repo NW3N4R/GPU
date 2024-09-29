@@ -8,10 +8,6 @@ namespace GPU.Controllers
     {
         public async Task<IActionResult> Index()
         {
-
-
-            ViewData["InfoMessage"] = "This is an information bar message!";
-
             await DbConnectionHelper.LoadAll();
             #region MyRegion
             List<HomeModel> list = new List<HomeModel>();
@@ -45,7 +41,6 @@ namespace GPU.Controllers
             model.Karkuk = contact.Count(x => x.Province.Contains("کەرکووک")) + arcontact.Count(x => x.Province.Contains("کەرکووک"));
             model.Diala = contact.Count(x => x.Province.Contains("دیالە")) + arcontact.Count(x => x.Province.Contains("دیالە"));
             #endregion
-
 
             list.Add(model);
             int RowCount = model.RowCount;

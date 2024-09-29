@@ -6,6 +6,476 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       mc:Ignorable="d"
-      Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-    <Grid Tag="UsersView"></Grid>
+      xmlns:pp="using:ABI.Microsoft.UI.Xaml.Controls"
+      Loaded="Page_Loaded"
+      xmlns:editors="using:KTI_DashBoard.Editors">
+    <Grid Tag="UsersView"
+          Padding="10"
+          RowSpacing="10"
+          ColumnSpacing="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Expander HorizontalAlignment="Stretch"
+                  VerticalAlignment="Top"
+                  HorizontalContentAlignment="Stretch">
+            <Expander.Header>
+                <Grid Padding="10"
+                      ColumnSpacing="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="auto" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Employees"
+                               Style="{StaticResource TitleTextBlockStyle}" />
+                    <TextBlock Text="in this article you will manage Employees"
+                               Style="{StaticResource BodyStrongTextBlockStyle}"
+                               Grid.Row="1" />
+                    <Button Grid.Column="1"
+                            Grid.RowSpan="2">
+                        <Button.Content>
+                            <Grid ColumnSpacing="10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto" />
+                                    <ColumnDefinition Width="auto" />
+                                </Grid.ColumnDefinitions>
+                                <SymbolIcon Symbol="Add" />
+                                <TextBlock Text="Add Employee"
+                                           Grid.Column="1" />
+                            </Grid>
+                        </Button.Content>
+                        <Button.Flyout>
+                            <Flyout>
+                                <Grid MinWidth="200"
+                                      RowSpacing="10">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto" />
+                                        <RowDefinition Height="auto" />
+                                    </Grid.RowDefinitions>
+                                    <TextBox Header="Employee is Full Name"
+                                             x:Name="NewEmployeename"
+                                             TextChanging="NewEmployeename_TextChanging"
+                                             PlaceholderText="Full Name" />
+                                    <Button Grid.Row="1"
+                                            x:Name="NewEmployeSave"
+                                            Click="NewEmployeSave_Click"
+                                            IsEnabled="False"
+                                            HorizontalContentAlignment="Center"
+                                            Background="{StaticResource SystemAccentColor}"
+                                            HorizontalAlignment="Stretch">
+                                        <Button.Content>
+                                            <Grid ColumnSpacing="10">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto" />
+                                                    <ColumnDefinition Width="auto" />
+                                                </Grid.ColumnDefinitions>
+                                                <SymbolIcon Symbol="Add" />
+                                                <TextBlock Text="Save"
+                                                           TextAlignment="Center"
+                                                           Grid.Column="1" />
+                                            </Grid>
+                                        </Button.Content>
+                                    </Button>
+                                </Grid>
+                            </Flyout>
+                        </Button.Flyout>
+                    </Button>
+                </Grid>
+            </Expander.Header>
+            <Expander.Content>
+                <ListView x:Name="EmployeesList"
+                          HorizontalAlignment="Stretch"
+                          HorizontalContentAlignment="Stretch">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid HorizontalAlignment="Stretch">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="auto" />
+                                    <ColumnDefinition Width="auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="{Binding Name}"
+                                           VerticalAlignment="Center" />
+                                <ToggleButton x:Name="EmpSusBttn"
+                                              Click="EmpSusBttn_Click"
+                                              Grid.Column="1"
+                                              Tag="{Binding id}"
+                                              Loaded="EmpSusBttn_Loaded" />
+                                <AppBarButton Icon="Edit"
+                                              Grid.Column="2"
+                                              Tag="{Binding id}"
+                                              LabelPosition="Collapsed"
+                                              x:Name="ShowEmpEditor"
+                                              Click="ShowEmpEditor_Click" />
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Expander.Content>
+        </Expander>
+        <Expander HorizontalAlignment="Stretch"
+                  VerticalAlignment="Top"
+                  Grid.Column="1"
+                  HorizontalContentAlignment="Stretch">
+            <Expander.Header>
+                <Grid Padding="10"
+                      ColumnSpacing="4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="auto" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Users"
+                               Style="{StaticResource TitleTextBlockStyle}" />
+                    <TextBlock Text="in this article you'll manage Users and their Access to Deps"
+                               Style="{StaticResource BodyStrongTextBlockStyle}"
+                               Grid.Row="1" />
+                    <Button Grid.Column="1"
+                            IsEnabled="False"
+                            x:Name="ShowNewUserFlyout"
+                            Click="ShowNewUserFlyout_Click"
+                            Grid.RowSpan="2">
+                        <Button.Content>
+                            <Grid ColumnSpacing="10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto" />
+                                    <ColumnDefinition Width="auto" />
+                                </Grid.ColumnDefinitions>
+                                <SymbolIcon Symbol="Add" />
+                                <TextBlock Text="Add User"
+                                           x:Name="AddUserTitle"
+                                           Grid.Column="1" />
+                            </Grid>
+                        </Button.Content>
+                        <Button.Flyout>
+                            <Flyout>
+                                <Grid  ColumnSpacing="20"
+                                       RowSpacing="15">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto" />
+                                        <RowDefinition Height="auto" />
+                                        <RowDefinition Height="auto" />
+                                    </Grid.RowDefinitions>
+                                    <ComboBox x:Name="EmpListForUsers"
+                                              Grid.ColumnSpan="2"
+                                              SelectionChanged="EmpListForUsers_SelectionChanged"
+                                              HorizontalAlignment="Stretch" />
+                                    <TextBox Header="User Name (8max) (4min)"
+                                             x:Name="NewUserName"
+                                             TextChanging="NewUserName_TextChanging"
+                                             MaxLength="8"
+                                             Grid.Row="1"
+                                             PlaceholderText="s0m30ne" />
+                                    <PasswordBox Header="Passowrd (8max) (4min)"
+                                                 x:Name="NewUserPassword"
+                                                 Grid.Row="1"
+                                                 MaxLength="8"
+                                                 PasswordChanging="NewUserPassword_PasswordChanging"
+                                                 PlaceholderText="passowrd..."
+                                                 Grid.Column="1" />
+                                    <Button Grid.Row="2"
+                                            x:Name="SaveNewUser"
+                                            Click="SaveNewUser_Click"
+                                            IsEnabled="False"
+                                            Grid.ColumnSpan="2"
+                                            HorizontalAlignment="Stretch"
+                                            HorizontalContentAlignment="Center">
+                                        <Button.Content>
+                                            <Grid ColumnSpacing="10">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto" />
+                                                    <ColumnDefinition Width="auto" />
+                                                </Grid.ColumnDefinitions>
+                                                <SymbolIcon Symbol="Accept" />
+                                                <TextBlock Text="Save"
+                                                           TextAlignment="Center"
+                                                           Grid.Column="1" />
+                                            </Grid>
+                                        </Button.Content>
+                                    </Button>
+                                </Grid>
+                            </Flyout>
+                        </Button.Flyout>
+                    </Button>
+                </Grid>
+            </Expander.Header>
+            <Expander.Content>
+                <ListView x:Name="UsersList"
+                          HorizontalAlignment="Stretch"
+                          HorizontalContentAlignment="Stretch">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid HorizontalAlignment="Stretch"
+                                  ColumnSpacing="10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto" />
+                                    <ColumnDefinition Width="auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="{Binding EmpName}"
+                                           Foreground="{StaticResource SystemAccentColor}"
+                                           VerticalAlignment="Center" />
+                                <TextBlock Text="{Binding UserName}"
+                                           VerticalAlignment="Center"
+                                           Grid.Column="2" />
+                                <AppBarButton Icon="Edit"
+                                              Grid.Column="3"
+                                              Tag="{Binding id}"
+                                              LabelPosition="Collapsed"
+                                              x:Name="ShowUsersEditor"
+                                              Click="ShowUsersEditor_Click" />
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Expander.Content>
+        </Expander>
+        <Expander HorizontalAlignment="Stretch"
+                  VerticalAlignment="Top"
+                  Grid.Column="0"
+                  Grid.Row="1"
+                  Grid.ColumnSpan="2"
+                  HorizontalContentAlignment="Stretch">
+            <Expander.Header>
+                <Grid Padding="10"
+                      ColumnSpacing="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="auto" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="USERS ACCESS"
+                               Style="{StaticResource TitleTextBlockStyle}" />
+                    <TextBlock Text="in this article you will specify access to each users is department form filling"
+                               Style="{StaticResource BodyStrongTextBlockStyle}"
+                               Grid.Row="1" />
+                    <Button Grid.Column="1"
+                            IsEnabled="False"
+                            x:Name="ShowUserAccessFlyout"
+                            Click="ShowUserAccessFlyout_Click"
+                            Grid.RowSpan="2">
+                        <Button.Content>
+                            <Grid ColumnSpacing="10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto" />
+                                    <ColumnDefinition Width="auto" />
+                                </Grid.ColumnDefinitions>
+                                <SymbolIcon Symbol="Add" />
+                                <TextBlock Text="New Access"
+                                           x:Name="AddUserAccessTitle"
+                                           Grid.Column="1" />
+                            </Grid>
+                        </Button.Content>
+                        <Button.Flyout>
+                            <Flyout>
+                                <Grid  ColumnSpacing="20"
+                                       MinWidth="300"
+                                       RowSpacing="15">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto" />
+                                        <RowDefinition Height="auto" />
+                                        <RowDefinition Height="auto" />
+                                    </Grid.RowDefinitions>
+                                    <ComboBox x:Name="UsersListForAccess"
+                                              Header="Select an Employee"
+                                              SelectionChanged="UsersListForAccess_SelectionChanged"
+                                              HorizontalAlignment="Stretch" />
+                                    <ComboBox x:Name="DepsListForAccess"
+                                              Grid.Column="1"
+                                              SelectionChanged="DepsListForAccess_SelectionChanged"
+                                              Header="Select a Department"
+                                              HorizontalAlignment="Stretch" />
+                                    <Button Grid.Row="2"
+                                            x:Name="SaveNewAccess"
+                                            Click="SaveNewAccess_Click"
+                                            Grid.ColumnSpan="2"
+                                            HorizontalAlignment="Stretch"
+                                            HorizontalContentAlignment="Center">
+                                        <Button.Content>
+                                            <Grid ColumnSpacing="10">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto" />
+                                                    <ColumnDefinition Width="auto" />
+                                                </Grid.ColumnDefinitions>
+                                                <SymbolIcon Symbol="Accept" />
+                                                <TextBlock Text="Save"
+                                                           TextAlignment="Center"
+                                                           Grid.Column="1" />
+                                            </Grid>
+                                        </Button.Content>
+                                    </Button>
+                                </Grid>
+                            </Flyout>
+                        </Button.Flyout>
+                    </Button>
+                </Grid>
+            </Expander.Header>
+            <Expander.Content>
+                <ListView x:Name="AccessList"
+                          HorizontalAlignment="Stretch"
+                          HorizontalContentAlignment="Stretch">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid HorizontalAlignment="Stretch"
+                                  ColumnSpacing="10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto" />
+                                    <ColumnDefinition Width="auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="{Binding EmpName}"
+                                           Foreground="{StaticResource SystemAccentColor}"
+                                           VerticalAlignment="Center" />
+                                <TextBlock Text=" has access to "
+                                           Grid.Column="1"
+                                           VerticalAlignment="Center" />
+                                <TextBlock Text="{Binding DepName}"
+                                           Foreground="{StaticResource SystemAccentColor}"
+                                           VerticalAlignment="Center"
+                                           Grid.Column="2" />
+                                <AppBarButton Icon="Delete"
+                                              Grid.Column="3"
+                                              Tag="{Binding id}"
+                                              LabelPosition="Collapsed"
+                                              x:Name="DeleteAccess"
+                                              Click="DeleteAccess_Click" />
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Expander.Content>
+        </Expander>
+        <ListView Grid.Row="2"
+                  Padding="10"
+                  CornerRadius="5"
+                  Background="{StaticResource CardBackgroundFillColorDefault}"
+                  Grid.ColumnSpan="2">
+            <ListView.Header>
+                <Grid Padding="10"
+                      RowSpacing="10"
+                      ColumnSpacing="16">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"
+                                          MinWidth="150"
+                                          MaxWidth="170" />
+                        <ColumnDefinition Width="*"
+                                          MinWidth="150"
+                                          MaxWidth="170" />
+                        <ColumnDefinition Width="*"
+                                          MinWidth="150"
+                                          MaxWidth="170" />
+                        <ColumnDefinition Width="*"
+                                          MinWidth="150"
+                                          MaxWidth="170" />
+                        <ColumnDefinition Width="*"
+                                          MinWidth="150"
+                                          MaxWidth="170" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Users Log"
+                               Style="{StaticResource TitleTextBlockStyle}" />
+                    <TextBlock Grid.Column="0"
+                               Grid.Row="1"
+                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                               Text="Employee Name" />
+                    <TextBlock Grid.Column="1"
+                               Grid.Row="1"
+                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                               Text="User Name" />
+                    <TextBlock Grid.Column="2"
+                               Grid.Row="1"
+                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                               Text="Date" />
+                    <TextBlock Grid.Column="3"
+                               Grid.Row="1"
+                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                               Text="Time" />
+                    <TextBlock Grid.Column="4"
+                               Grid.Row="1"
+                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                               Text="Table" />
+                    <TextBlock Grid.Column="5"
+                               Grid.Row="1"
+                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                               Text="Command" />
+                </Grid>
+            </ListView.Header>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid ColumnSpacing="16">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"
+                                              MinWidth="150"
+                                              MaxWidth="170" />
+                            <ColumnDefinition Width="*"
+                                              MinWidth="150"
+                                              MaxWidth="170" />
+                            <ColumnDefinition Width="*"
+                                              MinWidth="150"
+                                              MaxWidth="170" />
+                            <ColumnDefinition Width="*"
+                                              MinWidth="150"
+                                              MaxWidth="170" />
+                            <ColumnDefinition Width="*"
+                                              MinWidth="150"
+                                              MaxWidth="170" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="{Binding Id}" />
+                        <TextBlock Grid.Column="1"
+                                   Text="{Binding Name}" />
+                        <TextBlock Grid.Column="2"
+                                   Text="{Binding Description}" />
+                        <TextBlock Grid.Column="3"
+                                   Text="{Binding Quantity}" />
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            <ListView.ItemContainerStyle>
+                <Style BasedOn="{StaticResource DefaultListViewItemStyle}"
+                       TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment"
+                            Value="Stretch" />
+                </Style>
+            </ListView.ItemContainerStyle>
+        </ListView>
+        <TeachingTip x:Name="EmployeesEditorTip"
+                     IsOpen="False">
+            <editors:EmployeesEditor />
+        </TeachingTip>
+        <TeachingTip x:Name="UsersEditorTip"
+                     IsOpen="False">
+            <editors:UsersEditor />
+        </TeachingTip>
+    </Grid>
 </Page>

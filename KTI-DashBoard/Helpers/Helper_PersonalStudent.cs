@@ -13,31 +13,36 @@ namespace KTI_DashBoard.Helpers
 
         public static async Task<List<PersonalStudent>> GetStudents()
         {
-            using (SqlCommand cmd = new SqlCommand("select * from PersonalStudent", DbConnectionHelper.con))
+            if (DbConnectionHelper.con.State == System.Data.ConnectionState.Open)
             {
-                using (SqlDataReader rd = await cmd.ExecuteReaderAsync())
+
+                using (SqlCommand cmd = new SqlCommand("select * from PersonalStudent", DbConnectionHelper.con))
                 {
-                    _Student.Clear();
-                    while (await rd.ReadAsync())
+                    using (SqlDataReader rd = await cmd.ExecuteReaderAsync())
                     {
-                        var model = new PersonalStudent
+                        _Student.Clear();
+                        while (await rd.ReadAsync())
                         {
-                            Id = rd.GetInt32(0),
-                            Name = rd.GetString(1),
-                            Age = rd.GetInt32(2),
-                            Sex = rd.GetString(3),
-                            MartialStatus = rd.GetString(4),
-                            BloodGroup = rd.GetString(5),
-                            Religion = rd.GetString(6),
-                            IdentityNo = rd.GetString(7),
-                            Nationality = rd.GetString(8),
-                            RationingFormNo = rd.GetString(9),
+                            var model = new PersonalStudent
+                            {
+                                Id = rd.GetInt32(0),
+                                Name = rd.GetString(1),
+                                Age = rd.GetInt32(2),
+                                Sex = rd.GetString(3),
+                                MartialStatus = rd.GetString(4),
+                                BloodGroup = rd.GetString(5),
+                                Religion = rd.GetString(6),
+                                IdentityNo = rd.GetString(7),
+                                Nationality = rd.GetString(8),
+                                RationingFormNo = rd.GetString(9),
 
-                        };
+                            };
 
-                        _Student.Add(model);
+                            _Student.Add(model);
+                        }
                     }
                 }
+
             }
             return _Student;
         }
@@ -355,6 +360,31 @@ namespace KTI_DashBoard.Helpers
                 }
             }
 
+        }
+
+
+        public static async Task<bool> DeleteStudent(int id)
+        {
+            using (SqlCommand cmd = new SqlCommand("DeleteStudents", DbConnectionHelper.con))
+            {
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@id", id);
+
+                int rf = await cmd.ExecuteNonQueryAsync();
+                return rf > 0;
+            }
+        }
+
+        public static async Task<bool> ArchiveDeleteStudent(int id)
+        {
+            using (SqlCommand cmd = new SqlCommand("DeleteArchiveStudents", DbConnectionHelper.con))
+            {
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@id", id);
+
+                int rf = await cmd.ExecuteNonQueryAsync();
+                return rf > 0;
+            }
         }
     }
 }

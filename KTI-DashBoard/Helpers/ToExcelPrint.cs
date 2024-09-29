@@ -9,7 +9,7 @@ namespace KTI_DashBoard.Helpers
 {
     public class ToExcelPrint
     {
-        public static async Task<MemoryStream> DoPrint(IEnumerable<StudentTableModel> students, int pre = 0)
+        public static async Task<ExcelPackage> DoPrint(List<StudentTableModel> students, int pre = 0)
         {
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial; // For non-commercial use
             ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.Commercial;
@@ -186,10 +186,8 @@ namespace KTI_DashBoard.Helpers
             var tableRange = worksheet.Cells[startCell.Address + ":" + endCell.Address];
 
             var table = worksheet.Tables.Add(tableRange, "MyTable");
-            var stream = new MemoryStream();
-            excelPackage.SaveAs(stream);
-            stream.Position = 0;
-            return stream;
+         
+            return excelPackage;
         }
     }
 }

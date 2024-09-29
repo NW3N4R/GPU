@@ -1,0 +1,24 @@
+﻿@{
+    ViewData["Title"] = "بڕوانامەکان";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="CerBody">
+
+<div class="card-container">
+    <div class="card">ماستەر شیت</div>
+    <div class="card">یەکەمەکان</div>
+    <div class="card">دەرچووانی ئەمساڵ</div>
+    <div class="card">کۆنمرە</div>
+    <div class="card">بروانامە تەواو بوەکان</div>
+    <div class="card">پشتگیریەکان</div>
+</div>
+<script>
+
+    document.querySelectorAll('.card').forEach(card => {
+        card.addEventListener('click', () => {
+            alert(card.textContent + " clicked!");
+        });
+    });
+
+</script>
+</div>

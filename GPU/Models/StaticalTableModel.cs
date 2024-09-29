@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Reflection.PortableExecutable;
 
 namespace GPU.Models
 {
@@ -45,6 +46,11 @@ namespace GPU.Models
         [DisplayName("قۆناغ")]
         public int Stage { get; set; }
 
+        [DisplayName("ڕەگەز")]
+        public string? Sex { get; set; }
+
+        [DisplayName("ساڵی تەواو کردن")]
+        public string? Graduation { get; set; }
         public bool isFirst { get; set; }
     }
 }

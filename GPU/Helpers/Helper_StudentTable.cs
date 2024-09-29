@@ -10,7 +10,6 @@ namespace GPU.Helpers
         public static List<StaticalTableModel> _student = new List<StaticalTableModel>();
         public static List<StaticalTableModel> arStudents = new List<StaticalTableModel>();
         public static List<StaticalTableModel> combinedStudents = new List<StaticalTableModel>();
-
         public static List<StaticalTableModel> GetStudentTable()
         {
 
@@ -28,6 +27,7 @@ namespace GPU.Helpers
                     Age = student.Age,
                     Religion = student.Religion,
                     Nationality = student.Nationality,
+                    Sex = student.Sex,
                     Province = contact?.Province,
                     EducationType = school?.EducationType,
                     SchoolGraduation = school?.Graduation,
@@ -35,7 +35,7 @@ namespace GPU.Helpers
                     AcceptanceType = dep?.AcceptanceType,
                     ResidenceType = dep?.ResidenceType,
                     StartingYear = dep?.startinYear,
-                    Stage = dep.Stage
+                    Stage = dep.Stage,
                 };
 
                 _student.Add(model);
@@ -57,7 +57,8 @@ namespace GPU.Helpers
             (!string.IsNullOrWhiteSpace(tbl.AcceptanceType) && tbl.AcceptanceType != "-" ? (x.AcceptanceType != null && x.AcceptanceType.Contains(tbl.AcceptanceType)) : true) &&
             (tbl.Stage != 0 ? x.Stage == tbl.Stage : true) &&
             (!string.IsNullOrWhiteSpace(tbl.ResidenceType) && tbl.ResidenceType != "-" ? (x.ResidenceType != null && x.ResidenceType.Contains(tbl.ResidenceType)) : true) &&
-            (!string.IsNullOrWhiteSpace(tbl.StartingYear) && tbl.StartingYear != "-" ? (x.StartingYear != null && x.StartingYear.Contains(tbl.StartingYear)) : true)).ToList();
+            (!string.IsNullOrWhiteSpace(tbl.StartingYear) && tbl.StartingYear != "-" ? (x.StartingYear != null && x.StartingYear.Contains(tbl.StartingYear)) : true) &&
+            (!string.IsNullOrWhiteSpace(tbl.Sex) && tbl.Sex != "-" ? (x.Sex != null && x.Sex.Contains(tbl.Sex)) : true)).ToList();
 
             return model;
         }
@@ -78,6 +79,7 @@ namespace GPU.Helpers
                     Age = student.Age,
                     Religion = student.Religion,
                     Nationality = student.Nationality,
+                    Sex = student.Sex,
                     Province = contact?.Province,
                     EducationType = school?.EducationType,
                     SchoolGraduation = school?.Graduation,
@@ -85,7 +87,8 @@ namespace GPU.Helpers
                     AcceptanceType = dep?.AcceptanceType,
                     ResidenceType = dep?.ResidenceType,
                     StartingYear = dep?.startinYear,
-                    Stage = dep.Stage
+                    Stage = dep.Stage,
+                    Graduation = dep.Graduate,
                 };
 
                 arStudents.Add(model);
@@ -107,7 +110,9 @@ namespace GPU.Helpers
             (!string.IsNullOrWhiteSpace(tbl.AcceptanceType) && tbl.AcceptanceType != "-" ? (x.AcceptanceType != null && x.AcceptanceType.Contains(tbl.AcceptanceType)) : true) &&
             (tbl.Stage != 0 ? x.Stage == tbl.Stage : true) &&
             (!string.IsNullOrWhiteSpace(tbl.ResidenceType) && tbl.ResidenceType != "-" ? (x.ResidenceType != null && x.ResidenceType.Contains(tbl.ResidenceType)) : true) &&
-            (!string.IsNullOrWhiteSpace(tbl.StartingYear) && tbl.StartingYear != "-" ? (x.StartingYear != null && x.StartingYear.Contains(tbl.StartingYear)) : true)).ToList();
+            (!string.IsNullOrWhiteSpace(tbl.StartingYear) && tbl.StartingYear != "-" ? (x.StartingYear != null && x.StartingYear.Contains(tbl.StartingYear)) : true) &&
+            (!string.IsNullOrWhiteSpace(tbl.Sex) && tbl.Sex != "-" ? (x.Sex != null && x.Sex.Contains(tbl.Sex)) : true)&&
+            (!string.IsNullOrWhiteSpace(tbl.Graduation) && tbl.Graduation != "-" ? (x.Graduation != null && x.Graduation.Contains(tbl.Graduation)) : true)).ToList();
 
             return model;
         }

@@ -24,10 +24,7 @@ namespace KTI_DashBoard.Models
         [DisplayName("ساڵی دەستپێك")]
         public string? StartingYear { get; set; }
 
-        public bool isFirst { get; set; }
-
-
-        public bool isLast { get; set; }
+        public int RowCount { get; set; }
 
 
     }

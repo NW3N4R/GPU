@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page x:Class="KTI_DashBoard.Views.StudentsView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:local="using:KTI_DashBoard.Views"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      Loaded="Page_Loaded"
+      mc:Ignorable="d">
+    <Grid Tag="StudentsView"
+          Padding="10">
+        <ListView x:Name="studentListView"
+                  SelectionChanged="studentListView_SelectionChanged"
+                  Padding="10"
+                  CornerRadius="10"
+                  Background="{StaticResource CardBackgroundFillColorDefault}">
+            <ListView.Header>
+                <Grid ColumnSpacing="50">
+                    <Grid.Resources>
+                        <ResourceDictionary>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Foreground"
+                                        Value="{ThemeResource TextFillColorSecondaryBrush}" />
+                                <Setter Property="HorizontalAlignment"
+                                        Value="Stretch" />
+                                <Setter Property="TextAlignment"
+                                        Value="Center" />
+                            </Style>
+                            <Style TargetType="ComboBox">
+                                <Setter Property="Background"
+                                        Value="Transparent" />
+                                <Setter Property="BorderBrush"
+                                        Value="Transparent" />
+                                <Setter Property="HorizontalAlignment"
+                                        Value="Center" />
+                                <Setter Property="SelectedIndex"
+                                        Value="0" />
+                                <Setter Property="VerticalAlignment"
+                                        Value="Top" />
+                                <Setter Property="CornerRadius"
+                                        Value="4" />
+                                <Setter Property="FlowDirection"
+                                        Value="RightToLeft" />
+                            </Style>
+                        </ResourceDictionary>
+                    </Grid.Resources>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="No" />
+                    <TextBlock Text="Name"
+                               Grid.Column="1" />
+                    <ComboBox  Grid.Column="2"
+                               x:Name="AcceptancCombo"
+                               SelectionChanged="AcceptancCombo_SelectionChanged">
+                        <x:String>Acceptance</x:String>
+                        <x:String>زانکۆلاین</x:String>
+                        <x:String>پاراڵیل</x:String>
+                        <x:String>ئێواران</x:String>
+                    </ComboBox>
+                    <ComboBox  Grid.Column="3"
+                               SelectedIndex="0"
+                               x:Name="DepartmentCombo"
+                               SelectionChanged="DepartmentCombo_SelectionChanged" />
+                    <ComboBox  Grid.Column="4"
+                               SelectedIndex="0"
+                               x:Name="StartingYearCombo"
+                               SelectionChanged="StartingYear_SelectionChanged" />
+                    <ComboBox  Grid.Column="5"
+                               x:Name="StageCombo"
+                               SelectionChanged="StageCombo_SelectionChanged">
+                        <x:String>Stage</x:String>
+                        <x:String>1</x:String>
+                        <x:String>2</x:String>
+                    </ComboBox>
+                    <TextBlock Text="Actions"
+                               Grid.Column="6" />
+                </Grid>
+            </ListView.Header>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid ColumnSpacing="50">
+                        <Grid.Resources>
+                            <ResourceDictionary>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment"
+                                            Value="Stretch" />
+                                    <Setter Property="TextAlignment"
+                                            Value="Center" />
+                                    <Setter Property="FontFamily"
+                                            Value="{StaticResource Droid}" />
+                                </Style>
+                            </ResourceDictionary>
+                        </Grid.Resources>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="{Binding RowCount}" />
+                        <TextBlock Text="{Binding Name}"
+                                   Grid.Column="1" />
+                        <TextBlock Text="{Binding Acceptance}"
+                                   Grid.Column="2" />
+                        <TextBlock Text="{Binding department}"
+                                   Grid.Column="3" />
+                        <TextBlock Text="{Binding StartingYear}"
+                                   FlowDirection="RightToLeft"
+                                   Grid.Column="4" />
+                        <TextBlock Text="{Binding Stage}"
+                                   Grid.Column="5" />
+                        <Grid Grid.Column="6"
+                              HorizontalAlignment="Center"
+                              ColumnSpacing="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="auto" />
+                            </Grid.ColumnDefinitions>
+                            <Button x:Name="PrintDocument"
+                                    Tag="{Binding id}"
+                                    Click="PrintDocument_Click">
+                                <SymbolIcon Symbol="Print" />
+                            </Button>
+                            <Button x:Name="DeleteButton"
+                                    Tag="{Binding id}"
+                                    Grid.Column="1"
+                                    Click="DeleteButton_Click">
+                                <SymbolIcon Symbol="Delete" />
+                            </Button>
+                        </Grid>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Grid HorizontalAlignment="Center"
+              VerticalAlignment="Bottom"
+              ColumnSpacing="10"
+              Margin="0,0,0,50">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
+            </Grid.ColumnDefinitions>
+            <ToggleButton x:Name="ToggleMutliBttn"
+                          Click="ToggleMutliBttn_Click">
+                <SymbolIcon Symbol="SelectAll" />
+            </ToggleButton>
+            <Button Grid.Column="1"
+                    IsEnabled="False"
+                    x:Name="DeleteMultiBttn"
+                    Click="DeleteMultiBttn_Click"
+                    Visibility="Collapsed">
+                <SymbolIcon Symbol="Delete" />
+            </Button>
+            <Button Grid.Column="2"
+                    IsEnabled="False"
+                    Click="ToExcelExportBttn_Click"
+                    x:Name="ToExcelExportBttn"
+                    Visibility="Collapsed">
+                <SymbolIcon Symbol="Document" />
+            </Button>
+        </Grid>
+    </Grid>
+</Page>

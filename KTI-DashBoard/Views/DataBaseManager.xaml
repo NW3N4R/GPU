@@ -6,8 +6,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       mc:Ignorable="d"
-      Loaded="Page_Loaded"
-      Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+      Loaded="Page_Loaded">
     <Grid Tag="DataBaseManager"
           RowSpacing="10"
           Padding="40">
@@ -22,89 +21,81 @@
                 <SolidColorBrush Color="{StaticResource SystemAccentColor}"
                                  Opacity="0.2" />
             </Frame.Background>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="auto" />
-                </Grid.ColumnDefinitions>
-                <Grid RowSpacing="10">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto" />
-                        <RowDefinition Height="auto" />
-                        <RowDefinition Height="auto" />
-                        <RowDefinition Height="auto" />
-                        <RowDefinition Height="auto" />
-                        <RowDefinition Height="auto" />
-                        <RowDefinition Height="auto" />
-                    </Grid.RowDefinitions>
-                    <StackPanel>
-                        <TextBlock Text="Main Server"
-                                   Style="{StaticResource HeaderTextBlockStyle}" />
-                        <TextBlock Text="St. Louis, Missouri, United States"
-                                   Style="{StaticResource SubheaderTextBlockStyle}"
-                                   Grid.Row="1" />
-                    </StackPanel>
-                    <Grid Grid.Row="2"
-                          ColumnSpacing="20">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto" />
-                            <ColumnDefinition Width="auto" />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="IIS STATUS :"
-                                   Style="{StaticResource SubtitleTextBlockStyle}" />
-                        <TextBlock Text=""
-                                   Style="{StaticResource SubtitleTextBlockStyle}"
-                                   x:Name="IisStatus"
-                                   Grid.Column="1" />
-                    </Grid>
-                    <Grid Grid.Row="3"
-                          ColumnSpacing="20">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto" />
-                            <ColumnDefinition Width="auto" />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="Database Status :"
-                                   Style="{StaticResource SubtitleTextBlockStyle}" />
-                        <TextBlock Text=""
-                                   x:Name="ServerStatus"
-                                   Style="{StaticResource SubtitleTextBlockStyle}"
-                                   VerticalAlignment="Bottom"
-                                   Grid.Column="1" />
-                    </Grid>
-                    <Grid Grid.Row="4"
-                          ColumnSpacing="20">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto" />
-                            <ColumnDefinition Width="auto" />
-                            <ColumnDefinition Width="auto" />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="Web Stat :"
-                                   Style="{StaticResource SubtitleTextBlockStyle}" />
-                        <ToggleButton x:Name="WebStatToggle"
-                                      Click="WebStatToggle_Click"
-                                      Grid.Column="1"
-                                      VerticalAlignment="Top" />
-                    </Grid>
-                    <Grid Grid.Row="5"
-                          ColumnSpacing="20">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto" />
-                            <ColumnDefinition Width="auto" />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="All Services Status :"
-                                   Style="{StaticResource SubtitleTextBlockStyle}" />
-                        <TextBlock Text=""
-                                   x:Name="AllServiceStatus"
-                                   Style="{StaticResource SubtitleTextBlockStyle}"
-                                   Grid.Column="1" />
-                    </Grid>
-                    <Button Content="Take me To Web!" x:Name="ToWeb" Click="ToWeb_Click" Grid.Row="6" />
+            <Grid RowSpacing="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+                <StackPanel>
+                    <TextBlock Text="Main Server"
+                               Style="{StaticResource HeaderTextBlockStyle}" />
+                    <TextBlock Text="St. Louis, Missouri, United States"
+                               Style="{StaticResource SubheaderTextBlockStyle}"
+                               Grid.Row="1" />
+                </StackPanel>
+                <Grid Grid.Row="2"
+                      ColumnSpacing="20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="IIS STATUS :"
+                               Style="{StaticResource SubtitleTextBlockStyle}" />
+                    <TextBlock Text=""
+                               Style="{StaticResource SubtitleTextBlockStyle}"
+                               x:Name="IisStatus"
+                               Grid.Column="1" />
                 </Grid>
-                <AppBarButton Icon="Refresh"
-                              x:Name="RefreshButton"
-                              Click="RefreshButton_Click"
-                              Grid.Column="1"
-                              LabelPosition="Collapsed" />
+                <Grid Grid.Row="3"
+                      ColumnSpacing="20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Database Status :"
+                               Style="{StaticResource SubtitleTextBlockStyle}" />
+                    <TextBlock Text=""
+                               x:Name="ServerStatus"
+                               Style="{StaticResource SubtitleTextBlockStyle}"
+                               VerticalAlignment="Bottom"
+                               Grid.Column="1" />
+                </Grid>
+                <Grid Grid.Row="4"
+                      ColumnSpacing="20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Web Stat :"
+                               Style="{StaticResource SubtitleTextBlockStyle}" />
+                    <ToggleButton x:Name="WebStatToggle"
+                                  Click="WebStatToggle_Click"
+                                  Grid.Column="1"
+                                  VerticalAlignment="Top" />
+                </Grid>
+                <Grid Grid.Row="5"
+                      ColumnSpacing="20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="All Services Status :"
+                               Style="{StaticResource SubtitleTextBlockStyle}" />
+                    <TextBlock Text=""
+                               x:Name="AllServiceStatus"
+                               Style="{StaticResource SubtitleTextBlockStyle}"
+                               Grid.Column="1" />
+                </Grid>
+                <Button Content="Take me To Web!"
+                        x:Name="ToWeb"
+                        Click="ToWeb_Click"
+                        Grid.Row="6" />
             </Grid>
         </Frame>
         <Frame CornerRadius="10"

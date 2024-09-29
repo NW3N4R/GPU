@@ -18,6 +18,7 @@ namespace KTI_DashBoard.Helpers
         public static List<WebProperties> _EduAdmini = new List<WebProperties>();
         public static List<WebProperties> _Nationality = new List<WebProperties>();
         public static List<WebProperties> _Religion = new List<WebProperties>();
+        public static List<WebProperties> _Department = new List<WebProperties>();
 
         public static async Task GetAllProps()
         {
@@ -29,17 +30,19 @@ namespace KTI_DashBoard.Helpers
                 tbls.Add("EducationAdministrator");
                 tbls.Add("Nationality");
                 tbls.Add("Religion");
+                tbls.Add("Department");
                 int index = 0;
                 _Martial.Clear();
                 _Province.Clear();
                 _EduAdmini.Clear();
                 _Nationality.Clear();
                 _Religion.Clear();
+                _Department.Clear();
                 foreach (var item in tbls)
                 {
 
                   
-                    if (index > 5)
+                    if (index > 6)
                     {
                         break;
                     }
@@ -73,12 +76,14 @@ namespace KTI_DashBoard.Helpers
                                 case 5:
                                     _Religion.Add(model);
                                     break;
+                                case 6:
+                                    _Department.Add(model);
+                                    break;
                                 default:
                                     break;
 
                             }
 
-                            Debug.WriteLine($"read the data {model.Name} and its one list item no :{index}");
 
                         }
                     }

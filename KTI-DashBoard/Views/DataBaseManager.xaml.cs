@@ -46,7 +46,8 @@ namespace KTI_DashBoard.Views
 
         private  void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            Load(); 
+            Load();
+            MainWindow.current.Refresh.Click += RefreshButton_Click;
         }
 
         async void Load()

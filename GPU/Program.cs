@@ -35,5 +35,4 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 await DbConnectionHelper.OpenConnection();
 
-await DbConnectionHelper.LoadAll();
 app.Run();

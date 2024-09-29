@@ -1,6 +1,7 @@
 using KTI_DashBoard.Helpers;
 using Microsoft.UI;
 using Microsoft.UI.Input;
+using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -17,20 +18,108 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
+using Windows.ApplicationModel;
+using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
-
+using Windows.UI.ViewManagement;
+using WinRT.Interop;
+using KTI_DashBoard.Extensions;
+using Microsoft.UI.Composition.SystemBackdrops;
 
 namespace KTI_DashBoard
 {
 
     public sealed partial class MainWindow : Window
     {
+        private AppWindow m_AppWindow;
+        private DesktopAcrylicBackdrop _backdrop;
+        public static MainWindow current;
         public MainWindow()
         {
             this.InitializeComponent();
+            m_AppWindow = this.AppWindow;
+            AppTitleBar.Loaded += AppTitleBar_Loaded;
+            AppTitleBar.SizeChanged += AppTitleBar_SizeChanged;
+            ExtendsContentIntoTitleBar = true;
+            TitleBarTextBlock.Text = "KTI Control Panel";
+            TrySetAcrylicBackdrop();
+            current = this;
+        }
 
-           
+        private void TrySetAcrylicBackdrop()
+        {
+
+            var micaBackdrop = new MicaBackdrop();
+            this.SystemBackdrop = micaBackdrop;
+          
+        }
+        private void AppTitleBar_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (ExtendsContentIntoTitleBar == true)
+            {
+                // Set the initial interactive regions.
+                SetRegionsForCustomTitleBar();
+            }
+        }
+
+        private void AppTitleBar_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (ExtendsContentIntoTitleBar == true)
+            {
+                // Update interactive regions if the size of the window changes.
+                SetRegionsForCustomTitleBar();
+            }
+        }
+        private void SetRegionsForCustomTitleBar()
+        {
+            // Specify the interactive regions of the title bar.
+
+            double scaleAdjustment = AppTitleBar.XamlRoot.RasterizationScale;
+
+            RightPaddingColumn.Width = new GridLength(m_AppWindow.TitleBar.RightInset / scaleAdjustment);
+            LeftPaddingColumn.Width = new GridLength(m_AppWindow.TitleBar.LeftInset / scaleAdjustment);
+
+            GeneralTransform transform = TitleBarSearchBox.TransformToVisual(null);
+            Rect bounds = transform.TransformBounds(new Rect(0, 0,
+                                                             TitleBarSearchBox.ActualWidth,
+                                                             TitleBarSearchBox.ActualHeight));
+            Windows.Graphics.RectInt32 SearchBoxRect = GetRect(bounds, scaleAdjustment);
+
+            transform = PersonPic.TransformToVisual(null);
+            bounds = transform.TransformBounds(new Rect(0, 0,
+                                                        PersonPic.ActualWidth,
+                                                        PersonPic.ActualHeight));
+            Windows.Graphics.RectInt32 PersonPicRect = GetRect(bounds, scaleAdjustment);
+
+            transform = Refresh.TransformToVisual(null);
+            bounds = transform.TransformBounds(new Rect(0, 0,
+                                                        Refresh.ActualWidth,
+                                                        Refresh.ActualHeight));
+            Windows.Graphics.RectInt32 RefreshRect = GetRect(bounds, scaleAdjustment);
+
+            transform = Settings.TransformToVisual(null);
+            bounds = transform.TransformBounds(new Rect(0, 0,
+                                                        Settings.ActualWidth,
+                                                        Settings.ActualHeight));
+
+            Windows.Graphics.RectInt32 SettingsRect = GetRect(bounds, scaleAdjustment);
+
+
+            var rectArray = new Windows.Graphics.RectInt32[] { SearchBoxRect, PersonPicRect , RefreshRect, SettingsRect };
+
+            InputNonClientPointerSource nonClientInputSrc =
+                InputNonClientPointerSource.GetForWindowId(this.AppWindow.Id);
+            nonClientInputSrc.SetRegionRects(NonClientRegionKind.Passthrough, rectArray);
+        }
+        private Windows.Graphics.RectInt32 GetRect(Rect bounds, double scale)
+        {
+            return new Windows.Graphics.RectInt32(
+                _X: (int)Math.Round(bounds.X * scale),
+                _Y: (int)Math.Round(bounds.Y * scale),
+                _Width: (int)Math.Round(bounds.Width * scale),
+                _Height: (int)Math.Round(bounds.Height * scale)
+            );
         }
 
         private async void NavView_Loaded(object sender, RoutedEventArgs e)
@@ -50,10 +139,8 @@ namespace KTI_DashBoard
 
             NavView.IsPaneOpen = false;
 
-            await DbConnectionHelper.OpenConnection();
-            await WebPropertiesHelper.GetAllProps();
+            //await WebPropertiesHelper.GetAllProps();
 
-            //await DbConnectionHelper.LoadAll();
         }
         private NavigationViewItem _lastItem;
         private void NavView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)

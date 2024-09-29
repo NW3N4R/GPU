@@ -12,7 +12,7 @@
             <input asp-for="table.Name"
                    name="table.Name"
                    id="searchInput"
-                   class="StaticalNameTXT columnSpan"
+                   class="StaticalNameTXT Span2"
                    placeholder="ناوی خوێندکار" />
 
             <select asp-for="table.Department" name="table.Department"
@@ -71,7 +71,7 @@
                 <option value="پیشەیی">پیشەیی</option>
             </select>
             <select asp-for="table.Province" name="table.Province" class="StaticalNameTXT">
-                <option value="-">پارێزێگا</option>
+                <option value="-">پارێزگا</option>
                 <option value="گەرمیان">گەرمیان</option>
                 <option value="سلێمانی">سلێمانی</option>
                 <option value="هەولێر">هەولێر</option>
@@ -95,6 +95,11 @@
                 <option value="نەخێر" class="YearOptions">نەخێر</option>
                 <option value="بەڵی" class="YearOptions">بەڵێ</option>
             </select>
+            <select asp-for="table.Sex" name="table.Sex" class="StaticalNameTXT">
+                <option value="-" class="YearOptions">رەگەز</option>
+                <option value="نێر" class="YearOptions">نێر</option>
+                <option value="مێ" class="YearOptions">مێ</option>
+            </select>
             <select asp-for="table.StartingYear" name="table.StartingYear" class="StaticalNameTXT">
                 <option value="-" class="YearOptions">ساڵی دەستپێک</option>
 
@@ -102,6 +107,17 @@
                 {
                     int yr = year - 1;
                     string yrr = $"{@year} - {@yr}";
+                    <option value="@yrr" class="YearOptions">@year - @yr </option>
+                }
+            </select>
+
+            <select asp-for="table.Graduation" name="table.Graduation" class="StaticalNameTXT">
+                <option value="0" class="YearOptions">ساڵی کۆتای</option>
+                @for (int year = DateTime.Now.Year; year >= 1995; year--)
+                {
+                    int yr = year - 1;
+                    string yrr = $"{@year} - {@yr}";
+
                     <option value="@yrr" class="YearOptions">@year - @yr </option>
                 }
             </select>

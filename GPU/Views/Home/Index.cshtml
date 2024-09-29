@@ -1,23 +1,11 @@
 ﻿@using System.ComponentModel
 @model (List<GPU.Models.HomeModel> model,int RowCount)
 @{
-   
-
-
-
     ViewData["Title"] = "سەرەتا";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var infoMessage = TempData["InfoMessage"];
-
 }
 
 <div class="home-container">
-    @if (ViewData["InfoMessage"] != null)
-    {
-    @*     <div class="alert alert-info">
-            @ViewData["InfoMessage"]
-        </div> *@
-    }
 
     <div class="home-RowOne CardProps">
         <div class="RightLogo fixTitle">
@@ -31,14 +19,23 @@
         <div class="LeftLogo fixTitle">
             <h2 class="TopHeaderTitle">هـــۆبـــەی تـــۆمـــارگـــە</h2>
             @{
-                string tt = DateTime.Now.ToString("tt") == "AM" ? "پ.ن" : "د.ن";
+                TimeZoneInfo timeZone = TimeZoneInfo.CreateCustomTimeZone(
+                "Arabian Standard Time", TimeSpan.FromHours(3), "Iraq Standard Time", "Iraq Standard Time"
+                );
+
+                // Get the current time in the specified time zone (Erbil)
+                DateTime dateTimeInTimeZone = TimeZoneInfo.ConvertTime(DateTime.Now, timeZone);
+
+                string tt = dateTimeInTimeZone.ToString("tt") == "AM" ? "پ.ن" : "د.ن";
             }
             <p>
-
-                <span class="TimeSet"> @DateTime.Now.ToString("mm : hh ") @tt </span>
+                @{
+                
+                }
+                <span class="TimeSet"> @dateTimeInTimeZone.ToString("mm : hh ") @tt </span>
                 @{
                     string Day = "";
-                    switch (DateTime.Now.DayOfWeek)
+                    switch (dateTimeInTimeZone.DayOfWeek)
                     {
                         case DayOfWeek.Sunday:
                             Day = "یەک شەممە";

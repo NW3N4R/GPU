@@ -30,12 +30,23 @@ namespace KTI_DashBoard.Views
         }
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            load();
+            MainWindow.current.Refresh.Click += Refresh_Click;
+        }
+        void load()
+        {
             provinceList.ItemsSource = WebPropertiesHelper._Province;
             MartialList.ItemsSource = WebPropertiesHelper._Martial;
             AdminiList.ItemsSource = WebPropertiesHelper._EduAdmini;
             NationalityList.ItemsSource = WebPropertiesHelper._Nationality;
             ReligionList.ItemsSource = WebPropertiesHelper._Religion;
+            DepartmentList.ItemsSource = WebPropertiesHelper._Department;
         }
+        private void Refresh_Click(object sender, RoutedEventArgs e)
+        {
+            load();
+        }
+
         private void NewProvinceName_TextChanging(TextBox sender, TextBoxTextChangingEventArgs args)
         {
             if (sender == NewProvinceName)
@@ -50,13 +61,17 @@ namespace KTI_DashBoard.Views
             {
                 SaveNewAdminiName.IsEnabled = sender.Text.Length > 0 && !WebPropertiesHelper._EduAdmini.Any(x => x.Name.Contains(sender.Text));
             }
-            else if (sender == NewNationalityName) 
+            else if (sender == NewNationalityName)
             {
                 SaveNationalityName.IsEnabled = sender.Text.Length > 0 && !WebPropertiesHelper._Nationality.Any(x => x.Name.Contains(sender.Text));
             }
-            else
+            else if (sender == NewReligionName)
             {
                 SaveReligionName.IsEnabled = sender.Text.Length > 0 && !WebPropertiesHelper._Religion.Any(x => x.Name.Contains(sender.Text));
+            }
+            else
+            {
+                SaveNewDepartmentName.IsEnabled = sender.Text.Length > 0 && !WebPropertiesHelper._Department.Any(x => x.Name.Contains(sender.Text));
 
             }
         }
@@ -65,6 +80,7 @@ namespace KTI_DashBoard.Views
         {
             await WebPropertiesHelper.addProperties("province", NewProvinceName.Text);
             NewProvinceName.Text = "";
+            load();
         }
         private async void ProvinceCheckBox_Click(object sender, RoutedEventArgs e)
         {
@@ -75,6 +91,7 @@ namespace KTI_DashBoard.Views
                 bool isActive = ch.IsChecked == true ? true : false;
                 await WebPropertiesHelper.UpdatePropStatus("province", id, isActive);
             }
+            load();
         }
         private void OpenProvinceUpdaterTip_Click(object sender, RoutedEventArgs e)
         {
@@ -90,6 +107,7 @@ namespace KTI_DashBoard.Views
         {
             await WebPropertiesHelper.addProperties("martialstatus", NewMartiaName.Text);
             NewMartiaName.Text = "";
+            load();
         }
         private void OpenMartialUpdaterTip_Click(object sender, RoutedEventArgs e)
         {
@@ -107,6 +125,7 @@ namespace KTI_DashBoard.Views
                 bool isActive = ch.IsChecked == true ? true : false;
                 await WebPropertiesHelper.UpdatePropStatus("martialstatus", id, isActive);
             }
+            load();
         }
         #endregion
         #region Admini
@@ -158,6 +177,7 @@ namespace KTI_DashBoard.Views
         }
 
         #endregion
+        #region Religion
         private async void SaveNewReligionName_Click(object sender, RoutedEventArgs e)
         {
             await WebPropertiesHelper.addProperties("Religion", NewReligionName.Text);
@@ -179,6 +199,31 @@ namespace KTI_DashBoard.Views
             ReligionUpdaterTip.IsOpen = !ReligionUpdaterTip.IsOpen;
             int id = Int32.Parse((sender as Button).Tag.ToString());
             ReligionEditor.current.load(id);
+        }
+
+
+        #endregion
+        private async void SaveNewDepartmentName_Click(object sender, RoutedEventArgs e)
+        {
+            await WebPropertiesHelper.addProperties("Department", NewDepartmentName.Text);
+            NewDepartmentName.Text = "";
+        }
+        private async void DepartmentCheckBox_Click(object sender, RoutedEventArgs e)
+        {
+            CheckBox ch = sender as CheckBox;
+            if (ch != null)
+            {
+                int id = Int32.Parse(ch.Tag.ToString());
+                bool isActive = ch.IsChecked == true ? true : false;
+                await WebPropertiesHelper.UpdatePropStatus("Department", id, isActive);
+            }
+        }
+        private void OpenDepartmentUpdaterTip_Click(object sender, RoutedEventArgs e)
+        {
+            departmentUpdaterTip.Target = sender as Button;
+            departmentUpdaterTip.IsOpen = !departmentUpdaterTip.IsOpen;
+            int id = Int32.Parse((sender as Button).Tag.ToString());
+            DepartmentEditor.current.load(id);
         }
 
     }

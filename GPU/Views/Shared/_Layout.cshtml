@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="~/css/DetailsCss.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/NavCss.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/StudentInsertStyle.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/CerStyles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/StudentTableStyle.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/InvoicesStyle.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/HomeStyle.css" asp-append-version="true" />
@@ -33,19 +34,33 @@
                            asp-controller="Home"
                            asp-action="Index">سەرەتا</a>
                     </li>
+
+                    <li class="nav-li ">
+                        <a class="nav-link "
+                           asp-area=""
+                           asp-controller="Students"
+                           asp-action="Create">تۆمارکردن</a>
+                    </li>
+
                     <li class="nav-li ">
                         <a class="nav-link  "
-                        asp-area="" 
-                        asp-controller="Students" 
-                        asp-action="Index">خوێندکاران</a>
+                           asp-area=""
+                           asp-controller="Students"
+                           asp-action="Index">خوێندکاران</a>
                     </li>
                     <li class="nav-li ">
                         <a class="nav-link "
-                        asp-area=""
-                        asp-controller="Archive"
-                        asp-action="Index">ئەرشیف</a>
+                           asp-area=""
+                           asp-controller="Certificates"
+                           asp-action="Index">بڕوانامەکان</a>
+                    </li>   
+                    <li class="nav-li ">
+                        <a class="nav-link "
+                           asp-area=""
+                           asp-controller="Archive"
+                           asp-action="Index">ئەرشیف</a>
                     </li>
-                 
+                  
                     <li class="nav-li ">
                         <a class="nav-link "
                            asp-area=""
@@ -53,19 +68,8 @@
                            asp-action="Index">ئامار</a>
                     </li>
 
-                       <li class="nav-li ">
-                        <a class="nav-link "
-                        asp-area="" 
-                        asp-controller="Students"
-                        asp-action="Create">تۆمارکردن</a>
-                    </li>
 
-                    <li class="nav-li ">
-                        <a class="nav-link "
-                           asp-area=""
-                           asp-controller="Home"
-                           asp-action="Index">بڕوانامەکان</a>
-                    </li>
+
                 </ul>
 
             </div>

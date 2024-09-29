@@ -20,13 +20,8 @@ namespace KTI_DashBoard.Helpers
 
         public static async Task LoadAll()
         {
-            await Task.WhenAll(
-                  Helper_StudentTable.GetStudent(),
-                  Helper_StudentTable.ar_GetStudent(),
-                  StaticalHelper.GetStatical()
-                );
 
-            await Task.WhenAny(
+            await Task.WhenAll(
                Helper_PersonalStudent.GetStudents(),
                Helper_PersonalStudent.ar_GetStudents(),
                Helper_StudentParentInfo.GetParent(),
@@ -41,7 +36,6 @@ namespace KTI_DashBoard.Helpers
                Helper_StudentDepartmentInfo.ar_GetDepartments(),
                Helper_Invoice.GetInvoices(),
                Helper_Invoice.ar_GetInvoices()
-         
                );
         }
 
@@ -54,9 +48,7 @@ namespace KTI_DashBoard.Helpers
             Helper_Student12Grade.GetGrades(),
             Helper_StudentSupport.GetSupports(),
             Helper_StudentDepartmentInfo.GetDepartments(),
-            Helper_Invoice.GetInvoices(),
-            Helper_StudentTable.GetStudent(),
-            Helper_StudentTable.ar_GetStudent()
+            Helper_Invoice.GetInvoices()
             );
         }
 

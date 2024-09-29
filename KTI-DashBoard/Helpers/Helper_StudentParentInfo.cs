@@ -14,26 +14,29 @@ namespace KTI_DashBoard.Helpers
 
         public static async Task GetParent()
         {
-            using (SqlCommand cmd = new SqlCommand("select * from StudentParentInfo", DbConnectionHelper.con))
+            if (DbConnectionHelper.con.State == ConnectionState.Open)
             {
-                using (SqlDataReader rd = await cmd.ExecuteReaderAsync())
+                using (SqlCommand cmd = new SqlCommand("select * from StudentParentInfo", DbConnectionHelper.con))
                 {
-                    _Parent.Clear();
-                    while (await rd.ReadAsync())
+                    using (SqlDataReader rd = await cmd.ExecuteReaderAsync())
                     {
-                        var parent = new StudentParentInfo
+                        _Parent.Clear();
+                        while (await rd.ReadAsync())
                         {
-                            Id = rd.GetInt32(0),
-                            Name = rd.GetString(1),
-                            Profession = rd.GetString(2),
-                            Phone = rd.GetString(3),
-                            Email = rd.GetString(4),
-                            SID = rd.GetInt32(5),
-                            CardInfoNo = rd.GetString(6),
-                            CardInfoIssuePlace = rd.GetString(7)
-                        };
-                        _Parent.Add(parent);
+                            var parent = new StudentParentInfo
+                            {
+                                Id = rd.GetInt32(0),
+                                Name = rd.GetString(1),
+                                Profession = rd.GetString(2),
+                                Phone = rd.GetString(3),
+                                Email = rd.GetString(4),
+                                SID = rd.GetInt32(5),
+                                CardInfoNo = rd.GetString(6),
+                                CardInfoIssuePlace = rd.GetString(7)
+                            };
+                            _Parent.Add(parent);
 
+                        }
                     }
                 }
             }

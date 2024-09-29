@@ -37,10 +37,7 @@ namespace KTI_DashBoard.Helpers
                     }
                 }
             }
-            if (_stu.Any())
-            {
-                _stu.First().isFirst = true;
-            }
+        
             return _stu;
         }
         public static async Task<List<StudentTableModel>> ar_GetStudent()
@@ -67,10 +64,7 @@ namespace KTI_DashBoard.Helpers
                     }
                 }
             }
-            if (ar_stu.Any())
-            {
-                ar_stu.First().isFirst = true;
-            }
+         
             return ar_stu;
         }
 

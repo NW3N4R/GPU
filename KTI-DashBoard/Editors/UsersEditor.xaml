@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page x:Class="KTI_DashBoard.Editors.UsersEditor"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:local="using:KTI_DashBoard.Editors"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      mc:Ignorable="d"
+>
+    <Grid  ColumnSpacing="20"
+           MinWidth="300"
+           RowSpacing="15">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+        <TextBox Header="User Name  (4min)"
+                 x:Name="NewUserName"
+                 TextChanging="NewUserName_TextChanging"
+                 MaxLength="8"
+                 PlaceholderText="s0m30ne " />
+        <PasswordBox Header="Pass (4min)"
+                     x:Name="NewUserPassword"
+                    MaxLength="8"
+                     PasswordChanging="NewUserPassword_PasswordChanging"
+                     PlaceholderText="passowrd..."
+                     Grid.Column="1" />
+        <Button Grid.Row="1"
+                x:Name="SaveNewUser"
+                Click="SaveNewUser_Click"
+                IsEnabled="False"
+                Grid.ColumnSpan="2"
+                HorizontalAlignment="Stretch"
+                HorizontalContentAlignment="Center">
+            <Button.Content>
+                <Grid ColumnSpacing="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="auto" />
+                    </Grid.ColumnDefinitions>
+                    <SymbolIcon Symbol="Accept" />
+                    <TextBlock Text="Save"
+                               TextAlignment="Center"
+                               Grid.Column="1" />
+                </Grid>
+            </Button.Content>
+        </Button>
+    </Grid>
+</Page>
