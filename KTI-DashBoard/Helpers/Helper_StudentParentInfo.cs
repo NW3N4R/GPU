@@ -1,9 +1,7 @@
 ﻿using KTI_DashBoard.Models;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Data;
-using System.Data.SqlClient;
-using System.Diagnostics;
+using Microsoft.Data.SqlClient;
 using System.Threading.Tasks;
 namespace KTI_DashBoard.Helpers
 {

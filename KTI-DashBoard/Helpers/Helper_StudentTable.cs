@@ -1,9 +1,6 @@
 ﻿using KTI_DashBoard.Models;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Data.SqlClient;
-using System.Diagnostics;
-using System.Linq;
+using Microsoft.Data.SqlClient;
 using System.Threading.Tasks;
 
 namespace KTI_DashBoard.Helpers
@@ -37,7 +34,7 @@ namespace KTI_DashBoard.Helpers
                     }
                 }
             }
-        
+
             return _stu;
         }
         public static async Task<List<StudentTableModel>> ar_GetStudent()
@@ -64,7 +61,7 @@ namespace KTI_DashBoard.Helpers
                     }
                 }
             }
-         
+
             return ar_stu;
         }
 

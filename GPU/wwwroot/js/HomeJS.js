@@ -55,13 +55,19 @@ function clearActive() {
 
 
 function Acceptance() {
-    var div = document.getElementById("InvoicePart");
+    var div = document.getElementById("InvoiceID");
+    var div1 = document.getElementById("InvoiceDate");
+    var div2 = document.getElementById("InvoiceAmount");
     var selction = document.getElementById("AcceptanceSelection");
     if (selction.value == 'زانکۆلاین') {
         div.classList.add('hidden');
+        div1.classList.add('hidden');
+        div2.classList.add('hidden');
     }
     else {
 
         div.classList.remove('hidden');
+        div1.classList.remove('hidden');
+        div2.classList.remove('hidden');
     }
 }

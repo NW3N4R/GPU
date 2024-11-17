@@ -1,5 +1,5 @@
 ﻿@using System.ComponentModel
-@model (List<GPU.Models.HomeModel> model,int RowCount)
+@model (List<GPU.Models.HomeModel> model,decimal RowCount)
 @{
     ViewData["Title"] = "سەرەتا";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -7,16 +7,18 @@
 
 <div class="home-container">
 
-    <div class="home-RowOne CardProps">
-        <div class="RightLogo fixTitle">
-            <h2 class="TopHeaderTitle">پەیمانگای تەکنیکی کەلار</h2>
-            <p>@Model.RowCount خوێندکار تۆمار کراوە</p>
-            <p>هیوا عزیز عەباس</p>
+    <div class="home-RowOne">
+        <div class="RightLogo hTitle">
+            <h2 >پەیمانگای تەکنیکی کەلار</h2>
+            <p>
+                کۆی گشتی تۆمارکراوان @Model.RowCount 
+                </p>
+            <p>@User.Identity.Name</p>
         </div>
-        <div class="CenterLogo ">
+        <div class="CenterLogo">
             <img src="~/logo.png" class="TopLogo" />
         </div>
-        <div class="LeftLogo fixTitle">
+        <div class="LeftLogo hTitle">
             <h2 class="TopHeaderTitle">هـــۆبـــەی تـــۆمـــارگـــە</h2>
             @{
                 TimeZoneInfo timeZone = TimeZoneInfo.CreateCustomTimeZone(
@@ -62,34 +64,16 @@
                 }
                 <span class="DaySet"> @Day</span>
             </p>
-            <span class="TimeSet"> @DateTime.Now.ToString("yyyy - MM - dd")  </span>
-
+            <p class="TimeSet"> @DateTime.Now.ToString("yyyy - MM - dd")  </p>
         </div>
     </div>
     <div class="home-RowTow">
-        @foreach (var item in Model.model)
+        @foreach (var item in Model.model.Where(x=>x.Title != "-1"))
         {
-            var properties = item.GetType().GetProperties();
-            foreach (var prop in properties)
-            {
-                // Get the DisplayName attribute, if it exists
-                var displayNameAttr = prop.GetCustomAttributes(typeof(DisplayNameAttribute), false)
-                .Cast<DisplayNameAttribute>()
-                .FirstOrDefault();
-
-                // If DisplayName attribute exists, use it, otherwise use the property name
-                var displayName = displayNameAttr != null ? displayNameAttr.DisplayName : prop.Name;
-
-                // Get the value of the property for the current item
-                var value = prop.GetValue(item, null);
-                if (displayName != "RowCount")
-                {
-                    <div>
-                        <h2>@value</h2> <!-- Display the DisplayName or property name -->
-                        <p>@displayName</p> <!-- Display the property value -->
-                    </div>
-                }
-            }
+            <div>
+                <h2>@item.No</h2>
+                <p>@item.Title</p>
+            </div>
         }
 
     </div>

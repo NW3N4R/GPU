@@ -7,8 +7,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       mc:Ignorable="d"
       Loaded="Page_Loaded"
-      xmlns:Updater="using:KTI_DashBoard.Editors"
-  >
+      xmlns:Updater="using:KTI_DashBoard.Editors">
     <Grid Tag="PropertiesView"
           ColumnSpacing="10"
           RowSpacing="10"
@@ -85,34 +84,35 @@
                     </Button>
                 </Grid>
             </Expander.Header>
-            <Grid>
-                <ListView x:Name="provinceList"
-                          HorizontalAlignment="Stretch"
-                          SelectionMode="None"
-                          HorizontalContentAlignment="Stretch">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid HorizontalAlignment="Stretch">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="auto" />
-                                </Grid.ColumnDefinitions>
-                                <CheckBox Content="{Binding Name}"
-                                          Tag="{Binding id}"
-                                          HorizontalAlignment="Stretch"
-                                          IsChecked="{Binding isActive}"
-                                          Click="ProvinceCheckBox_Click" />
-                                <AppBarButton LabelPosition="Collapsed"
-                                              Icon="Edit"
+          
+                    <ListView x:Name="provinceList"
+                              HorizontalAlignment="Stretch"
+                              SelectionMode="None"
+                              MaxHeight="400"
+                              HorizontalContentAlignment="Stretch">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid HorizontalAlignment="Stretch">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <CheckBox Content="{Binding Name}"
                                               Tag="{Binding id}"
-                                              x:Name="OpenProvinceUpdaterTip"
-                                              Click="OpenProvinceUpdaterTip_Click"
-                                              Grid.Column="2" />
-                            </Grid>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </Grid>
+                                              HorizontalAlignment="Stretch"
+                                              IsChecked="{Binding isActive}"
+                                              Click="ProvinceCheckBox_Click" />
+                                    <AppBarButton LabelPosition="Collapsed"
+                                                  Icon="Edit"
+                                                  Tag="{Binding id}"
+                                                  x:Name="OpenProvinceUpdaterTip"
+                                                  Click="OpenProvinceUpdaterTip_Click"
+                                                  Grid.Column="2" />
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+           
         </Expander>
         <Expander Grid.Row="1"
                   VerticalAlignment="Top"
@@ -176,34 +176,33 @@
                     </Button>
                 </Grid>
             </Expander.Header>
-            <Grid>
-                <ListView x:Name="MartialList"
-                          HorizontalAlignment="Stretch"
-                          SelectionMode="None"
-                          HorizontalContentAlignment="Stretch">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid HorizontalAlignment="Stretch">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="auto" />
-                                </Grid.ColumnDefinitions>
-                                <CheckBox Content="{Binding Name}"
+            <ListView x:Name="MartialList"
+                      HorizontalAlignment="Stretch"
+                      SelectionMode="None"
+                      MaxHeight="400"
+                      HorizontalContentAlignment="Stretch">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid HorizontalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="auto" />
+                            </Grid.ColumnDefinitions>
+                            <CheckBox Content="{Binding Name}"
+                                      Tag="{Binding id}"
+                                      HorizontalAlignment="Stretch"
+                                      IsChecked="{Binding isActive}"
+                                      Click="MartialCheckBox_Click" />
+                            <AppBarButton LabelPosition="Collapsed"
+                                          Icon="Edit"
                                           Tag="{Binding id}"
-                                          HorizontalAlignment="Stretch"
-                                          IsChecked="{Binding isActive}"
-                                          Click="MartialCheckBox_Click" />
-                                <AppBarButton LabelPosition="Collapsed"
-                                              Icon="Edit"
-                                              Tag="{Binding id}"
-                                              x:Name="OpenMartiaUpdaterTip"
-                                              Click="OpenMartialUpdaterTip_Click"
-                                              Grid.Column="2" />
-                            </Grid>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </Grid>
+                                          x:Name="OpenMartiaUpdaterTip"
+                                          Click="OpenMartialUpdaterTip_Click"
+                                          Grid.Column="2" />
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </Expander>
         <Expander Grid.Row="2"
                   VerticalAlignment="Top"
@@ -268,33 +267,32 @@
                     </Button>
                 </Grid>
             </Expander.Header>
-            <Grid>
-                <ListView x:Name="NationalityList"
-                          HorizontalAlignment="Stretch"
-                          SelectionMode="None"
-                          HorizontalContentAlignment="Stretch">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid HorizontalAlignment="Stretch">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="auto" />
-                                </Grid.ColumnDefinitions>
-                                <CheckBox Content="{Binding Name}"
+            <ListView x:Name="NationalityList"
+                      HorizontalAlignment="Stretch"
+                      SelectionMode="None"
+                      MaxHeight="400"
+                      HorizontalContentAlignment="Stretch">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid HorizontalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="auto" />
+                            </Grid.ColumnDefinitions>
+                            <CheckBox Content="{Binding Name}"
+                                      Tag="{Binding id}"
+                                      HorizontalAlignment="Stretch"
+                                      IsChecked="{Binding isActive}"
+                                      Click="NationalityCheckBox_Click" />
+                            <AppBarButton LabelPosition="Collapsed"
+                                          Icon="Edit"
                                           Tag="{Binding id}"
-                                          HorizontalAlignment="Stretch"
-                                          IsChecked="{Binding isActive}"
-                                          Click="NationalityCheckBox_Click" />
-                                <AppBarButton LabelPosition="Collapsed"
-                                              Icon="Edit"
-                                              Tag="{Binding id}"
-                                              Click="OpenNationalityUpdaterTip_Click"
-                                              Grid.Column="2" />
-                            </Grid>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </Grid>
+                                          Click="OpenNationalityUpdaterTip_Click"
+                                          Grid.Column="2" />
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </Expander>
         <Expander Grid.Row="3"
                   VerticalAlignment="Top"
@@ -359,33 +357,32 @@
                     </Button>
                 </Grid>
             </Expander.Header>
-            <Grid>
-                <ListView x:Name="ReligionList"
-                          HorizontalAlignment="Stretch"
-                          SelectionMode="None"
-                          HorizontalContentAlignment="Stretch">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid HorizontalAlignment="Stretch">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="auto" />
-                                </Grid.ColumnDefinitions>
-                                <CheckBox Content="{Binding Name}"
+            <ListView x:Name="ReligionList"
+                      HorizontalAlignment="Stretch"
+                      SelectionMode="None"
+                      MaxHeight="400"
+                      HorizontalContentAlignment="Stretch">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid HorizontalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="auto" />
+                            </Grid.ColumnDefinitions>
+                            <CheckBox Content="{Binding Name}"
+                                      Tag="{Binding id}"
+                                      HorizontalAlignment="Stretch"
+                                      IsChecked="{Binding isActive}"
+                                      Click="ReligionCheckBox_Click" />
+                            <AppBarButton LabelPosition="Collapsed"
+                                          Icon="Edit"
                                           Tag="{Binding id}"
-                                          HorizontalAlignment="Stretch"
-                                          IsChecked="{Binding isActive}"
-                                          Click="ReligionCheckBox_Click" />
-                                <AppBarButton LabelPosition="Collapsed"
-                                              Icon="Edit"
-                                              Tag="{Binding id}"
-                                              Click="OpenreligionUpdaterTip_Click"
-                                              Grid.Column="2" />
-                            </Grid>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </Grid>
+                                          Click="OpenreligionUpdaterTip_Click"
+                                          Grid.Column="2" />
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </Expander>
         <Expander Grid.Row="4"
                   VerticalAlignment="Top"
@@ -450,33 +447,32 @@
                     </Button>
                 </Grid>
             </Expander.Header>
-            <Grid>
-                <ListView x:Name="AdminiList"
-                          HorizontalAlignment="Stretch"
-                          SelectionMode="None"
-                          HorizontalContentAlignment="Stretch">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid HorizontalAlignment="Stretch">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="auto" />
-                                </Grid.ColumnDefinitions>
-                                <CheckBox Content="{Binding Name}"
+            <ListView x:Name="AdminiList"
+                      HorizontalAlignment="Stretch"
+                      SelectionMode="None"
+                      MaxHeight="400"
+                      HorizontalContentAlignment="Stretch">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid HorizontalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="auto" />
+                            </Grid.ColumnDefinitions>
+                            <CheckBox Content="{Binding Name}"
+                                      Tag="{Binding id}"
+                                      HorizontalAlignment="Stretch"
+                                      IsChecked="{Binding isActive}"
+                                      Click="AdminiCheckBox_Click" />
+                            <AppBarButton LabelPosition="Collapsed"
+                                          Icon="Edit"
                                           Tag="{Binding id}"
-                                          HorizontalAlignment="Stretch"
-                                          IsChecked="{Binding isActive}"
-                                          Click="AdminiCheckBox_Click" />
-                                <AppBarButton LabelPosition="Collapsed"
-                                              Icon="Edit"
-                                              Tag="{Binding id}"
-                                              Click="OpenAdminiUpdaterTip_Click"
-                                              Grid.Column="2" />
-                            </Grid>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </Grid>
+                                          Click="OpenAdminiUpdaterTip_Click"
+                                          Grid.Column="2" />
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </Expander>
         <Expander Grid.Row="5"
                   VerticalAlignment="Top"
@@ -541,33 +537,32 @@
                     </Button>
                 </Grid>
             </Expander.Header>
-            <Grid>
-                <ListView x:Name="DepartmentList"
-                          HorizontalAlignment="Stretch"
-                          SelectionMode="None"
-                          HorizontalContentAlignment="Stretch">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid HorizontalAlignment="Stretch">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="auto" />
-                                </Grid.ColumnDefinitions>
-                                <CheckBox Content="{Binding Name}"
+            <ListView x:Name="DepartmentList"
+                      MaxHeight="400"
+                      HorizontalAlignment="Stretch"
+                      SelectionMode="None"
+                      HorizontalContentAlignment="Stretch">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid HorizontalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="auto" />
+                            </Grid.ColumnDefinitions>
+                            <CheckBox Content="{Binding Name}"
+                                      Tag="{Binding id}"
+                                      HorizontalAlignment="Stretch"
+                                      IsChecked="{Binding isActive}"
+                                      Click="DepartmentCheckBox_Click" />
+                            <AppBarButton LabelPosition="Collapsed"
+                                          Icon="Edit"
                                           Tag="{Binding id}"
-                                          HorizontalAlignment="Stretch"
-                                          IsChecked="{Binding isActive}"
-                                          Click="DepartmentCheckBox_Click" />
-                                <AppBarButton LabelPosition="Collapsed"
-                                              Icon="Edit"
-                                              Tag="{Binding id}"
-                                              Click="OpenDepartmentUpdaterTip_Click"
-                                              Grid.Column="2" />
-                            </Grid>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </Grid>
+                                          Click="OpenDepartmentUpdaterTip_Click"
+                                          Grid.Column="2" />
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </Expander>
         <TeachingTip x:Name="ProvinceUpdaterTip"
                      IsOpen="False">

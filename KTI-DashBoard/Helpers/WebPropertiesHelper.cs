@@ -1,27 +1,27 @@
 ﻿using KTI_DashBoard.Models;
-using Microsoft.EntityFrameworkCore.SqlServer.Query.Internal;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
+using Microsoft.Data.SqlClient;
 using System.Threading.Tasks;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace KTI_DashBoard.Helpers
 {
     public class WebPropertiesHelper
     {
-        public static List<WebProperties> _Martial = new List<WebProperties>();
-        public static List<WebProperties> _Province = new List<WebProperties>();
-        public static List<WebProperties> _EduAdmini = new List<WebProperties>();
-        public static List<WebProperties> _Nationality = new List<WebProperties>();
-        public static List<WebProperties> _Religion = new List<WebProperties>();
-        public static List<WebProperties> _Department = new List<WebProperties>();
-
+        public static List<WebProperties> _Martial;
+        public static List<WebProperties> _Province;
+        public static List<WebProperties> _EduAdmini;
+        public static List<WebProperties> _Nationality;
+        public static List<WebProperties> _Religion;
+        public static List<WebProperties> _Department;
         public static async Task GetAllProps()
         {
+            _Martial = new List<WebProperties>();
+            _Province = new List<WebProperties>();
+            _EduAdmini = new List<WebProperties>();
+            _Nationality = new List<WebProperties>();
+            _Religion = new List<WebProperties>();
+            _Department = new List<WebProperties>();
             using (SqlCommand cmd = new SqlCommand("", DbConnectionHelper.con))
             {
                 List<string> tbls = new List<string>();
@@ -32,16 +32,9 @@ namespace KTI_DashBoard.Helpers
                 tbls.Add("Religion");
                 tbls.Add("Department");
                 int index = 0;
-                _Martial.Clear();
-                _Province.Clear();
-                _EduAdmini.Clear();
-                _Nationality.Clear();
-                _Religion.Clear();
-                _Department.Clear();
+
                 foreach (var item in tbls)
                 {
-
-                  
                     if (index > 6)
                     {
                         break;
@@ -62,22 +55,40 @@ namespace KTI_DashBoard.Helpers
                             switch (index)
                             {
                                 case 1:
-                                    _Martial.Add(model);
+                                    if (!_Martial.Contains(model))
+                                    {
+                                        _Martial.Add(model);
+                                    }
                                     break;
                                 case 2:
-                                    _Province.Add(model);
+                                    if (!_Province.Contains(model))
+                                    {
+                                        _Province.Add(model);
+                                    }
                                     break;
                                 case 3:
-                                    _EduAdmini.Add(model);
+                                    if (!_EduAdmini.Contains(model))
+                                    {
+                                        _EduAdmini.Add(model);
+                                    }
                                     break;
                                 case 4:
-                                    _Nationality.Add(model);
+                                    if (!_Nationality.Contains(model))
+                                    {
+                                        _Nationality.Add(model);
+                                    }
                                     break;
                                 case 5:
-                                    _Religion.Add(model);
+                                    if (!_Religion.Contains(model))
+                                    {
+                                        _Religion.Add(model);
+                                    }
                                     break;
                                 case 6:
-                                    _Department.Add(model);
+                                    if (!_Department.Contains(model))
+                                    {
+                                        _Department.Add(model);
+                                    }
                                     break;
                                 default:
                                     break;
@@ -95,15 +106,46 @@ namespace KTI_DashBoard.Helpers
         {
             using (SqlCommand cmd = new SqlCommand("", DbConnectionHelper.con))
             {
-                cmd.CommandText = $"insert into {tbl} (Name,isActive)values(@name,@isactive)";
+                cmd.CommandText = $"insert into {tbl} (Name,isActive)values(@name,@isactive); select scope_identity();";
                 cmd.Parameters.AddWithValue("@name", name);
                 cmd.Parameters.AddWithValue("@isactive", true);
 
-                await cmd.ExecuteNonQueryAsync();
+                int id = (int)(decimal)await cmd.ExecuteScalarAsync();
+                if (id > 0)
+                {
+                    var web = new WebProperties();
+                    web.id = id;
+                    web.Name = name;
+                    web.isActive = true;
+                    if (tbl.ToLower().Contains("prov"))
+                    {
+                        _Province.Add(web);
+                    }
+                    else if (tbl.ToLower().Contains("martial"))
+                    {
+                        _Martial.Add(web);
+                    }
+                    else if (tbl.ToLower().Contains("educationadmini"))
+                    {
+                        _EduAdmini.Add(web);
+                    }
+                    else if (tbl.ToLower().Contains("national"))
+                    {
+                        _Nationality.Add(web);
+                    }
+                    else if (tbl.ToLower().Contains("religion"))
+                    {
+                        _Religion.Add(web);
+                    }
+                    else if (tbl.ToLower().Contains("depart"))
+                    {
+                        _Department.Add(web);
+                    }
+                }
+                return id > 0;
             }
-            return true;
         }
-        public static async Task<bool> UpdatePropStatus(string tbl,int id, bool status)
+        public static async Task<bool> UpdatePropStatus(string tbl, int id, bool status)
         {
             using (SqlCommand cmd = new SqlCommand("", DbConnectionHelper.con))
             {
@@ -111,7 +153,10 @@ namespace KTI_DashBoard.Helpers
                 cmd.Parameters.AddWithValue("@id", id);
                 cmd.Parameters.AddWithValue("@isactive", status);
 
-                await cmd.ExecuteNonQueryAsync();
+                int rf = await cmd.ExecuteNonQueryAsync();
+                if (rf > 0)
+                {
+                }
             }
             return true;
         }

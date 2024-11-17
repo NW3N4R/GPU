@@ -1,34 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
 using GPU.Models;
 using GPU.Helpers;
+using Microsoft.AspNetCore.Authorization;
+using GPU.Services;
+using System.Data;
 using System.Diagnostics;
-using System.Collections.ObjectModel;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using static NuGet.Packaging.PackagingConstants;
-using OfficeOpenXml;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 namespace GPU.Controllers
 {
+    [Authorize]
     public class StudentsController : Controller
     {
-        public async Task<IActionResult> Index()
+
+        [Authorize(Policy = "RequireStuList")]
+        public IActionResult Index()
         {
-            return View((Helper_StudentTable.GetStudentTable(), new StaticalTableModel()));
+            return View((Helper_StudentTable.GetStudentTable(), new StaticalTableModel(),
+                             props: WebPropsServices.MergedProps, access: ManagerServices._auths));
         }
 
-
-        [HttpPost]
+        [Authorize(Policy = "RequireStuList")]
+        [HttpGet]
         public async Task<IActionResult> Search([Bind(Prefix = "table")] StaticalTableModel tbl, bool DoPrint, bool doSearch = true)
         {
             if (doSearch)
             {
-                var viewModel = ((Helper_StudentTable.SearchHelper(tbl), tbl));
+                var viewModel = ((Helper_StudentTable.SearchHelper(tbl), tbl,
+                             props: WebPropsServices.MergedProps,
+                             access: ManagerServices._auths));
                 if (DoPrint)
                 {
                     var fileContent = await ToExcelPrint.DoPrint((Helper_StudentTable.SearchHelper(tbl)), 0);
@@ -41,26 +41,27 @@ namespace GPU.Controllers
             }
             else
             {
-                return View("Index", (Helper_StudentTable.GetStudentTable(), new StaticalTableModel()));
+                return View("Index", (Helper_StudentTable.GetStudentTable(), new StaticalTableModel(), props: WebPropsServices.MergedProps, access: ManagerServices._auths));
 
             }
 
         }
+        [Authorize(Policy = "RequireStuList")]
         public async Task<IActionResult> Details(int? id)
         {
-            //await DbConnectionHelper.LoadStudent();
+
             if (id == null)
             {
                 return View("~/Views/Students/NotFound404.cshtml");
             }
 
-            var personalStudent = Helper_PersonalStudent._Student.FirstOrDefault(x => x.Id == id) as PersonalStudent;
-            var studentContactInfo = Helper_StudentContactInfo._Contacts.FirstOrDefault(x => x.SID == id) as StudentContactInfo;
-            var studentParentInfo = Helper_StudentParentInfo._Parent.FirstOrDefault(x => x.SID == id) as StudentParentInfo;
-            var student12Grade = Helper_Student12Grade._Grade.FirstOrDefault(x => x.SID == id) as Student12Grade;
-            var studentDepartmentInfo = Helper_StudentDepartmentInfo._department.FirstOrDefault(x => x.SID == id) as StudentDepartmentInfo;
-            var invoice = Helper_Invoice._Invoices.FirstOrDefault(x => x.SID == id) as InvoiceInfo;
-            var support = Helper_StudentSupport._Supports.FirstOrDefault(x => x.sid == id) as StudentSupport;
+            var personalStudent = StudentServices._Student.FirstOrDefault(x => x.Id == id) as PersonalStudent;
+            var studentContactInfo = StudentServices._Contacts.FirstOrDefault(x => x.SID == id) as StudentContactInfo;
+            var studentParentInfo = StudentServices._Parent.FirstOrDefault(x => x.SID == id) as StudentParentInfo;
+            var student12Grade = StudentServices._Grade.FirstOrDefault(x => x.SID == id) as Student12Grade;
+            var studentDepartmentInfo = StudentServices._department.FirstOrDefault(x => x.SID == id) as StudentDepartmentInfo;
+            var invoice = StudentServices._Invoices.FirstOrDefault(x => x.SID == id) as InvoiceInfo;
+            var support = StudentServices._Supports.FirstOrDefault(x => x.sid == id) as StudentSupport;
 
             if (personalStudent == null)
             {
@@ -72,7 +73,6 @@ namespace GPU.Controllers
                              StudentDepartmentInfo: studentDepartmentInfo, InvoiceInfo: invoice,
                              StudentSupport: support));
         }
-        #region CRUD
 
         public IActionResult Create()
         {
@@ -83,11 +83,13 @@ namespace GPU.Controllers
             var studentDepartmentInfo = new StudentDepartmentInfo();
             var invoice = new InvoiceInfo();
             var studentSupport = new StudentSupport();
-
             var viewMode = (PersonalStudent: personalStudent, StudentContactInfo: studentContactInfo,
                              StudentParentInfo: studentParentInfo, Student12Grade: student12Grade,
                              StudentDepartmentInfo: studentDepartmentInfo, InvoiceInfo: invoice,
-                             StudentSupport: studentSupport);
+                             StudentSupport: studentSupport,
+                             props: WebPropsServices.MergedProps,
+                             access: ManagerServices._auths
+                           );
             return View(viewMode);
         }
 
@@ -104,45 +106,31 @@ namespace GPU.Controllers
         {
 
             await Helper_PersonalStudent.Create(personalStudent, studentContactInfo, studentParentInfo, student12Grade, studentDepartmentInfo, invoice, studentSupport);
+
+
             return RedirectToAction("Index");
 
 
         }
 
 
-
+        [Authorize(Policy = "RequireStuList")]
         public IActionResult Edit(int? id)
         {
-            var personalStudent = Helper_PersonalStudent._Student.FirstOrDefault(x => x.Id == id) as PersonalStudent;
-            var studentContactInfo = Helper_StudentContactInfo._Contacts.FirstOrDefault(x => x.SID == id) as StudentContactInfo;
-            var studentParentInfo = Helper_StudentParentInfo._Parent.FirstOrDefault(x => x.SID == id) as StudentParentInfo;
-            var student12Grade = Helper_Student12Grade._Grade.FirstOrDefault(x => x.SID == id) as Student12Grade;
-            var studentDepartmentInfo = Helper_StudentDepartmentInfo._department.FirstOrDefault(x => x.SID == id) as StudentDepartmentInfo;
-            var studentSupport = Helper_StudentSupport._Supports.FirstOrDefault(x => x.sid == id) as StudentSupport;
+            var personalStudent = StudentServices._Student.FirstOrDefault(x => x.Id == id) as PersonalStudent;
+            var studentContactInfo = StudentServices._Contacts.FirstOrDefault(x => x.SID == id) as StudentContactInfo;
+            var studentParentInfo = StudentServices._Parent.FirstOrDefault(x => x.SID == id) as StudentParentInfo;
+            var student12Grade = StudentServices._Grade.FirstOrDefault(x => x.SID == id) as Student12Grade;
+            var studentDepartmentInfo = StudentServices._department.FirstOrDefault(x => x.SID == id) as StudentDepartmentInfo;
+            var studentSupport = StudentServices._Supports.FirstOrDefault(x => x.sid == id) as StudentSupport;
 
             return View((PersonalStudent: personalStudent, StudentContactInfo: studentContactInfo,
                              StudentParentInfo: studentParentInfo, Student12Grade: student12Grade,
-                             StudentDepartmentInfo: studentDepartmentInfo, StudentSupport: studentSupport));
+                             StudentDepartmentInfo: studentDepartmentInfo, StudentSupport: studentSupport,
+                              props: WebPropsServices.MergedProps,
+                             access: ManagerServices._auths));
 
         }
-
-        public async Task<IActionResult> GetEdit(int? id)
-        {
-            //await DbConnectionHelper.LoadStudent();
-            var personalStudent = Helper_PersonalStudent._Student.FirstOrDefault(x => x.Id == id) as PersonalStudent;
-            var studentContactInfo = Helper_StudentContactInfo._Contacts.FirstOrDefault(x => x.SID == id) as StudentContactInfo;
-            var studentParentInfo = Helper_StudentParentInfo._Parent.FirstOrDefault(x => x.SID == id) as StudentParentInfo;
-            var student12Grade = Helper_Student12Grade._Grade.FirstOrDefault(x => x.SID == id) as Student12Grade;
-            var studentDepartmentInfo = Helper_StudentDepartmentInfo._department.FirstOrDefault(x => x.SID == id) as StudentDepartmentInfo;
-            var studentSupport = Helper_StudentSupport._Supports.FirstOrDefault(x => x.sid == id) as StudentSupport;
-
-            var viewModel = (PersonalStudent: personalStudent, StudentContactInfo: studentContactInfo,
-                             StudentParentInfo: studentParentInfo, Student12Grade: student12Grade,
-                             StudentDepartmentInfo: studentDepartmentInfo, StudentSupport: studentSupport);
-            return View("Edit", viewModel);
-
-        }
-
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -155,17 +143,72 @@ namespace GPU.Controllers
             [Bind(Prefix = "studentSupport")] StudentSupport studentSupport)
         {
 
-            Debug.WriteLine($"the edit commited for the id of {personalStudent.Id}");
             await Helper_PersonalStudent.Update(personalStudent, studentContactInfo, studentParentInfo, student12Grade, studentDepartmentInfo, studentSupport);
             return RedirectToAction("Index");
 
         }
 
-        //[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
 
 
-        #endregion
+        [Authorize(Policy = "RequireStuList")]
+        public async Task<IActionResult> Gallery(int id)
+        {
+            if (id == 0)
+            {
+                return BadRequest();
+            }
+            string path = "C:\\Users\\Aurora\\Desktop\\Student List Images";
+#if !DEBUG
+            path = @$"C:\Users\nwenar\Desktop\Student List Images";
+#endif
+            var NewImg = new StudentDepartmentInfo();
+            NewImg.Id = id;
+            return View((await Helper_PersonalStudent.GetimagesBack(path, id.ToString()), NewImg, id));
+        }
 
+        [HttpPost]
+        [Authorize(Policy = "RequireStuList")]
+        public async Task<IActionResult> NewImage([Bind(Prefix = "NewImage")] StudentDepartmentInfo personalStudent)
+        {
+            Debug.WriteLine(personalStudent.Id);
+            string path = "C:\\Users\\Aurora\\Desktop\\Student List Images\\Pdf Files";
+#if !DEBUG
+            path = @$"C:\Users\nwenar\Desktop\Student List Images\\Pdf Files";
+#endif
 
+            await Helper_PersonalStudent.SaveOtherFiles(personalStudent.OtherFiles, personalStudent.Id.ToString(), path);
+
+            return RedirectToAction("Gallery", new { id = personalStudent.Id });
+        }
+
+        [Authorize(Policy = "RequireStuList")]
+        public IActionResult RemoveImage(int? id, string? fileName)
+        {
+            //if (id == 0 || fileName != null)
+            //{
+            //    return BadRequest();
+            //}
+            Debug.WriteLine($"fileName was {fileName}");
+            string path = $"C:\\Users\\Aurora\\Desktop\\Student List Images\\Pdf Files\\{fileName}";
+#if !DEBUG
+            path = @$"C:\Users\nwenar\Desktop\Student List Images\\Pdf Files\\{fileName}";
+#endif
+            if (System.IO.File.Exists(path))
+            {
+                System.IO.File.Delete(path);
+            }
+            return RedirectToAction("Gallery", new { id = id });
+        }
+
+        [Authorize(Policy = "RequireStuList")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            if (id == 0)
+            {
+                return BadRequest();
+            }
+            await Helper_PersonalStudent.DeleteRecord(id, "DeleteStudents");
+            return RedirectToAction("Index");
+        }
     }
 }

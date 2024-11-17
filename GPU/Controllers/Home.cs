@@ -1,49 +1,88 @@
 ﻿using GPU.Helpers;
 using GPU.Models;
+using GPU.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace GPU.Controllers
 {
+    [Authorize]
     public class Home : Controller
     {
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            await DbConnectionHelper.LoadAll();
             #region MyRegion
             List<HomeModel> list = new List<HomeModel>();
-            HomeModel model = new HomeModel();
-            var dep = Helper_StudentDepartmentInfo._department;
-            var ardep = Helper_StudentDepartmentInfo.ar_department;
-            model.ITCount = dep.Count(x => x.Department.Contains("تەکنەلۆجیای زانیاری")) + ardep.Count(x => x.Department.Contains("تەکنەلۆژیای زانیاری"));
-            model.NurseCount = dep.Count(x => x.Department.Contains("پەرستاری")) + ardep.Count(x => x.Department.Contains("پەرستاری"));
-            model.VitCount = dep.Count(x => x.Department.Contains("تەکنیکی ڤیتەرنەری")) + ardep.Count(x => x.Department.Contains("تەکنیکی ڤیتەرنەری"));
-            model.FarmingCount = dep.Count(x => x.Department.Contains("پڕۆژە کشتوکاڵیەکان")) + ardep.Count(x => x.Department.Contains("پڕۆژە کشتوکاڵیەکان"));
-            model.MeasureMentCount = dep.Count(x => x.Department.Contains("ڕوو پێوی")) + ardep.Count(x => x.Department.Contains("ڕوو پێوی"));
-            model.AdminiCount = dep.Count(x => x.Department.Contains("کارگێری کار")) + ardep.Count(x => x.Department.Contains("کارگێری کار"));
+            foreach (var item in Helper_StudentTable.GetStatical().Select(x => x.Department).Distinct().ToList())
+            {
+                var deps = new HomeModel
+                {
+                    Title = string.IsNullOrWhiteSpace(item) ? "-1" : item,
+                    Filter = "Dep"
+                };
+                list.Add(deps);
+            }
+            foreach (var item in list.Where(x => x.Filter == "Dep").ToList())
+            {
+                var depsCount = Helper_StudentTable.combinedStudents.Count(x => x.Department == item.Title);
+                item.No = depsCount;
+            }
+            foreach (var item in Helper_StudentTable.GetStatical().Select(x => x.Province).Distinct().ToList())
+            {
+                var deps = new HomeModel
+                {
+                    Title = string.IsNullOrWhiteSpace(item) ? "-1" : item,
+                    Filter = "Province"
+                };
+                list.Add(deps);
+            }
+            foreach (var item in list.Where(x => x.Filter == "Province").ToList())
+            {
+                var depsCount = Helper_StudentTable.combinedStudents.Count(x => x.Province == item.Title);
+                item.No = depsCount;
+            }
+            foreach (var item in Helper_StudentTable.GetStatical().Select(x => x.AcceptanceType).Distinct().ToList())
+            {
+                var deps = new HomeModel
+                {
+                    Title = string.IsNullOrWhiteSpace(item) ? "-1" : item,
+                    Filter = "Acceptance"
+                };
+                list.Add(deps);
+            }
+            foreach (var item in list.Where(x => x.Filter == "Acceptance").ToList())
+            {
+                var depsCount = Helper_StudentTable.combinedStudents.Count(x => x.AcceptanceType == item.Title);
+                item.No = depsCount;
+            }
+            var Male = new HomeModel
+            {
+                Title = "خوێندکاری نێر",
+                No = Helper_StudentTable.combinedStudents.Count(x => x.Sex.Contains("نێ"))
+            };
+            list.Add(Male);
+            var Female = new HomeModel
+            {
+                Title = "خوێندکاری مێ",
+                No = Helper_StudentTable.combinedStudents.Count(x => x.Sex.Contains("مێ"))
+            };
+            list.Add(Female);
+            var Stu = new HomeModel
+            {
+                Title = "خوێندکار لە خوێندندایە",
+                No = StudentServices._Student.Count()
+            };
+            list.Add(Stu);
+            var Arch = new HomeModel
+            {
+                Title = "خوێندکارانی ساڵانی پێشوو",
+                No = ArchiveService.ar_Student.Count()
+            };
+            list.Add(Arch);
 
-            model.StudentListCount = Helper_PersonalStudent._Student.Count();
-            model.ArchiveCount = Helper_PersonalStudent.ar_Student.Count();
-            model.RowCount = model.StudentListCount + model.ArchiveCount;
-
-            model.MaleCount = Helper_PersonalStudent._Student.Count(x => x.Sex.Contains("نێر")) + Helper_PersonalStudent.ar_Student.Count(x => x.Sex.Contains("نێر"));
-            model.FemaleCount = Helper_PersonalStudent._Student.Count(x => x.Sex.Contains("مێ")) + Helper_PersonalStudent.ar_Student.Count(x => x.Sex.Contains("مێ"));
-
-            model.ZankoLine = dep.Count(x => x.AcceptanceType.Contains("زانکۆلاین")) + ardep.Count(x => x.AcceptanceType.Contains("زانکۆلاین"));
-            model.Parallel = dep.Count(x => x.AcceptanceType.Contains("پاراڵیل"))+  ardep.Count(x => x.AcceptanceType.Contains("پاراڵیل"));
-            model.Evening = dep.Count(x => x.AcceptanceType.Contains("ئێواران")) + ardep.Count(x => x.AcceptanceType.Contains("ئێواران"));
-
-
-            var contact = Helper_StudentContactInfo._Contacts;
-            var arcontact = Helper_StudentContactInfo.ar_Contacts;
-            model.Garmian = contact.Count(x => x.Province.Contains("گەرمیان")) + arcontact.Count(x => x.Province.Contains("گەرمیان"));
-            model.Slemani = contact.Count(x => x.Province.Contains("سلێمانی")) + arcontact.Count(x => x.Province.Contains("سلێمانی"));
-            model.Hawler = contact.Count(x => x.Province.Contains("هەولێر")) + arcontact.Count(x => x.Province.Contains("هەولێر"));
-            model.Karkuk = contact.Count(x => x.Province.Contains("کەرکووک")) + arcontact.Count(x => x.Province.Contains("کەرکووک"));
-            model.Diala = contact.Count(x => x.Province.Contains("دیالە")) + arcontact.Count(x => x.Province.Contains("دیالە"));
             #endregion
-
-            list.Add(model);
-            int RowCount = model.RowCount;
+            decimal RowCount = Arch.No + Stu.No;
             return View((list, RowCount));
         }
     }

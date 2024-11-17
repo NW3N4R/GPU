@@ -1,14 +1,20 @@
-﻿using System.Data.SqlClient;
+﻿using Microsoft.Data.SqlClient;
+using System.Net.Http;
 using System.Threading.Tasks;
+using Windows.Networking.Sockets;
 
 namespace KTI_DashBoard.Helpers
 {
     public class DbConnectionHelper
     {
-        public static SqlConnection con = new SqlConnection("Data Source=p4165386.eero.online,1433;Initial Catalog=KTI;User ID=nwenar;Password =KnnKnn123;TrustServerCertificate=True;MultipleActiveResultSets=True");
-
+        private static string strConnection = "Data Source=p4165386.eero.online,1433;Initial Catalog=KTI;User ID=nwenar;Password =KnnKnn123;TrustServerCertificate=True;MultipleActiveResultSets=True";
+        public static SqlConnection con;
         public static async Task<bool> OpenConnection()
         {
+#if DEBUG
+            strConnection = "Data Source=NWENAR\\SQLEXPRESS;Initial Catalog=KTI;User ID=nwenar;Password =KnnKnn123;TrustServerCertificate=True;MultipleActiveResultSets=True";
+#endif
+            con = new SqlConnection(strConnection);
             await con.OpenAsync();
             return con.State == System.Data.ConnectionState.Open;
         }

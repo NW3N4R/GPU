@@ -1,0 +1,35 @@
+﻿<!-- imageViewer.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Viewer</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #000;
+        }
+
+        img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <img id="image" src="" alt="Image" />
+    <script>
+        // Get the image source passed via URL
+        const imageSrc = new URLSearchParams(window.location.search).get('imageSrc');
+        if (imageSrc) {
+            document.getElementById('image').src = imageSrc;
+        }
+    </script>
+</body>
+</html>

@@ -1,102 +1,123 @@
 ﻿
-    .home-container {
-        display: grid;
-        grid-template-rows: 20% 70%;
-        gap: 10px;
-        min-width: 180vh;
-        min-height: 70vh;
-        margin-top: 10px;
-        height: 80vh;
-        width: 100%;
-    }
-    /*#region Row One */
+.home-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+    box-sizing: border-box;
+    width: fit-content;
+    overflow-y:auto;
+}
+/*#region Row One */
 .home-RowOne {
     display: flex;
-    gap: 25px;
+    gap: 10px;
+    padding: 10px;
+    width: 90vw;
     border-radius: 10px;
     background-color: #008374;
 }
 
-    .RightLogo, .LeftLogo {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-    }
+.RightLogo, .LeftLogo {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
 
-    .RightLogo {
-        align-items: flex-end;
-        text-align: left;
-    }
+.RightLogo {
+    align-items: flex-end;
+    text-align: left;
+}
 
-    .LeftLogo {
-        align-items: flex-start;
-        text-align: right;
-    }
+.CenterLogo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-    .fixTitle p, h2 {
+.LeftLogo {
+    align-items: flex-start;
+    text-align: right;
+}
+
+.hTitle {
+    justify-content: center; /* Centers horizontally */
+}
+
+    .hTitle p, h2 {
         margin: 0;
         padding: 0;
+        color: white;
     }
 
-    .fixTitle {
-        margin-top: 2vh;
-    }
+.TopLogo {
+    max-width: auto;
+    height: clamp(10vh, 15vw, 20vh);
+}
 
-    .CenterLogo {
-        width: 8%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+.hTitle h2 {
+    white-space: nowrap;
+    font-size: clamp(0.8rem, 2.5vw, 2rem);
+}
 
-    .TopLogo {
-        width: 100%;
-        height: auto;
-    }
+.hTitle p {
+    white-space: nowrap;
+    font-size: clamp(0.6rem, 1.7vw, 1rem);
+}
 
 .fixTitle {
+    margin-top: 2vh;
+}
+
+.Title span {
     color: white;
 }
 
-    .TimeSet {
-        direction: rtl;
-    }
 
-    /*#endregion */
-    .home-RowTow {
-        display: grid;
-        grid-template-columns: repeat(6, 1fr);
-        grid-template-rows: repeat(6, 13vh);
-        gap: 10px;
-        direction: rtl;
-    }
+.TimeSet {
+    direction: rtl;
+}
 
-        .home-RowTow div {
-            text-align: center;
-            padding: 10px;
-            transition: 0.2s;
-            border-radius: 10px;
-            background-color: #ffffff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s ease-in-out;
-        }
+/*#endregion */
+.home-RowTow {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); /* Adjust 150px as the minimum width for each column */
+    gap: 10px;
+    width: 100%;
+    direction: rtl;
+    padding-block: 10px;
+    max-height:50vh;
+    overflow-y: auto;
+}
+
+    .home-RowTow div {
+        text-align: center;
+        padding: 10px;
+        transition: 0.2s;
+        border-radius: 10px;
+        background-color: #ffffff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s ease-in-out;
+    }
 
         .home-RowTow div:hover {
             background-color: #008374;
             color: white;
-             transform: translateY(-5px);
+            transform: translateY(-5px);
             transition: 0.2s;
         }
+
             .home-RowTow div:hover h2 {
                 color: white;
                 transition: 0.2s;
             }
-                .home-RowTow h2 {
-                  color: #008374;
-                  font-weight: bolder;
-                }
-        .home-RowTow div h2,p {
-            padding: 0;
-            margin: 0;
-  
-        }
+
+    .home-RowTow h2 {
+        color: #008374;
+        font-weight: bolder;
+    }
+
+    .home-RowTow div p, h2 {
+        padding: 0;
+        margin: 0;
+    }

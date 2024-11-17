@@ -2,18 +2,7 @@ using KTI_DashBoard.Helpers;
 using KTI_DashBoard.Models;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
-using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 
 
 namespace KTI_DashBoard.Editors
@@ -21,6 +10,7 @@ namespace KTI_DashBoard.Editors
     public sealed partial class UsersEditor : Page
     {
         int eid;
+        string CurrentUserName;
         public static UsersEditor current;
         public UsersEditor()
         {
@@ -38,9 +28,8 @@ namespace KTI_DashBoard.Editors
         }
         void validateUserInputs()
         {
-            SaveNewUser.IsEnabled = NewUserName.Text.Length >= 4
-                && !UsersHelper._Users.Any(x => x.UserName == NewUserName.Text)
-                && NewUserPassword.Password.Length >= 4;
+
+            SaveNewUser.IsEnabled = NewUserName.Text.Length >= 4 && !UsersHelper._Users.Any(x => x.UserName == NewUserName.Text && x.UserName != CurrentUserName) && NewUserPassword.Password.Length >= 4;
         }
 
         private async void SaveNewUser_Click(object sender, RoutedEventArgs e)
@@ -50,6 +39,7 @@ namespace KTI_DashBoard.Editors
                 id = eid,
                 UserName = NewUserName.Text,
                 Password = NewUserPassword.Password,
+                CanDelete = CanDelete.IsChecked == true || false
             };
             await UsersHelper.UpdateUser(model);
         }
@@ -59,6 +49,21 @@ namespace KTI_DashBoard.Editors
             NewUserName.Text = user.UserName;
             NewUserPassword.Password = user.Password;
             eid = e;
+            CurrentUserName = user.UserName;
+            CanDelete.IsChecked = user.CanDelete;
+
+        }
+
+        private async void CanDelete_Click(object sender, RoutedEventArgs e)
+        {
+            var model = new UsersModel
+            {
+                id = eid,
+                UserName = NewUserName.Text,
+                Password = NewUserPassword.Password,
+                CanDelete = CanDelete.IsChecked == true || false
+            };
+            await UsersHelper.UpdateUser(model);
         }
     }
 }

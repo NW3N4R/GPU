@@ -15,7 +15,7 @@ namespace KTI_DashBoard.Models
 
         [DisplayName("ژ. فەرمانی زانکۆیی")]
         public string? UniversityCommandNo { get; set; }
-        
+
         [DisplayName("ژ.فەرمانی کارگێڕی")]
         public string? AdministratorCommandNo { get; set; }
 
@@ -24,7 +24,7 @@ namespace KTI_DashBoard.Models
 
         [DisplayName("ساڵی تەواوکردن")]
         public string? Graduate { get; set; }
-        
+
         [DisplayName("ساڵی دەستپێک")]
         public string? startinYear { get; set; }
 
@@ -32,7 +32,7 @@ namespace KTI_DashBoard.Models
         public int Stage { get; set; }
 
         [DisplayName("خوێندکاری بەشە ناوخۆییە؟")]
-        public string?   ResidenceType { get; set; }
+        public string? ResidenceType { get; set; }
         public int SID { get; set; }
     }
 }

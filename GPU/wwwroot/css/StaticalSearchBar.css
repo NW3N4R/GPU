@@ -1,30 +1,31 @@
 ﻿
 .StaticSearchBar {
-    display: grid;
-    grid-template-columns: 90% 10%;
+    display: flex;
+    flex-direction: row;
     gap: 5px;
-    max-width: 180vh;
+    width: 95vw;
     margin: 0 auto;
     margin-block: 10px;
+    max-height: 13vh;
+    justify-content:center;
 }
 
 .Static-ColOne {
     background-color: rgba(233, 233, 233, 0.7);
     border-radius: 10px;
-    display: grid;
-    grid-template-columns: repeat(8, auto);
-    grid-template-rows: auto auto;
+    display: flex;
+    width: auto;
     padding: 10px;
     gap: 10px;
+    text-align:center;
+    justify-content:center;
+    align-content:center;
+    align-items:center;
 }
 
-.columnSpan {
-    grid-column: span 3;
-}
 .Span2 {
     grid-column: span 2;
 }
-
 .StaticalNameTXT {
     border: none;
     border-radius: 5px;
@@ -42,33 +43,33 @@
 }
 
 .Static-ColTow {
-    display: grid;
-    grid-template-columns:repeat(2,auto);
-    flex-direction: row; /* Items will be in a row */
-    align-items: center; /* Vertically centers the items within the row */
-    justify-content: center; /* Centers the items horizontally */
-    gap: 10px;
-    text-align: center; /* Centers text inside each flex item */
+    display: flex;
+    flex-direction:row;
 }
 
     .Static-ColTow button {
         color: #008374;
         border: none;
         background-color: transparent;
-        padding: 10px;
+        padding: 5px;
         border-radius: 10px;
-        font-size: 20px;
         direction: rtl;
-        font-family: 'Segoe MDL2 Assets';
+        font-family: 'Segoe MDL2 Assets', sans-serif;
         border: none;
+        font-size: 25.5px;
         transition: 0.2s ease; /* Smooth transition on width change */
     }
 
         .Static-ColTow button:hover {
-            transition: 0.2s; 
-            font-weight:bolder;
-            font-size:27.5px;
+            transition: 0.2s;
+            font-weight: bolder;
+            font-size: 27.5px;
         }
 
-
-      
+.HeaderFilter {
+    color: #008374;
+    border: none;
+    background-color: transparent;
+    font-family: 'Droid Arabic Kufi',sans-serif;
+    text-align:center;
+}

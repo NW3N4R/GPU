@@ -1,7 +1,7 @@
 ﻿using GPU.Models;
-using System.Collections.ObjectModel;
-using System.Data.SqlClient;
+using GPU.Services;
 using System.Diagnostics;
+using System.Security.Claims;
 
 namespace GPU.Helpers
 {
@@ -12,13 +12,15 @@ namespace GPU.Helpers
         public static List<StaticalTableModel> combinedStudents = new List<StaticalTableModel>();
         public static List<StaticalTableModel> GetStudentTable()
         {
-
             _student.Clear();
-            foreach (var student in Helper_PersonalStudent._Student)
+            IHttpContextAccessor httpContextAccessor = new HttpContextAccessor();
+            var users = ManagerServices._auths.Where(x => x.usrid.ToString() == httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            var deps = WebPropsServices.MergedProps.Where(x => x.propType == "Department" && users.Any(z => x.id == z.depid));
+            foreach (var student in StudentServices._Student.Where(x=> StudentServices._department.Any(dep=>dep.SID ==x.Id && deps.Any(de=>de.Name.Contains(dep.Department)))).ToList())
             {
-                var contact = Helper_StudentContactInfo._Contacts.FirstOrDefault(x => x.SID == student.Id);
-                var school = Helper_Student12Grade._Grade.FirstOrDefault(x => x.SID == student.Id);
-                var dep = Helper_StudentDepartmentInfo._department.FirstOrDefault(x => x.SID == student.Id);
+                var contact = StudentServices._Contacts.FirstOrDefault(x => x.SID == student.Id);
+                var school = StudentServices._Grade.FirstOrDefault(x => x.SID == student.Id);
+                var dep = StudentServices._department.FirstOrDefault(x => x.SID == student.Id);
                 var model = new StaticalTableModel
                 {
                     id = student.Id,
@@ -37,13 +39,16 @@ namespace GPU.Helpers
                     StartingYear = dep?.startinYear,
                     Stage = dep.Stage,
                 };
-
                 _student.Add(model);
             }
             return _student;
         }
         public static List<StaticalTableModel> SearchHelper(StaticalTableModel tbl)
         {
+
+
+
+
             var model = _student.Where(
              x => (!string.IsNullOrWhiteSpace(tbl.Name) ? (x.Name != null && x.Name.Contains(tbl.Name)) : true) &&
             (!string.IsNullOrWhiteSpace(tbl.Department) && tbl.Department != "-" ? (x.Department != null && x.Department.Contains(tbl.Department)) : true) &&
@@ -66,11 +71,14 @@ namespace GPU.Helpers
         {
 
             arStudents.Clear();
-            foreach (var student in Helper_PersonalStudent.ar_Student)
+            IHttpContextAccessor httpContextAccessor = new HttpContextAccessor();
+            var users = ManagerServices._auths.Where(x => x.usrid.ToString() == httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            var deps = WebPropsServices.MergedProps.Where(x => x.propType == "Department" && users.Any(z => x.id == z.depid));
+            foreach (var student in ArchiveService.ar_Student.Where(x => ArchiveService.ar_department.Any(dep => dep.SID == x.Id && deps.Any(de => de.Name.Contains(dep.Department)))))
             {
-                var contact = Helper_StudentContactInfo.ar_Contacts.FirstOrDefault(x => x.SID == student.Id);
-                var school = Helper_Student12Grade.ar_Grade.FirstOrDefault(x => x.SID == student.Id);
-                var dep = Helper_StudentDepartmentInfo.ar_department.FirstOrDefault(x => x.SID == student.Id);
+                var contact = ArchiveService.ar_Contacts.FirstOrDefault(x => x.SID == student.Id);
+                var school = ArchiveService.ar_Grade.FirstOrDefault(x => x.SID == student.Id);
+                var dep = ArchiveService.ar_department.FirstOrDefault(x => x.SID == student.Id);
                 var model = new StaticalTableModel
                 {
                     id = student.Id,
@@ -87,8 +95,8 @@ namespace GPU.Helpers
                     AcceptanceType = dep?.AcceptanceType,
                     ResidenceType = dep?.ResidenceType,
                     StartingYear = dep?.startinYear,
-                    Stage = dep.Stage,
-                    Graduation = dep.Graduate,
+                    Stage = dep == null ? 0 : dep.Stage,
+                    Graduation = dep?.Graduate,
                 };
 
                 arStudents.Add(model);
@@ -111,25 +119,53 @@ namespace GPU.Helpers
             (tbl.Stage != 0 ? x.Stage == tbl.Stage : true) &&
             (!string.IsNullOrWhiteSpace(tbl.ResidenceType) && tbl.ResidenceType != "-" ? (x.ResidenceType != null && x.ResidenceType.Contains(tbl.ResidenceType)) : true) &&
             (!string.IsNullOrWhiteSpace(tbl.StartingYear) && tbl.StartingYear != "-" ? (x.StartingYear != null && x.StartingYear.Contains(tbl.StartingYear)) : true) &&
-            (!string.IsNullOrWhiteSpace(tbl.Sex) && tbl.Sex != "-" ? (x.Sex != null && x.Sex.Contains(tbl.Sex)) : true)&&
+            (!string.IsNullOrWhiteSpace(tbl.Sex) && tbl.Sex != "-" ? (x.Sex != null && x.Sex.Contains(tbl.Sex)) : true) &&
             (!string.IsNullOrWhiteSpace(tbl.Graduation) && tbl.Graduation != "-" ? (x.Graduation != null && x.Graduation.Contains(tbl.Graduation)) : true)).ToList();
 
             return model;
         }
+        static IHttpContextAccessor httpContextAccessor = new HttpContextAccessor();
         public static List<StaticalTableModel> GetStatical()
         {
             combinedStudents.Clear();
-            GetStudentTable();
-            GetArchiveStudentTable();
-            combinedStudents.AddRange(_student);
-            combinedStudents.AddRange(arStudents);
+            int usrId = Int32.Parse(httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            var usr = ManagerServices._employees.FirstOrDefault(x => x.id == usrId);
+
+            if (usr.StuList)
+            {
+                GetStudentTable();
+                combinedStudents.AddRange(_student);
+
+            }
+
+            if (usr.ArchList)
+            {
+
+                GetArchiveStudentTable();
+                combinedStudents.AddRange(arStudents);
+            }
+
             return combinedStudents;
         }
         public static List<StaticalTableModel> StaticalSearch(StaticalTableModel tbl)
         {
             combinedStudents.Clear();
-            combinedStudents.AddRange(SearchHelper(tbl));
-            combinedStudents.AddRange(ArSearchHelper(tbl));
+
+            int usrId = Int32.Parse(httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            var usr = ManagerServices._employees.FirstOrDefault(x => x.id == usrId);
+
+            if (usr.StuList)
+            {
+                combinedStudents.AddRange(SearchHelper(tbl));
+
+            }
+            if (usr.ArchList)
+            {
+                combinedStudents.AddRange(ArSearchHelper(tbl));
+
+            }
             return combinedStudents;
         }
 

@@ -5,12 +5,15 @@
   xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
   xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
   xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
-  IgnorableNamespaces="uap rescap">
+  xmlns:uap4="http://schemas.microsoft.com/appx/manifest/uap/windows10/4"
+  xmlns:uap3="http://schemas.microsoft.com/appx/manifest/uap/windows10/3"
+  xmlns:iot="http://schemas.microsoft.com/appx/manifest/iot/windows10"
+  IgnorableNamespaces="uap rescap uap4 uap3 iot">
 
   <Identity
     Name="c0165217-eb69-4efd-bb02-a19e80b581b1"
     Publisher="CN=Hiwa Aziz"
-    Version="1.0.0.0" />
+    Version="1.0.5.0" />
 
   <mp:PhoneIdentity PhoneProductId="c0165217-eb69-4efd-bb02-a19e80b581b1" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
@@ -35,7 +38,7 @@
       EntryPoint="$targetentrypoint$">
       <uap:VisualElements
         DisplayName="KTI - Control Panel"
-        Description="developed By Hiwa A. Aziz Special design Contexts for &apos;KALAR TECHNINCAL INSTITUTE&apos;"
+        Description="Developed By Hiwa A. Aziz Designed for &apos;KALAR TECHNINCAL INSTITUTE&apos; Web Services"
         BackgroundColor="transparent"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png">
@@ -48,5 +51,9 @@
 
   <Capabilities>
     <rescap:Capability Name="runFullTrust" />
+    <uap4:Capability Name="userDataTasks"/>
+    <iot:Capability Name="systemManagement"/>
+    <uap:Capability Name="picturesLibrary"/>
+    <Capability Name="internetClientServer"/>
   </Capabilities>
 </Package>

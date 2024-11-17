@@ -5,7 +5,7 @@ VisualStudioVersion = 17.11.35303.130
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GPU", "GPU\GPU.csproj", "{DAFB0C31-391A-48EA-A116-41C7395FEAF2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KTI-DashBoard", "KTI-DashBoard\KTI-DashBoard.csproj", "{373D2E20-AA8D-4DAD-8F1C-458B651FAAB3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KTIDashBoard", "KTI-DashBoard\KTIDashBoard.csproj", "{373D2E20-AA8D-4DAD-8F1C-458B651FAAB3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

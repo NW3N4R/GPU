@@ -1,19 +1,17 @@
 ﻿using KTI_DashBoard.Models;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Windows.Media.Audio;
-using Windows.Security.Cryptography.Certificates;
+using System.Collections.ObjectModel;
 
 namespace KTI_DashBoard.Helpers
 {
     internal class UsersHelper
     {
-        public static List<UsersModel> _Users = new List<UsersModel>();
-        public static async Task<List<UsersModel>> GetUsers()
+        public static ObservableCollection<UsersModel> _Users = new ObservableCollection<UsersModel>();
+        public static async Task<ObservableCollection<UsersModel>> GetUsers()
         {
             using (SqlCommand cmd = new SqlCommand("select  * from users", DbConnectionHelper.con))
             {
@@ -29,6 +27,7 @@ namespace KTI_DashBoard.Helpers
                             UserName = reader.GetString(1),
                             Password = reader.GetString(2),
                             EMPID = reader.GetInt32(3),
+                            CanDelete = reader.GetBoolean(4),
 
                         };
                         _Users.Add(model);
@@ -43,25 +42,39 @@ namespace KTI_DashBoard.Helpers
             if (isDup)
                 return false;
 
-            using (SqlCommand cmd = new SqlCommand("insert into users (UserName,Password,EMPID)values(@usrName,@Pass,@EMP)",DbConnectionHelper.con))
+            using (SqlCommand cmd = new SqlCommand("insert into users (UserName,Password,EMPID,CanDelete)values(@usrName,@Pass,@EMP,@CanDelete); select scope_identity();", DbConnectionHelper.con))
             {
                 cmd.Parameters.AddWithValue("@usrName", model.UserName);
                 cmd.Parameters.AddWithValue("@Pass", model.Password);
                 cmd.Parameters.AddWithValue("@EMP", model.EMPID);
-
-                int rf = await cmd.ExecuteNonQueryAsync();
+                cmd.Parameters.AddWithValue("@CanDelete", model.CanDelete);
+                int rf = (int)(decimal)await cmd.ExecuteScalarAsync();
+                if (rf > 0)
+                {
+                    model.id = rf;
+                }
+                _Users.Add(model);
                 return rf > 0;
             }
         }
         public static async Task<bool> UpdateUser(UsersModel model)
         {
-            using (SqlCommand cmd = new SqlCommand("Update users set UserName = @usrName,Password = @Pass where id =@id", DbConnectionHelper.con))
+            using (SqlCommand cmd = new SqlCommand("Update users set UserName = @usrName,Password = @Pass , CanDelete = @CanDelete where id =@id", DbConnectionHelper.con))
             {
                 cmd.Parameters.AddWithValue("@usrName", model.UserName);
                 cmd.Parameters.AddWithValue("@Pass", model.Password);
                 cmd.Parameters.AddWithValue("@id", model.id);
-
+                cmd.Parameters.AddWithValue("@CanDelete", model.CanDelete);
                 int rf = await cmd.ExecuteNonQueryAsync();
+                if (rf > 0)
+                {
+                    var existing = _Users.First(x => x.id == model.id);
+                    existing.UserName = model.UserName;
+                    existing.Password = model.Password;
+                    existing.CanDelete = model.CanDelete;
+                    existing.EMPID = model.EMPID;
+
+                }
                 return rf > 0;
             }
         }

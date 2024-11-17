@@ -1,0 +1,45 @@
+﻿.infobar {
+    position: fixed;
+    bottom: 50px;
+    right: 20px;
+    width: 60vh;
+    height: 3vh;
+    color: white;
+    border-radius: 10px;
+    background-color: #353535;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    gap: 3vh;
+}
+.success {
+    color: #44C2BB;
+    border: solid #44C2BB 3px;
+}
+.error {
+    border: solid #C2574F 3px;
+}
+.infobar h4 {
+    border: none;
+    font-weight: 100;
+}
+
+.circle {
+    min-width: 8vh;
+    min-height: 8vh;
+    background-color: white;
+    border-radius: 100%;
+    display:flex;
+    justify-content:center;
+    align-content:center;
+    align-items:center;
+}
+    .circle span {
+        font-family: 'Segoe MDL2 Assets', sans-serif;
+        font-size: 30px;
+    }
+
+.warning {
+    color: #C2574F;
+}

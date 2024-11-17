@@ -31,7 +31,7 @@
     border-radius: 10px;
     font-size: 15px;
     direction: rtl;
-    font-family: 'Segoe MDL2 Assets';
+    font-family: 'Segoe MDL2 Assets', sans-serif;
     transition: 0.2s;
 }
 .NewInvoice {
@@ -54,3 +54,30 @@
     justify-content: flex-end;
     align-items: flex-end;
 }
+
+
+.SearchChild {
+    display: flex;
+    flex-direction: column;
+}
+
+.SearchTXT {
+    border: solid 1px rgba(0, 131, 116, 0.5); /* Border with 50% opacity */
+    border-radius: 6px;
+    font-size: 14px;
+    padding-inline: 10px;
+    font-family: 'Droid Arabic Kufi'
+}
+
+
+
+.NewInvoice {
+    transition: 1s;
+    font-size: 14px;
+}
+
+.DivToNewInvoiceBTTN :hover {
+    transition: 1s;
+    font-size: 15px;
+}
+

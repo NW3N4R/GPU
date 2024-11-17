@@ -1,0 +1,38 @@
+﻿@using System.Security.Claims;
+
+@{
+
+    @if (GPU.Helpers.DbConnectionHelper.Infos.Any(x => x.UserId.ToString() == User.FindFirst(ClaimTypes.NameIdentifier)?.Value))
+    {
+
+        foreach (var item in GPU.Helpers.DbConnectionHelper.Infos.Where(x => x.UserId.ToString() == User.FindFirst(ClaimTypes.NameIdentifier)?.Value))
+        {
+            if (item.isSuccess)
+            {
+                <div class="infobar success">
+                    <div class="circle success">
+                        <span class="">&#xF78C;</span>
+                    </div>
+                    <h4 style="color:white;">
+                        کردارەکە سەرکەوتوو بوو
+                    </h4>
+                </div>
+            }
+            else
+            {
+                <div class="infobar error">
+                    <div class="circle error">
+                        <span class="warning">&#xE711;</span>
+                    </div>
+                    <h4 style="color:white;">
+                        کێشەیەک ڕوویدا نەتوانرا کردەکە ئەنجام بدرێت
+                    </h4>
+                </div>
+            }
+        }
+    }
+}
+
+
+
+@* <meta http-equiv="refresh" content="3"> *@

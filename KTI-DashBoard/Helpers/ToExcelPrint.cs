@@ -1,7 +1,6 @@
 ﻿using KTI_DashBoard.Models;
 using OfficeOpenXml;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -186,7 +185,7 @@ namespace KTI_DashBoard.Helpers
             var tableRange = worksheet.Cells[startCell.Address + ":" + endCell.Address];
 
             var table = worksheet.Tables.Add(tableRange, "MyTable");
-         
+
             return excelPackage;
         }
     }

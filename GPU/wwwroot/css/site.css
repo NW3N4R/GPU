@@ -13,10 +13,7 @@ html {
     box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
-html {
-    position: relative;
-    min-height: 100%;
-}
+
 
 @font-face {
     font-family: 'Droid Arabic Kufi';
@@ -24,47 +21,63 @@ html {
     font-weight: normal;
     font-style: normal;
 }
-
+@font-face {
+    font-family: 'Segoe MDL2 Assets';
+    src: url('../fonts/segoe.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
 body {
-    margin-bottom: 60px;
     direction: rtl;
     font-family: 'Droid Arabic Kufi', sans-serif;
     font-weight: normal;
     font-style: normal;
     background-color: #f3f4f6;
+
 }
 
 body, html {
-    height: 100%;
     margin: 0;
-    overflow: hidden;
+    padding:0;
+    overflow:hidden;
+    max-height:90vh;
 }
 
 footer {
     position: absolute;
     bottom: 0;
-    width: 100%;
-    height: 8vh;
+    width: 100vw;
+    height: 5vh;
     border: none;
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: #008374;
+    color:white;
+    
 }
 
 .finner {
     border-radius: 10px;
     padding: 5px;
-    margin-top: 1%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 100%;
-    text-align: center;
+    margin-top: 0%;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
     justify-content: center;
+    text-align: center;
+    width: 100%;
 }
-
+    .finner p {
+        font-size: clamp(0.5rem, 0.8vw, 1rem);
+        white-space:nowrap;
+    }
+    .finner .pfirst {
+        text-align: right;
+    }
+    .finner .plast {
+        text-align:left;
+    }
 .RightSide {
-    background: red;
     text-align: center;
 }
 
@@ -74,7 +87,7 @@ footer {
 
 
 .container {
-    max-width: 180vh; /* Max width (though typically max-width is set in pixels or percentage) */
+    max-width: 100%; /* Max width (though typically max-width is set in pixels or percentage) */
     margin: 0 auto; /* Center the container itself horizontally */
     display: flex; /* Use Flexbox */
     align-items: center; /* Center children vertically */
@@ -83,5 +96,48 @@ footer {
 }
 
 .Segoe {
-    font-family: 'Segoe MDL2 Assets';
+    font-family: 'Segoe MDL2 Assets', sans-serif;
+}
+
+
+.element::-webkit-scrollbar {
+    width: 15px; /* Width for vertical scrollbar */
+    height: 10px; /* Height for horizontal scrollbar */
+}
+
+/* Track (background of the scrollbar) */
+.element::-webkit-scrollbar-track {
+    background-color:transparent; /* Light background color */
+
+}
+
+/* Handle (the draggable part of the scrollbar) */
+.element::-webkit-scrollbar-thumb {
+    background: #008374; /* Darker color for contrast */
+    border: solid #f3f4f6 2px;
+   
+}
+
+    /* Handle hover effect */
+    .element::-webkit-scrollbar-thumb:hover {
+        background: #555; /* Darker color when hovered */
+    }
+
+.elementFields::-webkit-scrollbar-thumb {
+    background: #008374; /* Darker color for contrast */
+}
+
+@media (max-width:380px){
+    footer {
+        width: 100vw;
+        height: 10vh;
+    }
+
+    .finner{
+        display:flex;
+        flex-direction:column;
+    }
+    .finner .pfirst,.finner .plast{
+        text-align:center;
+    }
 }

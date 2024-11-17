@@ -51,6 +51,8 @@ namespace GPU.Models
 
         [DisplayName("ساڵی تەواو کردن")]
         public string? Graduation { get; set; }
-        public bool isFirst { get; set; }
+
+        [DisplayName("ژ. فۆرمی بەشە خۆراک")]
+        public string? RationingFormNo { get; set; }
     }
 }

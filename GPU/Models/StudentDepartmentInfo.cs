@@ -6,7 +6,6 @@ namespace GPU.Models
     {
         public int Id { get; set; }
 
-
         [DisplayName("بەشی وەرگیراو")]
         public string? Department { get; set; }
 
@@ -32,7 +31,11 @@ namespace GPU.Models
         public int Stage { get; set; }
 
         [DisplayName("خوێندکاری بەشە ناوخۆییە؟")]
-        public string?   ResidenceType { get; set; }
+        public string? ResidenceType { get; set; }
         public int SID { get; set; }
+
+        [DisplayName("تەواوی فایلەکانی تر بە pdf یان وێنە")]
+        public IEnumerable<IFormFile>? OtherFiles { get; set; }
+
     }
 }

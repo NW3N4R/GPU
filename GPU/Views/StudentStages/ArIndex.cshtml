@@ -1,0 +1,212 @@
+﻿@model (List<GPU.Models.StudentStages> List ,GPU.Models.StudentStages stages )
+
+@{
+    ViewData["Title"] = "ڕەوشی خوێندکار";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h4 class="Title">ڕەوشی خوێندکار - @Html.DisplayFor(model => model.stages.Name)</h4>
+<form method="post"  asp-action="ArSearch">
+    <div class="InvoiceSearchBar">
+        <div class="SearchChild SearchBox">
+            <label asp-for="stages.Year" class="control-label"></label>
+            <select asp-for="stages.Year" name="stages.Year" class="SearchTXT">
+                <option value="-" class="YearOptions">هەمووی</option>
+
+                @for (int year = 1995; year <= DateTime.Now.Year + 5; year++)
+                {
+                    int yr = year - 1;
+                    string yrr = $"{@year} - {@yr}";
+                    <option value="@yrr" class="YearOptions">@year - @yr </option>
+                }
+            </select>
+        </div>
+        <div class="InvoiceSearchContainer" style="margin-top:3%;">
+            <button type="submit" class="InvoiceFind" asp-action="ArSearch" asp-route-id="@Model.stages.Sid">
+                &#xE721;
+                </button>
+        </div>
+    </div>
+
+</form>
+<div class="DivToNewInvoiceBTTN">
+    <button type="submit" class=" NewInvoice" id="openModalButton" onclick="openModel()">ڕەوشی نوێ</button>
+</div>
+
+<div class="content">
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th class="Header FirstColumn">
+                        @Html.DisplayNameFor(model => model.stages.Stage)
+                    </th>
+                    <th class="Header">
+                        @Html.DisplayNameFor(model => model.stages.Year)
+                    </th>
+                    <th class="Header">
+                        @Html.DisplayNameFor(model => model.stages.Status)
+                    </th>
+                    <th class="Header lastColumn">
+                    </th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td class="r1" />
+                    <td class="r1" />
+                    <td class="r1" />
+                </tr>
+                @foreach (var item in Model.List)
+                {
+                    <tr>
+                        <td class="DgColumn">
+                            @Html.DisplayFor(modelItem => item.Stage)
+                        </td>
+                        <td class="DgColumn">
+                            @Html.DisplayFor(modelItem => item.Year)
+                        </td>
+                        <td class="DgColumn">
+                            @Html.DisplayFor(modelItem => item.Status)
+                        </td>
+                        <td>
+                            <a onclick="OpenEdit(this)"
+                               class="dgActionBttn"
+                               id="openEditModalButton"
+                               data-sid="@item.Sid"
+                               data-id="@item.id"
+                               data-year="@item.Year"
+                               data-stage="@item.Stage"
+                               data-status="@item.Status">نوێ کردنەوە</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div id="customModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>ڕەوشی نوێ بۆ خوێندکار - <span style="color:#008374;">@Html.DisplayFor(model => model.stages.Name)</span> </h2>
+        <form method="post" asp-action="ArNewStage" class="FormOfInsert">
+            <div class="form-group">
+                <label asp-for="stages.Stage" style="text-align:right;" class="control-label"></label>
+                <input asp-for="stages.Stage" type="number" min="1" max="2" value="1" name="stages.Stage" class="form-control" />
+                <span asp-validation-for="stages.Stage" class="text-danger"></span>
+
+            </div>
+            <div class="form-group" style="margin-block:10px;">
+                <label asp-for="stages.Year" style="text-align:right;" class="control-label"></label>
+                <select asp-for="stages.Year" name="stages.Year" class="form-control YearSelect">
+                    @for (int year = 1995; year <= DateTime.Now.Year + 5; year++)
+                    {
+                        int yr = year - 1;
+                        string yrr = $"{@year} - {@yr}";
+                        <option value="@yrr" class="YearOptions">@year - @yr </option>
+                    }
+                </select>
+                <span asp-validation-for="stages.Year" class="text-danger"></span>
+
+            </div>
+            <div class="form-group">
+                <label asp-for="stages.Status" style="text-align:right;" class="control-label"></label>
+                <input asp-for="stages.Status" name="stages.Status" class="form-control" />
+                <span asp-validation-for="stages.Status" class="text-danger"></span>
+
+                <input asp-for="stages.Sid" hidden name="stages.Sid" class="form-control" />
+            </div>
+            <div class="InsertFooter">
+                <button type="submit" id="savePromptValue" class="SaveNewInvoiceBttn">وەرگرتن</button>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+<div id="UpdateModal" class="modal">
+    <div class="modal-content">
+        <span class="close" id="CloseEdit">&times;</span>
+        <h2> نوێ کردنەوەی ڕەوش بۆ خوێندکار - <span style="color:#008374;">@Html.DisplayFor(model => model.stages.Name)</span> </h2>
+        <form method="post" asp-action="ArUpdateStage" class="FormOfInsert">
+            <div class="form-group">
+                <label asp-for="stages.Stage" style="text-align:right;" class="control-label"></label>
+                <input asp-for="stages.Stage" id="StageStage" type="number" min="1" max="2" value="1" name="stages.Stage" class="form-control" />
+                <span asp-validation-for="stages.Stage" class="text-danger"></span>
+
+            </div>
+            <div class="form-group" style="margin-block:10px;">
+                <label asp-for="stages.Year" style="text-align:right;" class="control-label"></label>
+                <select asp-for="stages.Year" id="StageYear" name="stages.Year" class="form-control YearSelect">
+                    @for (int year = 1995; year <= DateTime.Now.Year + 5; year++)
+                    {
+                        int yr = year - 1;
+                        string yrr = $"{@year} - {@yr}";
+                        <option value="@yrr" class="YearOptions">@year - @yr </option>
+                    }
+                </select>
+                <span asp-validation-for="stages.Year" class="text-danger"></span>
+
+            </div>
+            <div class="form-group">
+                <label asp-for="stages.Status" style="text-align:right;" class="control-label"></label>
+                <input asp-for="stages.Status" id="StageStatus" name="stages.Status" class="form-control" />
+                <span asp-validation-for="stages.Status" class="text-danger"></span>
+                <input asp-for="stages.id" hidden id="iID" name="stages.id" class="form-control" />
+                <input asp-for="stages.Sid" hidden id="sid" name="stages.Sid" class="form-control" />
+            </div>
+            <div class="InsertFooter">
+                <button type="submit" id="savePromptValue" class="SaveNewInvoiceBttn">نوێ کردنەوە</button>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    // Get modal elements
+
+
+    var modal = document.getElementById("customModal");
+    var Editmodal = document.getElementById("UpdateModal");
+    var btn = document.getElementById("openModalButton");
+    var closeBtn = document.getElementsByClassName("close")[0];
+    var closeEditBtn = document.getElementsByClassName("close")[1];
+
+    function OpenEdit(button) {
+
+        Editmodal.style.display = "block";
+        var id = button.getAttribute("data-id");
+        var year = button.getAttribute("data-year");
+        var stage = button.getAttribute("data-stage");
+        var status = button.getAttribute("data-status");
+        var sid = button.getAttribute("data-sid");
+
+
+        document.getElementById('StageStage').value = stage;
+        document.getElementById('StageYear').value = year;
+        document.getElementById('StageStatus').value = status;
+        document.getElementById('iID').value = id;
+        document.getElementById('sid').value = sid;
+    }
+    // Open the modal when the user clicks the button
+    btn.onclick = function () {
+        modal.style.display = "block";
+    }
+
+    closeBtn.onclick = function () {
+        modal.style.display = "none";
+    }
+    closeEditBtn.onclick = function () {
+        Editmodal.style.display = "none";
+    }
+    window.onclick = function (event) {
+        if (event.target == modal || event.target == Editmodal) {
+            modal.style.display = "none";
+            Editmodal.style.display = "none";
+        }
+    }
+
+</script>
+
+

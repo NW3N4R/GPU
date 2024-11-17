@@ -1,22 +1,9 @@
 using KTI_DashBoard.Editors;
 using KTI_DashBoard.Helpers;
-using KTI_DashBoard.Models;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 
 
 namespace KTI_DashBoard.Views
@@ -33,8 +20,16 @@ namespace KTI_DashBoard.Views
             load();
             MainWindow.current.Refresh.Click += Refresh_Click;
         }
-        void load()
+        async void load()
         {
+
+            provinceList.ItemsSource = null;
+            MartialList.ItemsSource = null;
+            AdminiList.ItemsSource = null;
+            NationalityList.ItemsSource = null;
+            ReligionList.ItemsSource = null;
+            DepartmentList.ItemsSource = null;
+            await WebPropertiesHelper.GetAllProps();
             provinceList.ItemsSource = WebPropertiesHelper._Province;
             MartialList.ItemsSource = WebPropertiesHelper._Martial;
             AdminiList.ItemsSource = WebPropertiesHelper._EduAdmini;

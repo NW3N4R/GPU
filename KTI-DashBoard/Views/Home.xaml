@@ -8,9 +8,6 @@
       mc:Ignorable="d">
     
     <Grid Tag="Home">
-        
-        <TextBlock Text="Home"
-                   VerticalAlignment="Center"
-                   HorizontalAlignment="Center" />
+  
     </Grid>
 </Page>

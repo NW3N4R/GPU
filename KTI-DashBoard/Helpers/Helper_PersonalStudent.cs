@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Data.SqlClient;
+﻿using KTI_DashBoard.Models;
+using System.Collections.Generic;
+using Microsoft.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
-using KTI_DashBoard.Models;
 namespace KTI_DashBoard.Helpers
 {
     public class Helper_PersonalStudent

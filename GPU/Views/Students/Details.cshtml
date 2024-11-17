@@ -4,19 +4,39 @@
     ViewData["Title"] = "پرۆفایلی خوێندکار";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-
-<div class="ParentAll">
+<div class="DeContainer">
 
     <div class="DetailContainer">
         <div class="Col">
             <h3>زانیاری کەسی</h3>
             <hr />
-            <div class="topProp">
+            @{
+                string imageSrc = null;
+
+                using (var stream = new MemoryStream())
+                {
+                    IFormFile form = await GPU.Helpers.ImagesHelper.GetProfileImageAsFormFile(Model.PersonalStudent.Id.ToString(), 0);
+                    if (form != null)
+                    {
+
+                        // Copy the IFormFile data into a stream
+                        await form.CopyToAsync(stream);
+                        var base64Image = Convert.ToBase64String(stream.ToArray());
+                        imageSrc = $"data:{form.ContentType};base64,{base64Image}";
+                    }
+                }
+                if (imageSrc != null)
+                {
+                    <div class="imgparent">
+                        <img class="ProFilePic" src="@imageSrc" alt="Student Picture" />
+                    </div>
+                }
+            }
+            <div class="PropInfo">
                 <h5>
                     @Html.DisplayNameFor(model => model.PersonalStudent.Name)
                 </h5>
-                <h4 class="hTXT">
+                <h4>
                     @Html.DisplayFor(model => model.PersonalStudent.Name)
                 </h4>
             </div>
@@ -32,7 +52,7 @@
                 <h5>
                     @Html.DisplayNameFor(model => model.PersonalStudent.RationingFormNo)
                 </h5>
-                <h4 class="hTXT">
+                <h4>
                     @Html.DisplayFor(model => model.PersonalStudent.RationingFormNo)
                 </h4>
             </div>
@@ -384,6 +404,8 @@
     <div class="bttnContainer">
         <a asp-controller="Print" asp-action="Index" class="EditBttn" asp-route-id="@Model.PersonalStudent.Id">پرنت کردن</a>
         <a asp-controller="Invoices" asp-action="Index" class="EditBttn" asp-route-id="@Model.PersonalStudent.Id">وەسڵەکان</a>
+        <a asp-controller="Students" asp-action="Gallery" class="EditBttn" asp-route-id="@Model.PersonalStudent.Id">بەڵگەنامەکان</a>
+        <a asp-controller="StudentStages" asp-action="Index" class="EditBttn" asp-route-id="@Model.PersonalStudent.Id">ڕەوشی خوێندکار</a>
         <a asp-action="Edit" class="EditBttn" asp-route-id="@Model.PersonalStudent.Id">نوێ کردنەوە</a>
     </div>
 </div>

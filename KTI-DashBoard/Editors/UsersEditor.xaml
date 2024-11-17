@@ -5,10 +5,8 @@
       xmlns:local="using:KTI_DashBoard.Editors"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      mc:Ignorable="d"
->
+      mc:Ignorable="d">
     <Grid  ColumnSpacing="20"
-           MinWidth="300"
            RowSpacing="15">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -25,15 +23,20 @@
                  PlaceholderText="s0m30ne " />
         <PasswordBox Header="Pass (4min)"
                      x:Name="NewUserPassword"
-                    MaxLength="8"
+                     MaxLength="8"
                      PasswordChanging="NewUserPassword_PasswordChanging"
                      PlaceholderText="passowrd..."
                      Grid.Column="1" />
+        <ToggleButton Content="Can Delete?"
+                      Grid.Row="1"
+                      x:Name="CanDelete"
+                      Click="CanDelete_Click"
+                      HorizontalAlignment="Stretch"
+                      Grid.Column="1"/>
         <Button Grid.Row="1"
                 x:Name="SaveNewUser"
                 Click="SaveNewUser_Click"
                 IsEnabled="False"
-                Grid.ColumnSpan="2"
                 HorizontalAlignment="Stretch"
                 HorizontalContentAlignment="Center">
             <Button.Content>

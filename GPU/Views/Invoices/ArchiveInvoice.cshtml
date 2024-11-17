@@ -5,20 +5,22 @@
 }
 <h4 class="Title">وەسڵی خوێندکار - @Html.DisplayFor(model => model.InvoiceModel.Name)</h4>
 <form method="post" asp-controller="Invoices" asp-action="ARSearch">
-    <div class="SearchBar">
+    <div class="InvoiceSearchBar">
         <div class="SearchChild SearchBox">
             <label asp-for="InvoiceModel.InvoiceDate" class="control-label"></label>
             <input asp-for="InvoiceModel.InvoiceDate" name="InvoiceModel.InvoiceDate" type="date" style="min-width:20vh;" class="SearchTXT" />
 
         </div>
-        <div class="button-container" style="margin-top:3%;">
-            <button type="submit" class="SearchBttn" asp-action="ARSearch" asp-route-id="@Model.dep.SID">گەڕان</button>
+        <div class="InvoiceSearchContainer" style="margin-top:3%;">
+            <button type="submit" class="InvoiceFind" asp-action="ARSearch" asp-route-id="@Model.dep.SID">
+                &#xE721;
+            </button>
         </div>
     </div>
 
 </form>
 <div class="DivToNewInvoiceBTTN">
-    <button type="submit" class="SearchBttn NewInvoice" id="openModalButton" onclick="openModel()">وەسڵی نوێ</button>
+    <button type="submit" class="NewInvoice" id="openModalButton" onclick="openModel()">وەسڵی نوێ</button>
 </div>
 
 <div class="content">
@@ -81,7 +83,7 @@
         <form method="post" asp-action="ArNewInvoice" class="FormOfInsert">
             <div class="form-group">
                 <label asp-for="InvoiceModel.InvoiceId" style="text-align:right;" class="control-label"></label>
-                <input asp-for="InvoiceModel.InvoiceId" name="InvoiceModel.InvoiceId" class="form-control" />
+                <input asp-for="InvoiceModel.InvoiceId" type="number" name="InvoiceModel.InvoiceId" class="form-control" />
                 <span asp-validation-for="InvoiceModel.InvoiceId" class="text-danger"></span>
 
             </div>
@@ -93,7 +95,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="InvoiceModel.Amount" style="text-align:right;" class="control-label"></label>
-                <input asp-for="InvoiceModel.Amount" name="InvoiceModel.Amount" class="form-control" />
+                <input asp-for="InvoiceModel.Amount" type="number" name="InvoiceModel.Amount" class="form-control" />
                 <span asp-validation-for="InvoiceModel.Amount" class="text-danger"></span>
 
                 <input asp-for="InvoiceModel.SID" hidden name="InvoiceModel.SID" class="form-control" />
@@ -113,7 +115,7 @@
         <form method="post" asp-action="arEditInvoice" class="FormOfInsert">
             <div class="form-group">
                 <label asp-for="InvoiceModel.InvoiceId" style="text-align:right;" class="control-label"></label>
-                <input asp-for="InvoiceModel.InvoiceId" id="invoiceIdField" name="InvoiceModel.InvoiceId" class="form-control" />
+                <input asp-for="InvoiceModel.InvoiceId" type="number" id="invoiceIdField" name="InvoiceModel.InvoiceId" class="form-control" />
                 <span asp-validation-for="InvoiceModel.InvoiceId" class="text-danger"></span>
 
             </div>
@@ -125,7 +127,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="InvoiceModel.Amount" style="text-align:right;" class="control-label"></label>
-                <input asp-for="InvoiceModel.Amount" id="invoiceAmountField" name="InvoiceModel.Amount" class="form-control" />
+                <input asp-for="InvoiceModel.Amount" type="number" id="invoiceAmountField" name="InvoiceModel.Amount" class="form-control" />
                 <span asp-validation-for="InvoiceModel.Amount" class="text-danger"></span>
 
                 <input asp-for="InvoiceModel.id" hidden id="iID" name="InvoiceModel.id" class="form-control" />

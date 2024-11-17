@@ -1,31 +1,14 @@
-using KTI_DashBoard.Helpers;
-using Microsoft.UI;
 using Microsoft.UI.Input;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Animation;
-using Microsoft.UI.Xaml.Navigation;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading.Tasks;
-using Windows.ApplicationModel;
-using Windows.ApplicationModel.Core;
 using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.ViewManagement;
-using WinRT.Interop;
-using KTI_DashBoard.Extensions;
-using Microsoft.UI.Composition.SystemBackdrops;
 
 namespace KTI_DashBoard
 {
@@ -33,8 +16,9 @@ namespace KTI_DashBoard
     public sealed partial class MainWindow : Window
     {
         private AppWindow m_AppWindow;
-        private DesktopAcrylicBackdrop _backdrop;
         public static MainWindow current;
+        private DesktopAcrylicBackdrop _backdrop;
+
         public MainWindow()
         {
             this.InitializeComponent();
@@ -52,7 +36,7 @@ namespace KTI_DashBoard
 
             var micaBackdrop = new MicaBackdrop();
             this.SystemBackdrop = micaBackdrop;
-          
+
         }
         private void AppTitleBar_Loaded(object sender, RoutedEventArgs e)
         {
@@ -106,7 +90,7 @@ namespace KTI_DashBoard
             Windows.Graphics.RectInt32 SettingsRect = GetRect(bounds, scaleAdjustment);
 
 
-            var rectArray = new Windows.Graphics.RectInt32[] { SearchBoxRect, PersonPicRect , RefreshRect, SettingsRect };
+            var rectArray = new Windows.Graphics.RectInt32[] { SearchBoxRect, PersonPicRect, RefreshRect, SettingsRect };
 
             InputNonClientPointerSource nonClientInputSrc =
                 InputNonClientPointerSource.GetForWindowId(this.AppWindow.Id);

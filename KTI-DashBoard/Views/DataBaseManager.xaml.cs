@@ -2,22 +2,9 @@ using KTI_DashBoard.Helpers;
 using KTI_DashBoard.Models;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
 using System;
-using System.Collections.Generic;
-using System.Data.Common;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Security.Policy;
-using System.Threading;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 
 
 namespace KTI_DashBoard.Views
@@ -44,7 +31,7 @@ namespace KTI_DashBoard.Views
             }
         }
 
-        private  void Page_Loaded(object sender, RoutedEventArgs e)
+        private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             Load();
             MainWindow.current.Refresh.Click += RefreshButton_Click;
@@ -53,9 +40,14 @@ namespace KTI_DashBoard.Views
         async void Load()
         {
             bool[] all = new bool[3];
+
+            for (int i = 0; i <= 2; i++)
+            {
+                all[i] = false;
+            }
             all[0] = DbConnectionHelper.con.State == System.Data.ConnectionState.Open;
             all[1] = await WebStat.GetStatAsync();
-            all[2] = await WebStat.IsWebRespondingAsync("http://p4165386.eero.online/kti");
+            all[2] = await WebStat.IsWebRespondingAsync("http://p4165386.eero.online");
 
             ServerStatus.Text = all[0] ? "Good" : "Down";
             WebStatToggle.IsChecked = all[1] ? true : false;
@@ -65,7 +57,7 @@ namespace KTI_DashBoard.Views
 
             await MyWebView.EnsureCoreWebView2Async();
 
-            MyWebView.CoreWebView2.Navigate("http://p4165386.eero.online/kti");
+            MyWebView.CoreWebView2.Navigate("http://p4165386.eero.online");
 
         }
         private async void WebStatToggle_Click(object sender, RoutedEventArgs e)
@@ -83,7 +75,7 @@ namespace KTI_DashBoard.Views
 
         private void ToWeb_Click(object sender, RoutedEventArgs e)
         {
-            OpenBrowser("http://p4165386.eero.online/kti");
+            OpenBrowser("http://p4165386.eero.online");
         }
 
         public static void OpenBrowser(string url)

@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 
 namespace KTI_DashBoard.Models
 {
-    public class WebProperties : INotifyPropertyChanged
+    public partial class WebProperties : INotifyPropertyChanged
     {
 
         private string _name;

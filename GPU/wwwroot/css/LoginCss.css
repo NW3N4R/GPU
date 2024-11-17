@@ -1,0 +1,99 @@
+﻿@font-face {
+    font-family: 'Droid Arabic Kufi';
+    src: url('../fonts/DroidKufi-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    font-family: 'Droid Arabic Kufi', sans-serif;
+    font-weight: normal;
+    font-style: normal;
+    background-color: #f3f4f6;
+    text-align:center;
+    vertical-align:central;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+.LoginContainer {
+    background-color: #B4DBD6;
+    padding: 40px;
+    min-width: 70vh;
+    border-radius: 10px;
+    display: grid;
+    justify-content: center;
+    direction:rtl;
+    gap:20px;
+}
+form div{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    justify-content:center;
+}
+
+.title h1,p{
+    margin:0;
+    padding:0;
+}
+.ImgContainer {
+    align-content: center;
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+    .ImgContainer img {
+        max-width: 100%;
+        height: auto;
+    }
+.controlContainer{
+    
+    display:flex;
+    flex-direction:column;
+    direction:rtl;
+    gap:10px;
+}
+.FormControl {
+    display: flex;
+    flex-direction: column;
+}
+
+.txtBox {
+    border-radius: 5px;
+    padding: 2px;
+    font-family: 'Droid Arabic Kufi';
+    font-size: 16px;
+    margin-top:-2%;
+    border:solid 1px #008374;
+}
+.InputLabel{
+    text-align:right;
+    font-weight:bold;
+
+}
+form button {
+    font-family: 'Droid Arabic Kufi';
+    font-size: 15px;
+    border: none;
+    border-radius: 4px;
+    transition: 0.3s;
+    padding-inline: 20px;
+    margin-top:3vh;
+    gap:10px
+}
+
+form button:hover {
+    transition: 0.3s;
+    font-size: 17px;
+    border-radius:12px;
+}
+
+.error-message{
+    color:red;
+    font-weight:bolder;
+    font-size:12px;
+    margin-top:5%;
+}

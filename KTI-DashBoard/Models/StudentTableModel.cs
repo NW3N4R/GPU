@@ -17,7 +17,7 @@ namespace KTI_DashBoard.Models
 
         [DisplayName("قۆناغ")]
         public int Stage { get; set; }
-        
+
         [DisplayName("ساڵی دەرچوون")]
         public string? Graduate { get; set; }
 

@@ -16,95 +16,175 @@
     <link rel="stylesheet" href="~/css/StaticalSearchBar.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/StaticalTableSpecialStyle.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/NewInvoiceStyle.css" asp-append-version="true" />
-    @* <link rel="stylesheet" href="~/GPU/styles.css" asp-append-version="true" /> *@
+    <link rel="stylesheet" href="~/css/Gallery.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/infoStyle.css" asp-append-version="true" />
     <link rel="icon" type="image/x-icon" href="~/favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="~/logo.png">
     <link rel="icon" type="image/png" sizes="16x16" href="~/logo.png">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simplebar@latest/dist/simplebar.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/simplebar@latest/dist/simplebar.min.js"></script>
 </head>
 <body>
     <header>
-        <nav>
-            <div class="NavRight">
-                <ul class="nav-nav flex-grow-1">
-                    <li class="nav-li ">
-                        <a class="nav-link  "
-                           asp-area=""
-                           asp-controller="Home"
-                           asp-action="Index">سەرەتا</a>
-                    </li>
+        <nav class="WideNav">
+            <a class="LogoSide " asp-area="" asp-controller="Home" asp-action="Index">
+                <img src="~/logo.png" class="NavLogo" />
+                <div>
+                    <p>پەیمانگای تەکنیکی کەلار</p>
+                    <p style="font-size:0.8rem;">هۆبـەی تـۆمـارگـا</p>
+                </div>
+            </a>
 
-                    <li class="nav-li ">
-                        <a class="nav-link "
-                           asp-area=""
-                           asp-controller="Students"
-                           asp-action="Create">تۆمارکردن</a>
-                    </li>
+            <ul class="centerSide ">
+                <li class="nav-li ">
+                    <a class="nav-link "
+                       asp-area=""
+                       asp-controller="Home"
+                       asp-action="Index">سەرەتا</a>
+                </li>
 
-                    <li class="nav-li ">
-                        <a class="nav-link  "
-                           asp-area=""
-                           asp-controller="Students"
-                           asp-action="Index">خوێندکاران</a>
-                    </li>
-                    <li class="nav-li ">
-                        <a class="nav-link "
-                           asp-area=""
-                           asp-controller="Certificates"
-                           asp-action="Index">بڕوانامەکان</a>
-                    </li>   
-                    <li class="nav-li ">
-                        <a class="nav-link "
-                           asp-area=""
-                           asp-controller="Archive"
-                           asp-action="Index">ئەرشیف</a>
-                    </li>
-                  
-                    <li class="nav-li ">
-                        <a class="nav-link "
-                           asp-area=""
-                           asp-controller="StaticalView"
-                           asp-action="Index">ئامار</a>
-                    </li>
+                <li class="nav-li ">
+                    <a class="nav-link "
+                       asp-area=""
+                       asp-controller="Students"
+                       asp-action="Create">تۆمارکردن</a>
+                </li>
+
+                <li class="nav-li ">
+                    <a class="nav-link  "
+                       asp-area=""
+                       asp-controller="Students"
+                       asp-action="Index">خوێندکاران</a>
+                </li>
+                <li class="nav-li ">
+                    <a class="nav-link "
+                       asp-area=""
+                       asp-controller="Certificates"
+                       asp-action="Index">بڕوانامەکان</a>
+                </li>
+                <li class="nav-li ">
+                    <a class="nav-link "
+                       asp-area=""
+                       asp-controller="Archive"
+                       asp-action="Index">ئەرشیف</a>
+                </li>
+
+                <li class="nav-li ">
+                    <a class="nav-link "
+                       asp-area=""
+                       asp-controller="StaticalView"
+                       asp-action="Index">ئامار</a>
+                </li>
+
+            </ul>
 
 
-
-                </ul>
-
+            <div class="logOutSide ">
+                <a class="nav-link  "
+                   asp-area=""
+                   asp-controller="Account"
+                   asp-action="Logout"> @User.Identity.Name</a>
             </div>
-            <div class="NavCenter">
-                <a class="ActionSide" asp-area="" asp-controller="Home" asp-action="Index">
-                    <img src="~/logo.png" class="NavLogo" />
-                </a>
-            </div>
-            <div class="NavLeft">
-                <a class="ActionSide" asp-area="" asp-controller="Home" asp-action="Index">
-                    <div class="NavTxt">
-                        <p>پەیمانگای تەکنیکی کەلار</p>
-                        <p class="BottomSpan">هۆبـەی تـۆمـارگـا</p>
-                    </div>
-                </a>
 
+        </nav>
+        <nav class="topnav">
+            <div class="active">
+                <button class="burger" onclick="toggleMenu()">&#9776;</button>
+                <a class="LogoSide " asp-area="" asp-controller="Home" asp-action="Index">
+                    <p>پەیمانگای تەکنیکی کەلار</p>
+                </a>
+                <a class="mobUser"
+                   asp-area=""
+                   asp-controller="Account"
+                   asp-action="Logout"> @User.Identity.Name</a>
+            </div>
+
+            <div class="nav-items" id="myTopnav">
+                <a asp-area=""
+                   asp-controller="Students"
+                   asp-action="Create">تۆمارکردن</a>
+                <a asp-area=""
+                   asp-controller="Students"
+                   asp-action="Index">خوێندکاران</a>
+
+                <a asp-area=""
+                   asp-controller="Certificates"
+                   asp-action="Index">بڕوانامەکان</a>
+
+                <a asp-area=""
+                   asp-controller="Archive"
+                   asp-action="Index">ئەرشیف</a>
+
+                <a asp-area=""
+                   asp-controller="StaticalView"
+                   asp-action="Index">ئامار</a>
+
+                <a class="mobUser2"
+                   asp-area=""
+                   asp-controller="Account"
+                   asp-action="Logout"> @User.Identity.Name</a>
             </div>
         </nav>
+
+        <script>
+
+
+       
+
+
+            function toggleMenu() {
+                var menu = document.getElementById('myTopnav');
+                if (menu.className === "nav-items") {
+                    menu.classList.add("responsive");
+                    menu.style.maxHeight = menu.scrollHeight + "vh";
+                }
+                else {
+                    menu.style.maxHeight = "0px";
+                    menu.classList.remove("responsive")
+                }
+            }
+
+        </script>
     </header>
     <div class="container">
 
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
+        <partial id="status-info" class="infobar-container">
+            @{
+                Html.RenderPartial("~/Views/Info/Info.cshtml");
+            }
+        </partial>
+
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer>
         <div class="finner">
-            <span>
-                هۆبەی تۆمارگای پەیمانگای تەکنیکی کەلار  &copy;
-            </span>
-            <span style="margin-right:40px;">
-                Developed By Hiwa A. Abbas
-            </span>
+            <p class="pfirst">
+                پەیمانگای تەکنیکی کەلار &ndash; هۆبەی تۆمارگە &copy;  @DateTime.Now.Year
+            </p>
+            <p class="midP">
+                @if (GPU.Helpers.WeatherCall._weather.Any())
+                {
+                    <span>
 
+                        @GPU.Helpers.WeatherCall._weather.FirstOrDefault().Current.Temp_C&deg;
+
+                        پلەی گەرمی کەلار
+                    </span>
+                }
+                else
+                {
+                    <span>
+                        @DateTime.Now.Year &dash; @DateTime.Now.AddYears(1).Year
+                    </span>
+                }
+            </p>
+            <p class="plast">
+                گەشەپیدراوە لەلایەن (هیوا عزیز عباس) ەوە
+            </p>
         </div>
 
     </footer>
@@ -118,21 +198,4 @@
 </html>
 
 
-@*   <div class="NavTitle">
-
-     <div class="">
-            <div class="NavTitle">
-            <a class="navbar-brand" asp-area="" asp-controller="PersonalStudents" asp-action="Index">
-            <img src="~/logo.png" class="NavLogo" />
-            پەیمانگای تەکنیکی کەلار
-            </a>
-            </div>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-            aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between NavCenter">
-
-            </div>
-            </div> *@
 

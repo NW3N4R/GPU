@@ -1,9 +1,6 @@
 ﻿using KTI_DashBoard.Models;
-using Microsoft.EntityFrameworkCore.Diagnostics.Internal;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Data.SqlClient;
-using System.Diagnostics;
+using Microsoft.Data.SqlClient;
 using System.Threading.Tasks;
 
 namespace KTI_DashBoard.Helpers
@@ -56,7 +53,7 @@ namespace KTI_DashBoard.Helpers
                 }
             }
         }
-        public static async Task NewInvoice( InvoiceInfo info)
+        public static async Task NewInvoice(InvoiceInfo info)
         {
             using (SqlCommand cmd = new SqlCommand("", DbConnectionHelper.con))
             {

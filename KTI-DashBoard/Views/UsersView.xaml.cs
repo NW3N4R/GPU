@@ -1,23 +1,13 @@
-using ABI.Windows.ApplicationModel.Activation;
 using KTI_DashBoard.Editors;
 using KTI_DashBoard.Helpers;
 using KTI_DashBoard.Models;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
-using Windows.ApplicationModel.Activation;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 
 
 namespace KTI_DashBoard.Views
@@ -33,14 +23,15 @@ namespace KTI_DashBoard.Views
             MainWindow.current.Refresh.Click += Refresh_Click;
             load();
         }
-
         private void Refresh_Click(object sender, RoutedEventArgs e)
         {
             load();
         }
-
         async void load()
         {
+            EmployeesList.ItemsSource = null;
+            UsersList.ItemsSource = null;
+            AccessList.ItemsSource = null;
             await Task.WhenAll(
                 EmployesHelper.GetEmployees(),
                 UsersHelper.GetUsers(),
@@ -61,17 +52,17 @@ namespace KTI_DashBoard.Views
                 item.EmpName = UsersHelper._Users.Any(x => x.id == item.usrid) ? UsersHelper._Users.FirstOrDefault(x => x.id == item.usrid).EmpName : $"Emp Name Not Found usrid is {item.usrid}";
                 item.DepName = WebPropertiesHelper._Department.Any(x => x.id == item.depid) ? WebPropertiesHelper._Department.FirstOrDefault(x => x.id == item.depid).Name : $"Dep Name Not Found depid is {item.depid}";
             }
-            EmpListForUsers.ItemsSource = EmployesHelper._employees.Where(x => !UsersHelper._Users.Any(z => x.id == z.EMPID) && x.Suspended == false);
+            EmpListForUsers.ItemsSource = EmployesHelper._employees.Where(x => !(UsersHelper._Users.Any(z => x.id == z.EMPID)) && (x.StuList || x.ArchList));
             EmpListForUsers.DisplayMemberPath = "Name";
             EmpListForUsers.SelectedValuePath = "id";
             EmployeesList.SelectedIndex = 0;
 
-            bool isEmpAvailable = EmployesHelper._employees.Any(x => !UsersHelper._Users.Any(z => x.id == z.EMPID) && x.Suspended == false);
+            bool isEmpAvailable = EmployesHelper._employees.Any(x => !(UsersHelper._Users.Any(z => x.id == z.EMPID)) && (x.StuList || x.ArchList));
             ShowNewUserFlyout.IsEnabled = isEmpAvailable;
-            AddUserTitle.Text = isEmpAvailable ? "Add User" : "Not Available";
+            AddUserTitle.Text = isEmpAvailable ? "Add User" : "Emp Not Available";
             ShowUserAccessFlyout.IsEnabled = checkAnyFurtherAccess();
             AddUserAccessTitle.Text = checkAnyFurtherAccess() ? "New Access" : "Not Available";
-            UsersListForAccess.ItemsSource = UsersHelper._Users.Where(x => !EmployesHelper._employees.Any(z => x.EMPID == z.id && z.Suspended == true));
+            UsersListForAccess.ItemsSource = UsersHelper._Users.Where(x => EmployesHelper._employees.Any(z => (x.EMPID == z.id) && (z.StuList || z.ArchList)));
             UsersListForAccess.DisplayMemberPath = "EmpName";
             UsersListForAccess.SelectedValuePath = "id";
             UsersListForAccess.SelectedIndex = 0;
@@ -83,7 +74,6 @@ namespace KTI_DashBoard.Views
         {
             NewEmployeSave.IsEnabled = sender.Text.Length > 0 && !EmployesHelper._employees.Any(x => x.Name.Contains(NewEmployeename.Text));
         }
-
         private async void NewEmployeSave_Click(object sender, RoutedEventArgs e)
         {
             var model = new employeesModel
@@ -94,7 +84,6 @@ namespace KTI_DashBoard.Views
             NewEmployeename.Text = "";
             load();
         }
-
         private void ShowEmpEditor_Click(object sender, RoutedEventArgs e)
         {
             Button button = sender as Button;
@@ -106,35 +95,30 @@ namespace KTI_DashBoard.Views
                 EmployeesEditor.current.load(id);
             }
         }
-
-        private void EmpSusBttn_Loaded(object sender, RoutedEventArgs e)
+        private async void StuListToggle_Click(object sender, RoutedEventArgs e)
         {
-            ToggleButton tg = sender as ToggleButton;
-            if (tg != null)
+            var bttn = sender as ToggleButton;
+            if (bttn != null)
             {
-                int id = Int32.Parse(tg.Tag.ToString());
-                var emp = EmployesHelper._employees.FirstOrDefault(x => x.id == id);
-                tg.IsChecked = emp.Suspended;
-                tg.Content = emp.Suspended ? "Suspended" : "NOT Suspend";
-            }
-        }
-
-        private async void EmpSusBttn_Click(object sender, RoutedEventArgs e)
-        {
-
-            ToggleButton tg = sender as ToggleButton;
-            if (tg != null)
-            {
-                tg.IsEnabled = false;
-                int id = Int32.Parse(tg.Tag.ToString());
-                var emp = EmployesHelper._employees.FirstOrDefault(x => x.id == id);
-
-                await EmployesHelper.SuspendEmployee((employeesModel)emp);
-                tg.Content = tg.IsChecked == true ? "Suspended" : "NOT Suspend";
+                int id = Int32.Parse(bttn.Tag.ToString());
+                var model = EmployesHelper._employees.FirstOrDefault(x => x.id == id) as employeesModel;
+                await EmployesHelper.EmployeeStuAuth(model);
                 load();
-                tg.IsEnabled = true;
             }
         }
+
+        private async void ArchListToggle_Click(object sender, RoutedEventArgs e)
+        {
+            var bttn = sender as ToggleButton;
+            if (bttn != null)
+            {
+                int id = Int32.Parse(bttn.Tag.ToString());
+                var model = EmployesHelper._employees.FirstOrDefault(x => x.id == id) as employeesModel;
+                await EmployesHelper.EmployeeArchAuth(model);
+                load();
+            }
+        }
+
 
         #endregion
         #region New User
@@ -144,7 +128,8 @@ namespace KTI_DashBoard.Views
             {
                 UserName = NewUserName.Text,
                 Password = NewUserPassword.Password,
-                EMPID = Int32.Parse(EmpListForUsers.SelectedValue.ToString())
+                EMPID = Int32.Parse(EmpListForUsers.SelectedValue.ToString()),
+                CanDelete = CanDelete.IsChecked == true || false,
             };
             await UsersHelper.AddUser(model);
             load();
@@ -248,7 +233,6 @@ namespace KTI_DashBoard.Views
             await UsersAccessToDepsHelper.setAccess(model);
             load();
         }
-        #endregion
 
         private async void DeleteAccess_Click(object sender, RoutedEventArgs e)
         {
@@ -259,6 +243,18 @@ namespace KTI_DashBoard.Views
                 await UsersAccessToDepsHelper.DeleteAccess(id);
             }
             load();
+        }
+
+        #endregion
+        private void UsersExpander_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            EmployeesExpander.IsExpanded = UsersExpander.IsExpanded;
+
+        }
+        private void EmployeesExpander_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            UsersExpander.IsExpanded = EmployeesExpander.IsExpanded;
+
         }
     }
 }

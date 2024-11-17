@@ -1,10 +1,10 @@
 ﻿
+
 .pivot-container {
-    width: 100%;
     margin: 0 auto;
-    width: 140vh;
+    width: 85vw;
     margin-block: 10px;
-    max-height: 80vh;
+    max-height: 78vh;
 }
 
 .pivot-nav {
@@ -13,10 +13,10 @@
     border-bottom: none;
     border-radius: 10px;
     padding-block: 5px;
+    gap: calc(10px + 2vw); /* Adjusts based on viewport width */
 }
 
 .pivot-tab {
-    margin-inline: 30px;
     padding: 5px;
     text-decoration: none;
     color: #008374;
@@ -25,11 +25,14 @@
     background-color: transparent;
     border: none;
     border-radius: 10px;
+    font-size: clamp(0.5rem, 1vw, 1rem);
 }
-
-    .pivot-tab:hover {
-        background-color: #bbb;
-    }
+.form-group label, input, select {
+    font-size: clamp(0.5rem, 1vw, 1rem);
+}
+.pivot-tab:hover {
+    background-color: #bbb;
+}
 
 .ActiveBG {
     background-color: #008374;
@@ -55,14 +58,13 @@
 .pivot-content {
     position: relative;
     display: none;
-    min-width: 80vh;
     padding-inline: 20px;
     padding-bottom: 20px;
     padding-top: 10px;
     margin-top: 10px;
     background-color: #B4DBD6;
     border-radius: 10px;
-    min-height: 65vh;
+    min-height: 55vh;
 }
 
     .pivot-content.active {
@@ -70,26 +72,58 @@
     }
 
 .TitleHeader {
-    min-width: 80vh;
+    display: flex;
+    justify-content: center; /* Centers the content horizontally */
+    flex-direction: row;
+    gap: 20px;
+    direction: ltr;
 }
+
+    .TitleHeader > :first-child::after {
+        content: " ~ ";
+        padding-left: 10px;
+    }
 
 .ActionTitle {
     text-align: center;
 }
 
 .form-container {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
     flex-wrap: wrap;
-    gap: 15px;
-    margin-top: 5%;
+    gap: 10px;
 }
 
+@media  (max-width:1280px) {
+    .pivot-container {
+        margin: 0 auto;
+        width: 95vw;
+        margin-block: 10px;
+        max-height: 78vh;
+    }
+
+    .form-container {
+        display: grid;
+        /*grid-template-columns: repeat(3,1fr);*/
+        grid-template-columns: repeat(auto-fill, minmax(250px, 200px));
+        max-height: 60vh;
+        justify-content:center;
+        overflow-y: auto;
+        gap: 10px;
+    }
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0px;
+}
 .form-control {
     border: solid rgba(0, 131, 116, 0.5) 2px;
     padding: 4px;
     border-radius: 5px;
     font-family: 'Droid Arabic Kufi';
-    font-size: 16px;
 }
 
 
@@ -98,20 +132,16 @@
     display: flex;
     flex: 1 1 calc(50% - 15px);
     gap: 15px;
-    min-width: 30vh;
 }
-
+.vformcol {
+    display: flex;
+    flex-direction:column;
+}
 .control-label {
     font-size: 14px;
 }
 
-.form-group {
-    width: 100%;
-    flex: 1 1 calc(50% - 15px);
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 0px;
-}
+
 
 .Title {
     margin-top: 10px;
@@ -145,13 +175,16 @@
 }
 
     .FormsActionbttn button:hover {
-        font-size: 16px;
-        transition: 1s;
+        background: #008374;
+        color: white;
+        transition: 0.3s;
     }
+
     .FormsActionbttn button:active {
         font-size: 18px;
         transition: 1s;
     }
+
 .SaveStudentBttn {
     padding-inline: 50px;
     border: none;
@@ -159,16 +192,6 @@
     font-family: 'Droid Arabic Kufi';
     transition: 1s;
 }
-
-
-/*.Header {
-    font-weight: 100;
-    text-align: center;
-}
-
-.DgColumn {
-    text-align: center;
-}*/
 
 
 
@@ -179,19 +202,12 @@
     gap: 15px;
 }
 
-.ThreeInvoiceRow {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
-    width: 100%;
+
+
+#InvoiceDiv .form-group {
+    margin: 0;
 }
 
-    #InvoiceDiv .form-group {
-        margin: 0;
-    }
-/*.FormCol {
-    flex: 1 1 calc(50% - 15px); 
-}*/
 .drop {
     height: 60px;
 }
@@ -228,6 +244,6 @@
     vertical-align: baseline;
 }
 
-.hidden{
-    display:none;
+.hidden {
+    display: none;
 }

@@ -5,7 +5,7 @@ namespace KTI_DashBoard.Models
     public class HomeModel
     {
         public int RowCount { get; set; }
-       
+
         [DisplayName("خوێندکاری تەکنەلۆژیای زانیاری")]
         public int ITCount { get; set; }
 

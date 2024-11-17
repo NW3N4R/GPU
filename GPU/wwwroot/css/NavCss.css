@@ -8,14 +8,67 @@ header {
 
 nav {
     display: grid;
-    grid-template-columns: 40% 20% 40%;
-    width: 100%;
+    grid-template-columns: auto 70% 15%;
+    max-height: 100px;
+}
+
+/*#region Logo */
+
+.LogoSide {
+    display: flex;
+    gap: 10px; /* Add space between logo and text */
+    padding: 10px; /* Add padding to content */
+    align-items: center; /* Vertically align logo and text */
+    width: fit-content; /* Let logo side adjust to its content width */
+    flex-shrink: 0; /* Prevent logo side from shrinking */
+}
+
+    .LogoSide div {
+        display: block;
+    }
+
+        .LogoSide div h4, p {
+            margin: 0;
+            padding: 0;
+        }
+
+.NavLogo {
+    width: 22%; /* Adjust logo width as needed */
+    height: auto; /* Maintain aspect ratio */
+}
+
+.TitleSide {
+    margin-left: 10px; /* Space between logo and title */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: white; /* Text color for contrast */
+}
+
+    .TitleSide p {
+        margin: 0;
+        padding: 0;
+    }
+
+
+/*#endregion */
+
+ul.centerSide {
+    display: flex;
+    justify-content: center; /* Center navigation links horizontally */
+    align-items: center; /* Align navigation links vertically */
+    flex-grow: 1; /* Allow center side to fill remaining space */
 }
 
 
+.logOutSide {
+    text-align: center;
+    align-content: center;
+}
+/*#region Animate */
 .nav-nav {
-    list-style: none; /* Remove default list dots */
-    padding-left: 0; /* Remove default padding */
+    list-style: none;
+    padding-left: 0;
 }
 
 .nav-li {
@@ -29,7 +82,6 @@ nav {
     padding: 10px 15px;
 }
 
-    /* Create the sliding underline using a pseudo-element */
     .nav-link::before {
         content: '';
         position: absolute;
@@ -37,81 +89,228 @@ nav {
         height: 2px;
         bottom: 0;
         left: 50%;
-        background-color: white; /* The underline color */
-        transition: all 0.2s ease-out; /* Animation timing */
+        background-color: white;
+        transition: all 0.2s ease-out;
         transform: translateX(-50%);
     }
 
-    /* On hover, animate the underline */
     .nav-link:hover::before {
         width: 100%;
         left: 0;
         transform: translateX(0);
     }
 
-
-.NavCenter {
-    padding-top: 10px;
-    text-align: center;
-}
-.NavLogo {
-    width:20%;
-    transition: transform 0.5s ease; /* Smooth transition on hover */
-}
-/*.ActionSide .NavLogo:hover {
-    transform: scaleX(-1);*/ /* Flips the image horizontally on hover */
-/*}*/
-.NavLogo {
-    width: 15%;
-}
-
-.NavRight {
-    display: flex;
-    align-items: center;
-    justify-content: left;
-    box-sizing: border-box;
-}
-
-.NavLeft {
-    display: flex;
-    align-items: center;
-    justify-content: right;
-    box-sizing: border-box;
-}
-
-    .NavLeft a {
-        color: white;
-        text-decoration: none;
-    }
-
-.BottomSpan {
-    font-size: 13px;s
-    margin-top: -2vh;
-}
-
-.li a {
-    position: relative;
-    transition: 1s;
-}
-
-.li2 a::after {
-    content: '';
-    position: absolute;
-    left: 50%; /* Start from the center */
-    bottom: 0; /* Position at the bottom of the link */
-    width: 0; /* Initially no width */
-    height: 2px; /* Height of the underline */
-    background-color: #008374; /* Underline color */
-    transition: width 0.4s ease, left 0.4s ease; /* Animation for width and position */
-}
+ 
 .li2:hover::after {
     width: 100%; /* Expand the underline to full width */
     left: 0; /* Move the starting point to the left */
 }
-.li3 a {
+
+
+a {
+    color: white;
+    text-decoration: none;
+}
+/*#endregion */
+
+.topnav {
+    display: none;
 }
 
-.NavTxt p {
-    margin: 0;
-    padding: 0;
+
+@media(max-width:1733px) {
+    nav {
+        display: grid;
+        grid-template-columns: auto 65% 15%;
+        max-height: 100px;
+    }
+}
+
+
+
+@media(max-width:1306px) {
+    nav {
+        display: grid;
+        grid-template-columns: auto 60% 17%;
+        max-height: 100px;
+    }
+}
+
+
+@media(max-width:1131px) {
+    nav {
+        display: grid;
+        grid-template-columns: auto 55% 17%;
+        max-height: 100px;
+    }
+}
+
+
+@media(max-width:1050px) {
+    nav {
+        display: grid;
+        grid-template-columns: auto 70% 20%;
+        max-height: 100px;
+    }
+
+    .LogoSide div {
+        display: none;
+    }
+
+    .LogoSide img {
+        width: 80%;
+    }
+}
+
+@media(max-width:1050px) {
+    nav {
+        display: grid;
+        grid-template-columns: auto 70% 22%;
+        max-height: 100px;
+    }
+}
+
+@media (max-width: 825px) {
+    .WideNav {
+        display: none;
+    }
+
+    header {
+    }
+
+    .topnav {
+        display: flex;
+        flex-direction: column;
+        height: fit-content;
+        max-height: 100%;
+        transition: height 0.6s ease-in-out;
+    }
+
+    .active {
+        display: grid;
+        grid-template-columns:10% auto auto;
+        justify-content: space-between;
+        padding:10px;
+    }
+
+    .burger {
+        flex: 1;
+        background-color: transparent;
+        border:none;
+        color:white;
+        font-size:1.8rem;
+    }
+
+    .LogoSide {
+        flex: 1;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+        text-align: center;
+    }
+
+    .mobUser {
+        flex: 1;
+        justify-content:center;
+        align-items:center;
+        align-content:center;
+        text-align:center;
+    }
+    .mobUser2{
+        display:none;
+    }
+    .nav-items {
+        display: none;
+        flex-direction: column;
+        transition: max-height 0.3s ease-in-out;
+    }
+
+        .nav-items.responsive {
+            display: flex;
+        }
+
+    .LogoSide img {
+        width: 130%;
+    }
+
+    .responsive {
+        display: flex;
+        flex-direction: row;
+        height: auto;
+        text-align:center;
+        justify-content:center;
+        align-content:center;
+        align-items:center;
+        gap:5vh;
+        padding-bottom:10px;
+    }
+}
+
+
+@media (max-width: 475px) {
+    .WideNav {
+        display: none;
+    }
+
+    header {
+    }
+
+    .topnav {
+        display: flex;
+        flex-direction: column;
+        height: fit-content;
+        max-height: 100%;
+        transition: height 0.6s ease-in-out;
+    }
+
+    .active {
+        display: grid;  
+    }
+
+    .burger {
+        background-color: transparent;
+        border: none;
+        color: white;
+        font-size: 1.8rem;
+    }
+
+    .LogoSide {
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+        text-align: center;
+    }
+
+    .mobUser {
+      display:none;
+    }
+    .mobUser2{
+        display:flex;
+    }
+
+    .nav-items {
+        display: none;
+        flex-direction: column;
+        transition: max-height 0.3s ease-in-out;
+    }
+
+        .nav-items.responsive {
+            display: flex;
+        }
+
+    .LogoSide img {
+        width: 130%;
+    }
+
+    .responsive {
+        display: flex;
+        flex-direction: column;
+        height: auto;
+        text-align: center;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 2vh;
+        padding-bottom: 10px;
+        padding:10px;
+    }
 }

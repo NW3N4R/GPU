@@ -1,4 +1,6 @@
-﻿@model (GPU.Models.PersonalStudent PersonalStudent, GPU.Models.StudentContactInfo StudentContactInfo,GPU.Models.StudentParentInfo StudentParentInfo,GPU.Models.Student12Grade Student12Grade,GPU.Models.StudentDepartmentInfo StudentDepartmentInfo,StudentSupport studentSupport)
+﻿@model (GPU.Models.PersonalStudent PersonalStudent, GPU.Models.StudentContactInfo StudentContactInfo,GPU.Models.StudentParentInfo StudentParentInfo,GPU.Models.Student12Grade Student12Grade,GPU.Models.StudentDepartmentInfo StudentDepartmentInfo,StudentSupport studentSupport,List<WebProperties> props,List<UsersAccessToDepsModel> access)
+@using System.Security.Claims;
+
 @{
     ViewData["Title"] = "نوێکردنەوەی قوتابی";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -11,26 +13,23 @@
             <a href="#tab2" onclick="OntabClick(2)" class="pivot-tab active" id="pivot-tab2">زانیاری پەیوەندیکردن</a>
             <a href="#tab3" onclick="OntabClick(3)" class="pivot-tab active" id="pivot-tab3">زانیاری بەخێوکەر</a>
             <a href="#tab4" onclick="OntabClick(4)" class="pivot-tab active" id="pivot-tab4">زانیاری پۆلی ١٢</a>
-            <a href="#tab5" onclick="OntabClick(5)" class="pivot-tab active" id="pivot-tab5">گەرەنتیدەر</a>
+            <a href="#tab5" onclick="OntabClick(5)" class="pivot-tab active" id="pivot-tab5">بەڵێننامە</a>
             <a href="#tab6" onclick="OntabClick(6)" class="pivot-tab active" id="pivot-tab6">زانیاری جۆری وەرگرتن</a>
         </nav>
 
         <form method="post" asp-action="Edit" id="infoForm">
             <div id="1" class="pivot-content active">
-                <div class="TitleHeader">
-                    <h3>زانیاری کەسی</h3>
-                    <h3 class="ActionTitle"> نوێکردنەوەی قوتابی</h3>
-                </div>
-                <div class="form-container">
+
+                <div class="form-container element">
                     <div class="form-group">
                         <label asp-for="PersonalStudent.Name" class="control-label"></label>
-                        <input asp-for="PersonalStudent.Name" name="PersonalStudent.Name" class="form-control"  />
+                        <input asp-for="PersonalStudent.Name" name="PersonalStudent.Name" class="form-control" />
                         <span asp-validation-for="PersonalStudent.Name" class="text-danger"></span>
                     </div>
 
                     <div class="form-group">
                         <label asp-for="PersonalStudent.Age" class="control-label"></label>
-                        <select asp-for="PersonalStudent.Age" name="PersonalStudent.Age" class="form-control YearSelect" >
+                        <select asp-for="PersonalStudent.Age" name="PersonalStudent.Age" class="form-control YearSelect">
                             @for (int year = 1980; year <= DateTime.Now.Year - 16; year++)
                             {
                                 <option value="@year" class="YearOptions">@year</option>
@@ -52,9 +51,10 @@
 
                         <label asp-for="PersonalStudent.MartialStatus" class="control-label"></label>
                         <select asp-for="PersonalStudent.MartialStatus" name="PersonalStudent.MartialStatus" class="form-control">
-                            <option value="سەڵت">سەڵت</option>
-                            <option value="خێزاندار">خێزاندار</option>
-                            <option value="جیابووە">جیابووە</option>
+                            @foreach (var item in Model.props.Where(x => x.propType.Contains("MartialStatus") && x.isActive == true))
+                            {
+                                <option value="@item.Name">@item.Name</option>
+                            }
                         </select>
                         <span asp-validation-for="PersonalStudent.MartialStatus" class="text-danger"></span>
 
@@ -82,11 +82,10 @@
                         <select asp-for="PersonalStudent.Religion" id="skip" name="PersonalStudent.Religion" class="form-control">
 
                             <option value="-">دیاری نەکراو</option>
-                            <option value="ئیسلام">ئیسلام</option>
-                            <option value="مەسیحی">مەسیحی</option>
-                            <option value="جوو">جوو</option>
-                            <option value="زەردەشتی">زەردەشتی</option>
-                            <option value="زەردەشتی">یارسانی</option>
+                            @foreach (var item in Model.props.Where(x => x.propType.Contains("Religion") && x.isActive == true))
+                            {
+                                <option value="@item.Name">@item.Name</option>
+                            }
 
                         </select>
 
@@ -94,7 +93,7 @@
                     </div>
                     <div class="form-group">
                         <label asp-for="PersonalStudent.IdentityNo" class="control-label"></label>
-                        <input asp-for="PersonalStudent.IdentityNo" name="PersonalStudent.IdentityNo" class="form-control"  />
+                        <input asp-for="PersonalStudent.IdentityNo" name="PersonalStudent.IdentityNo" class="form-control" />
                         <span asp-validation-for="PersonalStudent.IdentityNo" class="text-danger"></span>
                     </div>
 
@@ -103,9 +102,10 @@
                         <label asp-for="PersonalStudent.Nationality" class="control-label"></label>
                         <select asp-for="PersonalStudent.Nationality" name="PersonalStudent.Nationality" class="form-control">
                             <option value="-">دیاری نەکراو</option>
-                            <option value="کورد">کورد</option>
-                            <option value="عەرەب">عەرەب</option>
-                            <option value="تورکمان">تورکمان</option>
+                            @foreach (var item in Model.props.Where(x => x.propType.Contains("Nationality") && x.isActive == true))
+                            {
+                                <option value="@item.Name">@item.Name</option>
+                            }
                         </select>
                         <span asp-validation-for="PersonalStudent.Nationality" class="text-danger"></span>
                     </div>
@@ -113,8 +113,6 @@
                         <label asp-for="PersonalStudent.RationingFormNo" class="control-label"></label>
                         <input asp-for="PersonalStudent.RationingFormNo" id="skip" name="PersonalStudent.RationingFormNo" class="form-control" />
                         <span asp-validation-for="PersonalStudent.RationingFormNo" class="text-danger"></span>
-                        <label for="personalImage" class="control-label">وێنەی کەسی</label>
-                        <input type="file" id="skip" name="personalImage" accept="image/*">
 
                     </div>
 
@@ -123,11 +121,8 @@
                 </div>
             </div>
             <div id="2" class="pivot-content">
-                <div class="TitleHeader">
-                    <h3>زانیاری پەیوەندیکردن</h3>
-                    <h3 class="ActionTitle"> نوێکردنەوەی قوتابی</h3>
-                </div>
-                <div class="form-container">
+
+                <div class="form-container element">
 
                     <div class="form-group">
                         <label asp-for="StudentContactInfo.Phone" class="control-label"></label>
@@ -145,11 +140,10 @@
                     <div class="form-group">
                         <label asp-for="StudentContactInfo.Province" class="control-label"></label>
                         <select asp-for="StudentContactInfo.Province" name="StudentContactInfo.Province" class="form-control">
-                            <option value="گەرمیان">گەرمیان</option>
-                            <option value="سلێمانی">سلێمانی</option>
-                            <option value="هەولێر">هەولێر</option>
-                            <option value="کەرکووک">کەرکووک</option>
-                            <option value="دیالە">دیالە</option>
+                            @foreach (var item in Model.props.Where(x => x.propType.Contains("Province") && x.isActive == true))
+                            {
+                                <option value="@item.Name">@item.Name</option>
+                            }
                         </select>
                         <span asp-validation-for="StudentContactInfo.Province" class="text-danger"></span>
                     </div>
@@ -175,11 +169,8 @@
                 </div>
             </div>
             <div id="3" class="pivot-content">
-                <div class="TitleHeader">
-                    <h3>زانیاری بەخێوکەر</h3>
-                    <h3 class="ActionTitle"> نوێکردنەوەی قوتابی</h3>
-                </div>
-                <div class="form-container">
+
+                <div class="form-container element">
 
                     <div class="form-group">
                         <label asp-for="StudentParentInfo.Name" class="control-label"></label>
@@ -215,18 +206,12 @@
                         <input asp-for="StudentParentInfo.CardInfoIssuePlace" id="skip" name="StudentParentInfo.CardInfoIssuePlace" class="form-control" />
                         <span asp-validation-for="StudentParentInfo.CardInfoIssuePlace" class="text-danger"></span>
                     </div>
-                    <div class="form-group">
-                        <label for="personalImage" class="control-label">کارتی زانیاری</label>
-                        <input type="file" id="skip" name="personalImage" accept="image/*">
-                    </div>
+
                 </div>
             </div>
             <div id="4" class="pivot-content">
-                <div class="TitleHeader">
-                    <h3>زانیاری پۆلی ١٢</h3>
-                    <h3 class="ActionTitle"> نوێکردنەوەی قوتابی</h3>
-                </div>
-                <div class="form-container">
+
+                <div class="form-container element">
                     <div class="form-group">
                         <label asp-for="Student12Grade.ExamNo" class="control-label"></label>
                         <input asp-for="Student12Grade.ExamNo" name="Student12Grade.ExamNo" class="form-control" />
@@ -242,12 +227,10 @@
                     <div class="form-group">
                         <label asp-for="Student12Grade.EducationAdministrator" class="control-label"></label>
                         <select asp-for="Student12Grade.EducationAdministrator" name="Student12Grade.EducationAdministrator" class="form-control">
-                            <option value="گەرمیان">گەرمیان</option>
-                            <option value="سلێمانی">سلێمانی</option>
-                            <option value="هەولێر">هەولێر</option>
-                            <option value="کەرکووک">کەرکووک</option>
-                            <option value="دیالە">دیالە</option>
-                            <option value="دیالە">سەڵاحەدین</option>
+                            @foreach (var item in Model.props.Where(x => x.propType.Contains("EducationAdministrator") && x.isActive == true))
+                            {
+                                <option value="@item.Name">@item.Name</option>
+                            }
 
                         </select>
                         <span asp-validation-for="Student12Grade.EducationAdministrator" class="text-danger"></span>
@@ -265,7 +248,7 @@
 
                     <div class="form-group">
                         <label asp-for="Student12Grade.Graduation" class="control-label"></label>
-                        <select asp-for="Student12Grade.Graduation" name="Student12Grade.Graduation" class="form-control YearSelect" >
+                        <select asp-for="Student12Grade.Graduation" name="Student12Grade.Graduation" class="form-control YearSelect">
                             @for (int year = DateTime.Now.Year; year >= 1995; year--)
                             {
                                 int yr = year - 1;
@@ -282,18 +265,12 @@
                         <input asp-for="Student12Grade.TotalMark" name="Student12Grade.TotalMark" class="form-control" />
                         <span asp-validation-for="Student12Grade.TotalMark" class="text-danger"></span>
                     </div>
-                    <div class="form-group">
-                        <label for="personalImage" class="control-label">وێنەی بڕوانامە</label>
-                        <input type="file" id="skip" name="personalImage" accept="image/*">
-                    </div>
+
                 </div>
             </div>
             <div id="5" class="pivot-content">
-                <div class="TitleHeader">
-                    <h3>گەرەنتیدەر</h3>
-                    <h3 class="ActionTitle"> نوێکردنەوەی قوتابی</h3>
-                </div>
-                <div class="form-container">
+
+                <div class="form-container element">
                     <div class="form-group">
                         <label asp-for="studentSupport.office" class="control-label"></label>
                         <input asp-for="studentSupport.office" maxlength="30" placeholder="نموونە:- ب.پ گەرمیان" name="studentSupport.office" class="form-control" />
@@ -314,38 +291,29 @@
                         <input asp-for="studentSupport.Amount" name="studentSupport.Amount" class="form-control" />
                         <span asp-validation-for="studentSupport.Amount" class="text-danger"></span>
                     </div>
-                    <div class="form-group">
-                        <label for="personalImage" class="control-label">وێنەی نووسراو</label>
-                        <input type="file" id="skip" name="personalImage" accept="image/*">
-                    </div>
+
                 </div>
             </div>
             <div id="6" class="pivot-content">
-                <div class="TitleHeader">
-                    <h3>زانیاری جۆری وەرگرتن</h3>
-                    <h3 class="ActionTitle"> نوێکردنەوەی قوتابی</h3>
-                </div>
-                <div class="form-container">
+
+                <div class="form-container element">
                     <div class="form-group">
                         <label asp-for="StudentDepartmentInfo.Department" class="control-label"></label>
                         <select asp-for="StudentDepartmentInfo.Department" name="StudentDepartmentInfo.Department" class="form-control">
-                            <option value="پەرستاری">پەرستاری</option>
-                            <option value="تەکنیکی ڤێتەرنەری">تەکنیکی ڤێتەرنەری</option>
-                            <option value="تەکنەلۆجیای زانیاری">تەکنەلۆجیای زانیاری</option>
-                            <option value="ڕوو پێوی">ڕوو پێوی</option>
-                            <option value="کارگێری کار">کارگێری کار</option>
-                            <option value="پرۆژە کشتوکاڵیەکان">پرۆژە کشتوکاڵیەکان</option>
-
+                            @foreach (var item in Model.props.Where(x => x.propType.Contains("Department") && x.isActive == true))
+                            {
+                                if (Model.access.Any(x => x.depid == item.id && x.usrid.ToString() == User.FindFirst(ClaimTypes.NameIdentifier)?.Value))
+                                {
+                                    <option value="@item.Name">@item.Name</option>
+                                }
+                            }
                         </select>
                         <span asp-validation-for="StudentDepartmentInfo.Department" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="StudentDepartmentInfo.AcceptanceType" class="control-label">ناتوانیت لێرە ئەم گۆڕان کاریە بکەی</label>
-
                         <input asp-for="StudentDepartmentInfo.AcceptanceType" readonly name="StudentDepartmentInfo.AcceptanceType" id="skip" class="form-control" />
-
                         <span asp-validation-for="StudentDepartmentInfo.AcceptanceType" class="text-danger"></span>
-
 
                     </div>
                     <div class="form-group">
@@ -368,7 +336,7 @@
 
                         <div class="form-group">
                             <label asp-for="StudentDepartmentInfo.Stage" class="control-label"></label>
-                            <select asp-for="StudentDepartmentInfo.Stage" name="StudentDepartmentInfo.Stage" class="form-control YearSelect" >
+                            <select asp-for="StudentDepartmentInfo.Stage" name="StudentDepartmentInfo.Stage" class="form-control YearSelect">
                                 <option value="1" class="YearOptions">1</option>
                                 <option value="2" class="YearOptions">2</option>
                             </select>
@@ -377,7 +345,7 @@
                     </div>
                     <div class="form-group">
                         <label asp-for="StudentDepartmentInfo.ResidenceType" class="control-label"></label>
-                        <select asp-for="StudentDepartmentInfo.ResidenceType" name="StudentDepartmentInfo.ResidenceType" class="form-control YearSelect" >
+                        <select asp-for="StudentDepartmentInfo.ResidenceType" name="StudentDepartmentInfo.ResidenceType" class="form-control YearSelect">
                             <option value="نەخێر" class="YearOptions">نەخێر</option>
                             <option value="بەڵی" class="YearOptions">بەڵێ</option>
                         </select>
@@ -385,7 +353,7 @@
                     </div>
                     <div class="form-group">
                         <label asp-for="StudentDepartmentInfo.startinYear" class="control-label"></label>
-                        <select asp-for="StudentDepartmentInfo.startinYear" name="StudentDepartmentInfo.startinYear" class="form-control " >
+                        <select asp-for="StudentDepartmentInfo.startinYear" name="StudentDepartmentInfo.startinYear" class="form-control ">
                             @for (int year = DateTime.Now.Year + 1; year >= 1995; year--)
                             {
                                 int yr = year - 1;
@@ -397,7 +365,7 @@
                     </div>
                     <div class="form-group">
                         <label asp-for="StudentDepartmentInfo.Graduate" class="control-label"></label>
-                        <select asp-for="StudentDepartmentInfo.Graduate" name="StudentDepartmentInfo.Graduate" class="form-control " >
+                        <select asp-for="StudentDepartmentInfo.Graduate" name="StudentDepartmentInfo.Graduate" class="form-control ">
                             <option value="0" class="YearOptions">بەردەوامە</option>
                             @for (int year = DateTime.Now.Year; year >= 1995; year--)
                             {
@@ -418,13 +386,11 @@
                 </div>
                 <div class="FormsActionbttn">
                     <input asp-for="PersonalStudent.Id" id="skip" name="PersonalStudent.Id" hidden />
-                    <button type="submit" id="SaveStudentBttn" class="SaveStudentBttn bttnDisabled  pbttn" >نوێ کردنەوە</button>
-                    @* <button id="PrintStudentBttn" class="PrintBttn bttnDisabled  pbttn" disabled>پرنت کردن</button> *@
+                    <button type="submit" id="SaveStudentBttn" class="SaveStudentBttn bttnDisabled  pbttn">نوێ کردنەوە</button>
                 </div>
             </div>
-
         </form>
-   
+
     </div>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/js/StudentInsertJS.js" asp-append-version="true"> </script>

@@ -2,23 +2,30 @@
     ViewData["Title"] = "بڕوانامەکان";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="CerBody">
 
-<div class="card-container">
-    <div class="card">ماستەر شیت</div>
-    <div class="card">یەکەمەکان</div>
-    <div class="card">دەرچووانی ئەمساڵ</div>
-    <div class="card">کۆنمرە</div>
-    <div class="card">بروانامە تەواو بوەکان</div>
-    <div class="card">پشتگیریەکان</div>
+<div class="home-RowTow" style="width:80vw;">
+    <div style="min-height:10vh; align-content:center; ">
+
+        <p>ماستەر شیت</p>
+    </div>
+    <div style="min-height:10vh; align-content:center; ">
+
+        <p>یەکەمەکان</p>
+    </div>
+    <div style="min-height:10vh; align-content:center; ">
+
+        <p>دەرچووانی ئەمساڵ</p>
+    </div>
+    <div style="min-height:10vh; align-content:center; ">
+
+        <p>کۆنمرە</p>
+    </div>
+    <div style="min-height:10vh; align-content:center; ">
+        <p>بروانامە تەواو بوەکان</p>
+    </div>
+    <div  style="min-height:10vh; align-content:center; ">
+
+        <p>پشتگیریەکان</p>
+    </div>
 </div>
-<script>
 
-    document.querySelectorAll('.card').forEach(card => {
-        card.addEventListener('click', () => {
-            alert(card.textContent + " clicked!");
-        });
-    });
-
-</script>
-</div>

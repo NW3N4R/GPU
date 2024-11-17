@@ -1,16 +1,8 @@
 ﻿using KTI_DashBoard.Helpers;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data.SqlClient;
-using System.Linq;
+using Microsoft.Data.SqlClient;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
-using Windows.ApplicationModel.Store.Preview.InstallControl;
-using Windows.Devices.Display.Core;
-using Windows.Foundation.Metadata;
 
 namespace KTI_DashBoard.Models
 {

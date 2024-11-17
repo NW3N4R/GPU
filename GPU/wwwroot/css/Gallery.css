@@ -1,0 +1,109 @@
+﻿.GalleryContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 40px;
+    height: 60vh;
+    overflow-y: auto;
+    justify-content: center;
+}
+
+.GalleryImageParent {
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 250px;
+}
+
+.GalleryImage {
+    display: flex;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    width: 230px;
+    height: 230px;
+    position: relative;
+    border-radius: 10px;
+    transition: transform 0.3s ease-in-out;
+}
+
+    .GalleryImage::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0);
+        z-index: 1;
+        pointer-events: none;
+        transition: background-color 0.3s ease-in-out;
+        display: flex;
+        flex-direction: row;
+    }
+
+    .GalleryImage:hover::before {
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .GalleryImage:hover {
+        transform: scale(1.05);
+    }
+
+        .GalleryImage:hover .GalleryActionsButton {
+            display: flex;
+        }
+
+.GalleryActionsButton {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 2;
+    color: white;
+    display: none;
+    display: none;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    left: 1%;
+    direction:ltr;
+    gap: 5px;
+}
+
+    .GalleryActionsButton a {
+        color: white;
+        text-decoration: none;
+        font-size: 20px;
+        background: rgba(0, 0, 0, 0.7);
+        border-radius: 50%;
+        font-size: 17px;
+        padding: 10px;
+        justify-content:center;
+        display:flex;
+    }
+
+.floating-button {
+    position: fixed;
+    bottom: 10%; /* Adjust this to move it higher or lower */
+    right: 3%; /* Adjust this to move it left or right */
+    background-color: #008374; /* Button background color */
+    color: white; /* Button text color */
+    border: none;
+    border-radius: 50%; /* Circular button */
+    width: 60px; /* Button size */
+    height: 60px; /* Button size */
+    font-size: 24px; /* Icon size */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); /* Optional shadow */
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+    .floating-button:hover {
+        background-color: #1B575B; /* Darken the button when hovered */
+    }

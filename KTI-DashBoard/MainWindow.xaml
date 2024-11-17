@@ -108,10 +108,12 @@
                                     Content="Statical"
                                     Tag="StaticalView" />
                 <NavigationViewItemHeader Content="CRUD Operations" />
-             
                 <NavigationViewItem Icon="Switch"
                                     Content="Move Students"
                                     Tag="MoveStudentView" />
+                <NavigationViewItem Icon="Copy"
+                                    Content="Back up"
+                                    Tag="BackupView" />
             </NavigationView.MenuItems>
             <Frame x:Name="ContentFrame"
                    FontFamily="Droid Arabic Kufi"></Frame>

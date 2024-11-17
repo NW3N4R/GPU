@@ -24,6 +24,8 @@
         </Grid.RowDefinitions>
         <Expander HorizontalAlignment="Stretch"
                   VerticalAlignment="Top"
+                  x:Name="EmployeesExpander"
+                  Tapped="EmployeesExpander_Tapped"
                   HorizontalContentAlignment="Stretch">
             <Expander.Header>
                 <Grid Padding="10"
@@ -93,39 +95,52 @@
                 </Grid>
             </Expander.Header>
             <Expander.Content>
-                <ListView x:Name="EmployeesList"
-                          HorizontalAlignment="Stretch"
-                          HorizontalContentAlignment="Stretch">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid HorizontalAlignment="Stretch">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="auto" />
-                                    <ColumnDefinition Width="auto" />
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Text="{Binding Name}"
-                                           VerticalAlignment="Center" />
-                                <ToggleButton x:Name="EmpSusBttn"
-                                              Click="EmpSusBttn_Click"
-                                              Grid.Column="1"
-                                              Tag="{Binding id}"
-                                              Loaded="EmpSusBttn_Loaded" />
-                                <AppBarButton Icon="Edit"
-                                              Grid.Column="2"
-                                              Tag="{Binding id}"
-                                              LabelPosition="Collapsed"
-                                              x:Name="ShowEmpEditor"
-                                              Click="ShowEmpEditor_Click" />
-                            </Grid>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                <Grid MaxHeight="250">
+                    <ListView x:Name="EmployeesList"
+                              HorizontalAlignment="Stretch"
+                              HorizontalContentAlignment="Stretch">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid HorizontalAlignment="Stretch"
+                                      ColumnSpacing="10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="auto" />
+                                        <ColumnDefinition Width="auto" />
+                                        <ColumnDefinition Width="auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="{Binding Name}"
+                                               VerticalAlignment="Center" />
+                                    <ToggleButton x:Name="StuListToggle"
+                                                  Content="{Binding stuListContent}"
+                                                  Click="StuListToggle_Click"
+                                                  Grid.Column="1"
+                                                  IsChecked="{Binding StuList}"
+                                                  Tag="{Binding id}" />
+                                    <ToggleButton x:Name="ArchListToggle"
+                                                  Content="{Binding ArchListContent}"
+                                                  Click="ArchListToggle_Click"
+                                                  Grid.Column="2"
+                                                  IsChecked="{Binding ArchList}"
+                                                  Tag="{Binding id}" />
+                                    <AppBarButton Icon="Edit"
+                                                  Grid.Column="3"
+                                                  Tag="{Binding id}"
+                                                  LabelPosition="Collapsed"
+                                                  x:Name="ShowEmpEditor"
+                                                  Click="ShowEmpEditor_Click" />
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
             </Expander.Content>
         </Expander>
         <Expander HorizontalAlignment="Stretch"
                   VerticalAlignment="Top"
                   Grid.Column="1"
+                  x:Name="UsersExpander"
+                  Tapped="UsersExpander_Tapped"
                   HorizontalContentAlignment="Stretch">
             <Expander.Header>
                 <Grid Padding="10"
@@ -190,11 +205,15 @@
                                                  PasswordChanging="NewUserPassword_PasswordChanging"
                                                  PlaceholderText="passowrd..."
                                                  Grid.Column="1" />
+                                    <ToggleButton Content="Can Delete?"
+                                                  Grid.Row="2"
+                                                  HorizontalAlignment="Stretch"
+                                                  Grid.Column="1"
+                                                  x:Name="CanDelete" />
                                     <Button Grid.Row="2"
                                             x:Name="SaveNewUser"
                                             Click="SaveNewUser_Click"
                                             IsEnabled="False"
-                                            Grid.ColumnSpan="2"
                                             HorizontalAlignment="Stretch"
                                             HorizontalContentAlignment="Center">
                                         <Button.Content>
@@ -218,6 +237,7 @@
             </Expander.Header>
             <Expander.Content>
                 <ListView x:Name="UsersList"
+                          MaxHeight="250"
                           HorizontalAlignment="Stretch"
                           HorizontalContentAlignment="Stretch">
                     <ListView.ItemTemplate>
@@ -234,6 +254,9 @@
                                            Foreground="{StaticResource SystemAccentColor}"
                                            VerticalAlignment="Center" />
                                 <TextBlock Text="{Binding UserName}"
+                                           VerticalAlignment="Center"
+                                           Grid.Column="1" />
+                                <TextBlock Text="{Binding CanDelete}"
                                            VerticalAlignment="Center"
                                            Grid.Column="2" />
                                 <AppBarButton Icon="Edit"
@@ -338,6 +361,7 @@
             <Expander.Content>
                 <ListView x:Name="AccessList"
                           HorizontalAlignment="Stretch"
+                          MaxHeight="450"
                           HorizontalContentAlignment="Stretch">
                     <ListView.ItemTemplate>
                         <DataTemplate>

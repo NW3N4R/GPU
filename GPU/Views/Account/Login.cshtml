@@ -1,0 +1,53 @@
+﻿@model GPU.Models.UsersModel
+@{
+    Layout = null;
+}
+<html>
+<head>
+    <title>چوونە ژوورەوە</title>
+    <link rel="stylesheet" href="~/css/LoginCss.css" />
+    <link rel="icon" type="image/x-icon" href="~/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="~/logo.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="~/logo.png">
+</head>
+<body>
+
+
+    <div class="LoginContainer">
+        <div class="ImgContainer">
+            <img src="~/logo.png" />
+        </div>
+        <div class="title">
+            <h1>بەخێربێن </h1>
+            <p>تکایە ناوی بەکارهێنەر و وشەی نهێنی تایبەت بە خۆت بنووسە.</p>
+        </div>
+
+
+        <form method="post" asp-action="Login">
+            <div class="controlContainer">
+                <div class="FormControl">
+                    <label asp-for="UserName" class="InputLabel"></label>
+                    <input type="text" asp-for="UserName"
+                           placeholder="ناوی بەکارهێنەر..."
+                           name="UserName"
+                           class="txtBox"
+                           required />
+                </div>
+                <div class="FormControl">
+                    <label asp-for="Password" class="InputLabel"></label>
+                    <input type="password" asp-for="Password"
+                           placeholder="وشەی نهێنی..." name="Password" class="txtBox" required />
+                </div>
+            </div>
+            <button type="submit" class="LoginBttn">چوونە ژوورەوە</button>
+            @if (Model.isWrongPass)
+            {
+                <div class="error-message">
+                    <p>ناوی بەکارهێنەر یان وشەی نهێنی هەڵەیە.</p>
+                </div>
+            }
+        </form>
+    </div>
+
+</body>
+</html>

@@ -2,7 +2,9 @@
 @{
     Layout = null;
 }
+
 <link rel="stylesheet" href="~/css/PrintPageStyle.css" />
+
 
 <div class="a4-paper">
     <header class="Centered-Child  CornerRadius Header">
@@ -70,9 +72,23 @@
 
                 </div>
             </div>
-            <div class="CardInfoParent ">
-                <img class="CardInfoimg" src="~/Personal Photo.jpg" />
-            </div>
+     @*        <div class="CardInfoParent ">
+                @if (Model.Pictures.PersonalPic != null)
+                {
+                    string imageSrc = null;
+
+                    using (var stream = new MemoryStream())
+                    {
+                        // Copy the IFormFile data into a stream
+                        await Model.Pictures.PersonalPic.CopyToAsync(stream);
+                        var base64Image = Convert.ToBase64String(stream.ToArray());
+                        imageSrc = $"data:{Model.Pictures.PersonalPic.ContentType};base64,{base64Image}";
+                    }
+
+                    <img class="LogoImg" src="@imageSrc" alt="Student Picture" />
+                }
+
+            </div> *@
         </div>
     </div>
     <div id="SectionTow" style="margin-top:10%;">
@@ -228,200 +244,243 @@
 
         </div>
     </div>
-
-
-
-    <div class="SectionBg">
-        <div id="SectionFive " style="margin-top:28%;">
-            <header class="Centered-Child  CornerRadius Header">
-                <div>
-                    <h4>پەیمانگای تەکنیکی کەلار - هۆبەی تۆمارگا</h4>
-                    <h6 style="margin-top:-7%;">پوختەی دۆسیەی خوێندکار ~ @Model.PersonalStudent.Name</h6>
-                </div>                <div class="LogoParent">
-                    <img class="LogoImg" src="~/logo.png" />
-                </div>
-            </header>
+    <div id="SectionFive" style="margin-top:28%;">
+        <header class="Centered-Child  CornerRadius Header">
             <div>
-                <h4>
-                    گەرەنتیدەر
-                </h4>
-                <hr />
+                <h4>پەیمانگای تەکنیکی کەلار - هۆبەی تۆمارگا</h4>
+                <h6 style="margin-top:-7%;">پوختەی دۆسیەی خوێندکار ~ @Model.PersonalStudent.Name</h6>
+            </div>                <div class="LogoParent">
+                <img class="LogoImg" src="~/logo.png" />
             </div>
-
-            <div class="OneRowSixColumn">
-                <div class="TowRowOneColum">
-                    <p class="PropertyLabel">
-                        فەرمانگە / بەرێوبەرایەتی
-                    </p>
-                    <h4 class="">@Model.StudentSupport.office</h4>
-                </div>
-                <div class="TowRowOneColum">
-                    <p class="PropertyLabel">
-                        ژمارەی نووسراو
-
-                    </p>
-                    <h4 class="">@Model.StudentSupport.WrittenNo</h4>
-                </div>
-                <div class="TowRowOneColum">
-                    <p class="PropertyLabel">
-                        بەرواری نووسراو
-                    </p>
-                    <h4 class=" ">@Model.StudentSupport.WrittenDate</h4>
-
-                </div>
-                <div class="TowRowOneColum">
-                    <p class="PropertyLabel">
-                        بڕی پارەی وەرگیراو
-                    </p>
-                    <h4 class="">@Model.StudentSupport.Amount</h4>
-
-                </div>
-            </div>
-
-
+        </header>
+        <div>
+            <h4>
+                گەرەنتیدەر
+            </h4>
+            <hr />
         </div>
 
-        <div id="SectionSix " style="margin-top:10%;">
-
-
-            <div>
-                <h4>
-                    زانیاری جۆری وەرگرتن
-
-                </h4>
-                <hr />
+        <div class="OneRowSixColumn">
+            <div class="TowRowOneColum">
+                <p class="PropertyLabel">
+                    فەرمانگە / بەرێوبەرایەتی
+                </p>
+                <h4 class="">@Model.StudentSupport.office</h4>
             </div>
+            <div class="TowRowOneColum">
+                <p class="PropertyLabel">
+                    ژمارەی نووسراو
 
-            <div class="OneRowSixColumn">
-                <div class="TowRowOneColum">
-                    <p class="PropertyLabel">
-                        بەشی وەرگیراو
-                    </p>
-                    <h4 class="">@Model.StudentDepartmentInfo.Department</h4>
-                </div>
-                <div class="TowRowOneColum">
-                    <p class="PropertyLabel">
-                        جۆری وەرگرتن
-
-
-                    </p>
-                    <h4 class="">@Model.StudentDepartmentInfo.AcceptanceType</h4>
-                </div>
-                <div class="TowRowOneColum">
-                    <p class="PropertyLabel">
-                        ژ. فەرمانی زانکۆیی
-                    </p>
-                    <h4 class=" ">@Model.StudentDepartmentInfo.UniversityCommandNo</h4>
-
-                </div>
-                <div class="TowRowOneColum">
-                    <p class="PropertyLabel">
-                        ژ.فەرمانی کارگێڕی
-                    </p>
-                    <h4 class=" ">@Model.StudentDepartmentInfo.AdministratorCommandNo</h4>
-
-                </div>
-                <div class="TowRowOneColum">
-                    <p class="PropertyLabel">
-                        زنجیرە
-                    </p>
-                    <h4 class=" ">@Model.StudentDepartmentInfo.Seq</h4>
-
-                </div>
+                </p>
+                <h4 class="">@Model.StudentSupport.WrittenNo</h4>
+            </div>
+            <div class="TowRowOneColum">
+                <p class="PropertyLabel">
+                    بەرواری نووسراو
+                </p>
+                <h4 class=" ">@Model.StudentSupport.WrittenDate</h4>
 
             </div>
-            <div class="OneRowSixColumn" style="margin-top:3%;">
+            <div class="TowRowOneColum">
+                <p class="PropertyLabel">
+                    بڕی پارەی وەرگیراو
+                </p>
+                <h4 class="">@Model.StudentSupport.Amount</h4>
 
-                <div class="TowRowOneColum">
-                    <p class="PropertyLabel">
-                        خوێندکاری بەشە ناوخۆییە؟
+            </div>
+        </div>
 
-                    </p>
-                    <h4 class=" ">@Model.StudentDepartmentInfo.ResidenceType</h4>
 
-                </div>
-                <div class="TowRowOneColum">
-                    <p class="PropertyLabel">
-                        ساڵی دەستپێک
+    </div>
+    <div id="SectionSix" style="margin-top:10%;">
 
-                    </p>
-                    <h4 class=" ">@Model.StudentDepartmentInfo.startinYear</h4>
+        <div>
+            <h4>
+                زانیاری جۆری وەرگرتن
+            </h4>
+            <hr />
+        </div>
 
-                </div>
-                <div class="TowRowOneColum">
-                    <p class="PropertyLabel">
-                        ساڵی دەرچوون
-                    </p>
-                    <h4 class=" ">@Model.StudentDepartmentInfo.Graduate</h4>
+        <div class="OneRowSixColumn">
+            <div class="TowRowOneColum">
+                <p class="PropertyLabel">
+                    بەشی وەرگیراو
+                </p>
+                <h4 class="">@Model.StudentDepartmentInfo.Department</h4>
+            </div>
+            <div class="TowRowOneColum">
+                <p class="PropertyLabel">
+                    جۆری وەرگرتن
 
-                </div>
-                <div class="TowRowOneColum">
-                    <p class="PropertyLabel">
-                        قۆناغ
-                    </p>
-                    <h4 class=" ">@Model.StudentDepartmentInfo.Stage</h4>
 
-                </div>
+                </p>
+                <h4 class="">@Model.StudentDepartmentInfo.AcceptanceType</h4>
+            </div>
+            <div class="TowRowOneColum">
+                <p class="PropertyLabel">
+                    ژ. فەرمانی زانکۆیی
+                </p>
+                <h4 class=" ">@Model.StudentDepartmentInfo.UniversityCommandNo</h4>
+
+            </div>
+            <div class="TowRowOneColum">
+                <p class="PropertyLabel">
+                    ژ.فەرمانی کارگێڕی
+                </p>
+                <h4 class=" ">@Model.StudentDepartmentInfo.AdministratorCommandNo</h4>
+
+            </div>
+            <div class="TowRowOneColum">
+                <p class="PropertyLabel">
+                    زنجیرە
+                </p>
+                <h4 class=" ">@Model.StudentDepartmentInfo.Seq</h4>
+
             </div>
 
         </div>
-        <div id="SectionSeven" style="margin-top:10%;">
+        <div class="OneRowSixColumn" style="margin-top:3%;">
 
-            <div>
-                <h4>
-                    وەسڵەکانی خوێندکار @Model.PersonalStudent.Name
-                </h4>
-                <hr />
-                <div class="content">
-                    <div class="table-container">
-                        <table dir="rtl">
-                            <thead>
+            <div class="TowRowOneColum">
+                <p class="PropertyLabel">
+                    خوێندکاری بەشە ناوخۆییە؟
+
+                </p>
+                <h4 class=" ">@Model.StudentDepartmentInfo.ResidenceType</h4>
+
+            </div>
+            <div class="TowRowOneColum">
+                <p class="PropertyLabel">
+                    ساڵی دەستپێک
+
+                </p>
+                <h4 class=" ">@Model.StudentDepartmentInfo.startinYear</h4>
+
+            </div>
+            <div class="TowRowOneColum">
+                <p class="PropertyLabel">
+                    ساڵی دەرچوون
+                </p>
+                <h4 class=" ">@Model.StudentDepartmentInfo.Graduate</h4>
+
+            </div>
+            <div class="TowRowOneColum">
+                <p class="PropertyLabel">
+                    قۆناغ
+                </p>
+                <h4 class=" ">@Model.StudentDepartmentInfo.Stage</h4>
+
+            </div>
+        </div>
+
+    </div>
+    <div id="SectionSeven" style="margin-top:10%;">
+        <div>
+            <h4>
+                ڕەوشەکانی خوێندکار @Model.PersonalStudent.Name
+            </h4>
+            <hr />
+            <div class="content">
+                <div class="table-container">
+                    <table dir="rtl">
+                        <thead>
+                            <tr>
+                                <th class="TblHeader FirstColumn">
+                                    @Html.DisplayNameFor(model => model.status.Stage)
+                                </th>
+                                <th class="TblHeader">
+                                    @Html.DisplayNameFor(model => model.status.Year)
+                                </th>
+                                <th class="TblHeader lastColumn">
+                                    @Html.DisplayNameFor(model => model.status.Status)
+                                </th>
+
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td class="r1" />
+                                <td class="r1" />
+                                <td class="r1" />
+                            </tr>
+                            @foreach (var item in Model.Stages)
+                            {
                                 <tr>
-                                    <th class="TblHeader FirstColumn">
-                                        @Html.DisplayNameFor(model => model.Invoice.InvoiceId)
-                                    </th>
-                                    <th class="TblHeader">
-                                        @Html.DisplayNameFor(model => model.Invoice.InvoiceDate)
-
-                                    </th>
-                                    <th class="TblHeader lastColumn">
-                                        @Html.DisplayNameFor(model => model.Invoice.Amount)
-                                    </th>
-
+                                    <td class="DgColumn" style="text-align:center;">
+                                        @Html.DisplayFor(modelItem => item.Stage)
+                                    </td>
+                                    <td class="DgColumn" style="text-align:center;">
+                                        @Html.DisplayFor(modelItem => item.Year)
+                                    </td>
+                                    <td class="DgColumn" style="text-align:center;">
+                                        @Html.DisplayFor(modelItem => item.Status)
+                                    </td>
                                 </tr>
-                            </thead>
-
-                            <tbody>
-                                <tr>
-                                    <td class="r1" />
-                                    <td class="r1" />
-                                    <td class="r1" />
-                                </tr>
-                                @foreach (var item in Model.MyInvoice)
-                                {
-                                    <tr>
-                                        <td class="DgColumn @(item.isFirst ? "RowOneColumnOne" :"")">
-                                            @Html.DisplayFor(modelItem => item.InvoiceId)
-                                        </td>
-                                        <td class="DgColumn">
-                                            @Html.DisplayFor(modelItem => item.InvoiceDate)
-                                        </td>
-                                        <td class="DgColumn @(item.isFirst ? "RowOneColumnLast" :"")">
-                                            @Html.DisplayFor(modelItem => item.Amount)
-                                        </td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>
+                            }
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
+    <div id="SectionEight" style="margin-top:10%;">
+        <div>
+            <h4>
+                وەسڵەکانی خوێندکار @Model.PersonalStudent.Name
+            </h4>
+            <hr />
+            <div class="content">
+                <div class="table-container">
+                    <table dir="rtl">
+                        <thead>
+                            <tr>
+                                <th class="TblHeader FirstColumn">
+                                    @Html.DisplayNameFor(model => model.Invoice.InvoiceId)
+                                </th>
+                                <th class="TblHeader">
+                                    @Html.DisplayNameFor(model => model.Invoice.InvoiceDate)
+
+                                </th>
+                                <th class="TblHeader lastColumn">
+                                    @Html.DisplayNameFor(model => model.Invoice.Amount)
+                                </th>
+
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td class="r1" />
+                                <td class="r1" />
+                                <td class="r1" />
+                            </tr>
+                            @foreach (var item in Model.MyInvoice)
+                            {
+                                <tr>
+                                    <td class="DgColumn @(item.isFirst ? "RowOneColumnOne" :"")" style="text-align:center;">
+                                        @Html.DisplayFor(modelItem => item.InvoiceId)
+                                    </td>
+                                    <td class="DgColumn" style="text-align:center;">
+                                        @Html.DisplayFor(modelItem => item.InvoiceDate)
+                                    </td>
+                                    <td class="DgColumn @(item.isFirst ? "RowOneColumnLast" :"")" style="text-align:center;">
+                                        @Html.DisplayFor(modelItem => item.Amount)
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
-        window.onload = function() {
+        window.onload = function () {
             window.print();
         };
     </script>
 </div>
+
 

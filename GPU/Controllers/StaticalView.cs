@@ -5,21 +5,28 @@ using GPU.Models;
 using System.Collections.ObjectModel;
 using System.Security.Cryptography.Xml;
 using Microsoft.Identity.Client;
+using Microsoft.AspNetCore.Authorization;
+using System.Diagnostics;
+using GPU.Services;
+using System.Data;
 namespace GPU.Controllers
 {
+    [Authorize]
     public class StaticalView : Controller
     {
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            return View((Helper_StudentTable.GetStatical(), new StaticalTableModel()));
+            return View((Helper_StudentTable.GetStatical(), new StaticalTableModel(),
+                props: WebPropsServices.MergedProps, access: ManagerServices._auths));
         }
 
-        [HttpPost]
+        [HttpGet]
         public async Task<IActionResult> Search([Bind(Prefix = "table")] StaticalTableModel tbl, bool DoPrint, bool doSearch = true)
         {
+            Debug.WriteLine(tbl.Department);
             if (doSearch)
             {
-                var viewModel = ((Helper_StudentTable.StaticalSearch(tbl), tbl));
+                var viewModel = ((Helper_StudentTable.StaticalSearch(tbl), tbl, props: WebPropsServices.MergedProps, access: ManagerServices._auths));
                 if (DoPrint)
                 {
                     var fileContent = await ToExcelPrint.DoPrint((Helper_StudentTable.StaticalSearch(tbl)), 2);
@@ -32,7 +39,7 @@ namespace GPU.Controllers
             }
             else
             {
-                return View("Index", (Helper_StudentTable.GetStatical(), new StaticalTableModel()));
+                return View("Index", (Helper_StudentTable.GetStatical(), new StaticalTableModel(), props: WebPropsServices.MergedProps, access: ManagerServices._auths));
 
             }
         }
