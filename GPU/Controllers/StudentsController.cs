@@ -6,6 +6,7 @@ using GPU.Services;
 using System.Data;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using System.Runtime.InteropServices;
 
 namespace GPU.Controllers
 {
@@ -106,13 +107,8 @@ namespace GPU.Controllers
         {
 
             await Helper_PersonalStudent.Create(personalStudent, studentContactInfo, studentParentInfo, student12Grade, studentDepartmentInfo, invoice, studentSupport);
-
-
             return RedirectToAction("Index");
-
-
         }
-
 
         [Authorize(Policy = "RequireStuList")]
         public IActionResult Edit(int? id)
@@ -157,14 +153,12 @@ namespace GPU.Controllers
             {
                 return BadRequest();
             }
-            string path = "C:\\Users\\Aurora\\Desktop\\Student List Images";
-#if !DEBUG
-            path = @$"C:\Users\nwenar\Desktop\Student List Images";
-#endif
             var NewImg = new StudentDepartmentInfo();
             NewImg.Id = id;
-            return View((await Helper_PersonalStudent.GetimagesBack(path, id.ToString()), NewImg, id));
+
+            return View((NewImg, id));
         }
+
 
         [HttpPost]
         [Authorize(Policy = "RequireStuList")]

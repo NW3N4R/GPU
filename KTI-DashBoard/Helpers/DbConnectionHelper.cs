@@ -11,9 +11,9 @@ namespace KTI_DashBoard.Helpers
         public static SqlConnection con;
         public static async Task<bool> OpenConnection()
         {
-#if DEBUG
-            strConnection = "Data Source=NWENAR\\SQLEXPRESS;Initial Catalog=KTI;User ID=nwenar;Password =KnnKnn123;TrustServerCertificate=True;MultipleActiveResultSets=True";
-#endif
+//#if DEBUG
+//            strConnection = "Data Source=NWENAR\\SQLEXPRESS;Initial Catalog=KTI;User ID=nwenar;Password =KnnKnn123;TrustServerCertificate=True;MultipleActiveResultSets=True";
+//#endif
             con = new SqlConnection(strConnection);
             await con.OpenAsync();
             return con.State == System.Data.ConnectionState.Open;

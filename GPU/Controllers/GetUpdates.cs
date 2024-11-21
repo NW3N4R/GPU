@@ -1,8 +1,12 @@
-﻿using GPU.Models;
+﻿using GPU.Helpers;
+using GPU.Models;
 using GPU.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
+using System.IO.Compression;
 
 namespace GPU.Controllers
 {
@@ -10,6 +14,7 @@ namespace GPU.Controllers
     [ApiController]
     public class GetUpdates : ControllerBase
     {
+        List<string> BackedOther = new List<string>();
         [HttpGet("props/")]
         public async Task<IActionResult> UpdateProperties([FromBody] WebProperties? prop)
         {
@@ -25,11 +30,13 @@ namespace GPU.Controllers
 
             }
         }
+
         [HttpGet("usrs/")]
         public async Task<IActionResult> UpdateUsrs()
         {
             await ManagerServices.LoadManagers();
             return Ok("Capture!");
         }
+
     }
 }

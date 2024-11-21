@@ -586,6 +586,7 @@ namespace GPU.Helpers
         }
         public static async Task<List<GalleryModel>> GetimagesBack(string Direction,string id)
         {
+
             List<GalleryModel> _FilesList = new List<GalleryModel>();
             string CompletePath = Direction + "\\Personal Pictures";
             if (Directory.Exists(CompletePath))
@@ -651,6 +652,7 @@ namespace GPU.Helpers
             }
             return _FilesList;
         }
+    
         private static string GetContentType(string fileName)
         {
             var extension = Path.GetExtension(fileName).ToLowerInvariant();
@@ -661,6 +663,7 @@ namespace GPU.Helpers
                 ".bmp" => "image/bmp",
                 ".tiff" or ".tif" => "image/tiff",
                 ".webp" => "image/webp",
+                ".pdf" => "application/pdf", // Handle PDF files
                 _ => "application/octet-stream", // Default if file type is unknown
             };
         }

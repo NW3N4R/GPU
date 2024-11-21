@@ -1,36 +1,32 @@
 ﻿@model (GPU.Models.PersonalStudent PersonalStudent, GPU.Models.StudentContactInfo StudentContactInfo,GPU.Models.StudentParentInfo StudentParentInfo,GPU.Models.Student12Grade Student12Grade,GPU.Models.StudentDepartmentInfo StudentDepartmentInfo,InvoiceInfo InvoiceInfo,StudentSupport studentSupport)
+@inject IWebHostEnvironment Environment
 
 @{
     ViewData["Title"] = "پرۆفایلی خوێندکار";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="DeContainer">
-
     <div class="DetailContainer">
         <div class="Col">
             <h3>زانیاری کەسی</h3>
             <hr />
             @{
-                string imageSrc = null;
-
-                using (var stream = new MemoryStream())
-                {
-                    IFormFile form = await GPU.Helpers.ImagesHelper.GetProfileImageAsFormFile(Model.PersonalStudent.Id.ToString(), 0);
-                    if (form != null)
-                    {
-
-                        // Copy the IFormFile data into a stream
-                        await form.CopyToAsync(stream);
-                        var base64Image = Convert.ToBase64String(stream.ToArray());
-                        imageSrc = $"data:{form.ContentType};base64,{base64Image}";
-                    }
-                }
-                if (imageSrc != null)
+                int id = Model.PersonalStudent.Id;
+                if (Environment.IsDevelopment())
                 {
                     <div class="imgparent">
-                        <img class="ProFilePic" src="@imageSrc" alt="Student Picture" />
+                        <img class="ProFilePic" src="http://localhost:5154/personalfiles/@id" alt="Student Picture" />
                     </div>
                 }
+                else
+                {
+                    <div class="imgparent">
+                        <img class="ProFilePic" src="http://p4165386.eero.online/personalfiles/@id" alt="Student Picture" />
+                    </div>
+                }
+
+
+
             }
             <div class="PropInfo">
                 <h5>

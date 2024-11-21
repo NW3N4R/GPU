@@ -1,84 +1,79 @@
-﻿@model (List<GPU.Models.GalleryModel> ImageList,GPU.Models.StudentDepartmentInfo NewImage,int id)
+﻿@model (GPU.Models.StudentDepartmentInfo NewImage,int id)
+@inject IWebHostEnvironment Environment
+@using System.Net.Http
+@using System.Net.Http.Json
+@using Newtonsoft.Json;
 @using GPU.Helpers;
 @{
     ViewData["Title"] = "گەلەری خوێندکار";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    HttpClient client = new HttpClient();
+    string url = "http://localhost:5154";
+    if (!Environment.IsDevelopment())
+    {
+        url = "http://p4165386.eero.online";
+    }
+    client.BaseAddress = new Uri($"{@url}/{Model.id}");
+    HttpResponseMessage response = await client.GetAsync(client.BaseAddress);
+    List<string> _Names = new List<string>();
+    if (response.IsSuccessStatusCode)
+    {
+        string json = await response.Content.ReadAsStringAsync();
+        _Names = JsonConvert.DeserializeObject<List<string>>(json);
+    }
+
 }
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
 
 <div class="GalleryContainer">
-    @foreach (var i in Model.ImageList)
-    {
-        if (!i._Files.FileName.Contains("pdf"))
+  
+  
+        <!-- First image (Model.id) -->
+        <div class="GalleryImageParent">
+            <div class="GalleryImage" style="background-image:url('@url/personalfiles/@Model.id');">
+                <div class="GalleryActionsButton">
+                    <a href="javascript:void(0);" onclick="openImageInNewTab('@url/personalfiles/@Model.id')">
+                        <span class="Segoe">&#xE92D;</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loop through additional files -->
+        @foreach (var file in _Names)
         {
-            <div class="GalleryImageParent">
-                @if (i._Files != null)
-                {
-                    string imageSrc = null;
-
-                    using (var stream = new MemoryStream())
-                    {
-                        await i._Files.CopyToAsync(stream);
-                        var base64Image = Convert.ToBase64String(stream.ToArray());
-                        imageSrc = $"data:{i._Files.ContentType};base64,{base64Image}";
-                    }
-
-                    <div class="GalleryImage" style="background-image:url('@imageSrc');">
+            if (!file.ToLower().Contains("pdf"))
+            {
+                <div class="GalleryImageParent">
+                    <div class="GalleryImage" style="background-image:url('@url/OtherFiles/@file');">
                         <div class="GalleryActionsButton">
-                            @if (!i.isPersonal)
-                            {
-                                <a asp-controller="Students"
-                                   asp-action="RemoveImage"
-                                   asp-route-id="@i.StudentID"
-                                   asp-route-fileName="@i._Files.FileName">
-                                    <span class="Segoe">&#xE74D;</span>
-                                </a>
-                            }
-                            <a href="javascript:void(0);" onclick="openImageInNewTab('@imageSrc')">
+                            <a href="javascript:void(0);" onclick="openImageInNewTab('@url/OtherFiles/@file')">
                                 <span class="Segoe">&#xE92D;</span>
                             </a>
-
-                        </div>
-                    </div>
-                }
-            </div>
-        }
-    }
-    @foreach (var pdfs in Model.ImageList)
-    {
-        if (pdfs._Files.FileName.Contains("pdf"))
-        {
-            <div class="GalleryImageParent">
-                @if (pdfs._Files != null)
-                {
-                    string imageSrc = null;
-                    using (var stream = new MemoryStream())
-                    {
-                        await pdfs._Files.CopyToAsync(stream);
-                        var base64Image = Convert.ToBase64String(stream.ToArray());
-                        imageSrc = $"data:application/pdf;base64,{base64Image}";
-                    }
-                    <div class="GalleryImage" style="background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;">
-                        <embed src="@imageSrc" type="application/pdf" class="GalleryImage" />
-                        <div class="GalleryActionsButton">
-                            @if (!pdfs.isPersonal)
-                            {
-                                <a asp-controller="Students"
-                                   asp-action="RemoveImage"
-                                   asp-route-id="@pdfs.StudentID"
-                                   asp-route-fileName="@pdfs._Files.FileName">
-                                    <span class="Segoe">&#xE74D;</span>
-                                </a>
-                            }
-                            <a href="javascript:void(0);" onclick="openPdfInNewTab('@imageSrc')">
-                                <span class="Segoe">&#xE92D;</span>
+                            <a asp-controller="Students" asp-action="RemoveImage" asp-route-id="@Model.id" asp-route-fileName="@file">
+                                <span class="Segoe">&#xE74D;</span>
                             </a>
                         </div>
                     </div>
-                }
-            </div>
+                </div>
+            }
+            else
+            {
+                <div class="pdfPreview">
+                    <embed src="@url/OtherFiles/@file" type="application/pdf" class="ThePDf" />
+                    <div class="PdfActions">
+                        <a href="javascript:void(0);" onclick="openPdfInNewTab('@url/OtherFiles/@file')">
+                            <span class="Segoe">&#xE92D;</span>
+                        </a>
+                        <a asp-controller="Students" asp-action="RemoveImage" asp-route-id="@Model.id" asp-route-fileName="@file" >
+                            <span class="Segoe">&#xE74D;</span>
+                        </a>
+                    </div>
+                </div>
+
+
+            }
         }
-    }
 </div>
 <form asp-action="NewImage" method="post" id="fileForm" enctype="multipart/form-data">
     <label for="fileInput" class="floating-button">
@@ -96,8 +91,8 @@
            onchange="submitForm()" />
 </form>
 <script>
-        function openImageInNewTab(imageSrc) {
-        var newTab = window.open(); // Open a new tab
+       function openImageInNewTab(imageSrc) {
+        var newTab = window.open();
         newTab.document.write('<img src="' + imageSrc + '" style="max-width: 100%; max-height: 100vh; object-fit: contain;" />');
         newTab.document.close();
     }
@@ -108,7 +103,7 @@
     }
         function submitForm() {
         const form = document.getElementById('fileForm');
-        form.submit();  // Submit the form when the file input changes
+        form.submit();
     }
 
 </script>

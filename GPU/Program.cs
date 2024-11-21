@@ -1,6 +1,7 @@
 using GPU;
 using GPU.Helpers;
 using GPU.Services;
+using Microsoft.AspNetCore.Authorization;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddAuthentication("CookieAuth")
        .AddCookie("CookieAuth", options =>
@@ -49,7 +50,6 @@ app.UseStatusCodePagesWithReExecute("/Error/{0}");
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
 DbConnectionHelper db = new DbConnectionHelper();
 await db.OpenConnection();

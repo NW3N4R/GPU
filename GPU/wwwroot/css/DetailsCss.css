@@ -32,17 +32,14 @@
         padding: 0;
     }
 
-.imgparent {
-    margin-top: 4vh;
-}
 
 .ProFilePic {
     border: solid #B4DBD6 1px;
     border-radius: 10px;
     text-align: center;
     align-content: center;
-    max-width: 20vh;
-    max-height: 10vh;
+    max-width: 23vh;
+    max-height: 12vh;
     background-color: #f0f0f0;
 }
 
